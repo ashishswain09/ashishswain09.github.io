@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wealth Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg-2: #111111;
+    --bg-3: #1a1a1a;
+    --bg-4: #222222;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.14);
+    --text-1: #f0f0f0;
+    --text-2: #888;
+    --text-3: #555;
+    --accent: #00e5a0;
+    --accent-dim: rgba(0,229,160,0.1);
+    --accent-border: rgba(0,229,160,0.25);
+    --red: #ff4d4d;
+    --red-dim: rgba(255,77,77,0.1);
+    --amber: #f5a623;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-1);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .shell {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+  }
+  .header-left {}
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+  }
+  .header-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-1);
+    letter-spacing: -0.3px;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .live-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 5px;
+    animation: blink 1.4s infinite;
+    vertical-align: middle;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  /* ── Ticker hero ── */
+  .ticker-hero {
+    background: var(--bg-2);
+    border: 1px solid var(--accent-border);
+    border-radius: var(--radius-lg);
+    padding: 32px 36px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ticker-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.6;
+  }
+  .ticker-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .ticker-amount {
+    font-family: var(--font-mono);
+    font-size: 48px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .ticker-sub {
+    font-size: 12px;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+  }
+  .ticker-toggle {
+    position: absolute;
+    top: 28px;
+    right: 32px;
+    display: flex;
+    gap: 4px;
+    background: var(--bg-3);
+    border-radius: 8px;
+    padding: 3px;
+  }
+  .tt-btn {
+    padding: 4px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-3);
+    transition: all 0.15s;
+  }
+  .tt-btn.active {
+    background: var(--bg-4);
+    color: var(--text-1);
+  }
+
+  /* ── Stats grid ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: var(--border-hover); }
+  .stat-icon {
+    font-size: 11px;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-1);
+    letter-spacing: -0.5px;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 3px;
+  }
+
+  /* ── Section ── */
+  .section { margin-bottom: 32px; }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+  }
+  .section-action {
+    font-size: 11px;
+    color: var(--accent);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    background: none;
+    border: none;
+    padding: 0;
+    opacity: 0.7;
+    transition: opacity 0.15s;
+  }
+  .section-action:hover { opacity: 1; }
+
+  /* ── Income source cards ── */
+  .source-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: border-color 0.2s;
+  }
+  .source-card:hover { border-color: var(--border-hover); }
+  .source-card.primary { border-left: 2px solid var(--accent); }
+  .source-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--accent-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+  .source-info { flex: 1; min-width: 0; }
+  .source-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-1);
+    margin-bottom: 2px;
+  }
+  .source-type {
+    font-size: 11px;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+  }
+  .source-amounts { text-align: right; flex-shrink: 0; }
+  .source-gross {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-1);
+  }
+  .source-net {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+  .source-status {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-family: var(--font-mono);
+    flex-shrink: 0;
+  }
+  .status-active { background: var(--accent-dim); color: var(--accent); }
+  .status-soon { background: rgba(245,166,35,0.1); color: var(--amber); }
+
+  /* ── Add source placeholder ── */
+  .add-source {
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    color: var(--text-3);
+    font-size: 13px;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+  }
+  .add-source:hover {
+    border-color: var(--accent-border);
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+  .add-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px dashed currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  /* ── Deduction breakdown ── */
+  .breakdown {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .breakdown-row:last-child { border-bottom: none; }
+  .breakdown-row.total {
+    background: var(--bg-3);
+    font-weight: 500;
+  }
+  .br-label { color: var(--text-2); display: flex; align-items: center; gap: 8px; }
+  .br-label .tag {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--bg-3);
+    color: var(--text-3);
+  }
+  .br-value { font-family: var(--font-mono); font-size: 13px; }
+  .br-value.neg { color: var(--red); }
+  .br-value.pos { color: var(--accent); }
+  .br-value.neutral { color: var(--text-1); }
+
+  /* ── Progress bar ── */
+  .progress-section { margin-bottom: 28px; }
+  .progress-item { margin-bottom: 14px; }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  .progress-name { color: var(--text-2); }
+  .progress-val { font-family: var(--font-mono); color: var(--text-1); }
+  .progress-track {
+    height: 4px;
+    background: var(--bg-3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--accent);
+    transition: width 1s ease;
+  }
+  .progress-fill.muted { background: var(--text-3); }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+  }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg-2);
+    border: 1px solid var(--border-hover);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    width: 100%;
+    max-width: 420px;
+    margin: 24px;
+  }
+  .modal-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: var(--text-1);
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-label {
+    display: block;
+    font-size: 11px;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .form-input, .form-select {
+    width: 100%;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-1);
+    font-family: var(--font-body);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus, .form-select:focus { border-color: var(--accent-border); }
+  .form-select option { background: var(--bg-3); }
+  .modal-actions { display: flex; gap: 10px; margin-top: 24px; }
+  .btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    font-family: var(--font-body);
+    transition: all 0.15s;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    font-weight: 500;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-ghost { background: transparent; color: var(--text-2); }
+  .btn-ghost:hover { background: var(--bg-3); }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .ticker-amount { font-size: 32px; }
+    .ticker-toggle { position: static; margin-top: 16px; }
+    .header { flex-direction: column; gap: 12px; }
+    .header-date { text-align: left; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live-dot, @keyframes blink { animation: none; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-eyebrow">personal finance</div>
+      <div class="header-title">earnings tracker</div>
+    </div>
+    <div class="header-date">
+      <div><span class="live-dot"></span>live</div>
+      <div id="live-date"></div>
+      <div id="live-time"></div>
+    </div>
+  </div>
+
+  <!-- Ticker hero -->
+  <div class="ticker-hero">
+    <div class="ticker-label">net earned this session</div>
+    <div class="ticker-amount" id="ticker">€0.0000</div>
+    <div class="ticker-sub" id="ticker-sub">session started 0s ago · net rate</div>
+    <div class="ticker-toggle">
+      <button class="tt-btn active" id="btn-net" onclick="setMode('net')">net</button>
+      <button class="tt-btn" id="btn-gross" onclick="setMode('gross')">gross</button>
+    </div>
+  </div>
+
+  <!-- Stats grid -->
+  <div class="stats-grid" id="stats-grid">
+    <!-- filled by JS -->
+  </div>
+
+  <!-- Income sources -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">income streams</span>
+      <button class="section-action" onclick="openModal()">+ add stream</button>
+    </div>
+    <div id="sources-list"></div>
+    <button class="add-source" onclick="openModal()">
+      <div class="add-icon">+</div>
+      <span>add another income stream — freelance, investments, side projects…</span>
+    </button>
+  </div>
+
+  <!-- Tax breakdown -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">deduction breakdown · annual</span>
+    </div>
+    <div class="breakdown" id="breakdown-table"></div>
+  </div>
+
+  <!-- Earnings rate bars -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">earnings rate</span>
+    </div>
+    <div id="rate-bars"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>personal use only · not financial advice</span>
+    <span id="footer-updated"></span>
+  </div>
+
+</div>
+
+<!-- Add stream modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title">add income stream</div>
+    <div class="form-group">
+      <label class="form-label" for="inp-name">stream name</label>
+      <input class="form-input" id="inp-name" type="text" placeholder="e.g. Freelance consulting">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="inp-type">type</label>
+      <select class="form-select" id="inp-type">
+        <option value="employment">employment</option>
+        <option value="freelance">freelance</option>
+        <option value="investment">investment / dividends</option>
+        <option value="rental">rental income</option>
+        <option value="other">other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="inp-gross">annual gross (€)</label>
+      <input class="form-input" id="inp-gross" type="number" placeholder="e.g. 12000">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="inp-net">annual net (€) — optional</label>
+      <input class="form-input" id="inp-net" type="number" placeholder="leave blank to auto-estimate">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="inp-status">status</label>
+      <select class="form-select" id="inp-status">
+        <option value="active">active</option>
+        <option value="soon">coming soon</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">cancel</button>
+      <button class="btn btn-primary" onclick="addStream()">add stream</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────
+const ICONS = { employment: '💼', freelance: '⚡', investment: '📈', rental: '🏠', other: '✦' };
+const TYPE_LABELS = { employment: 'employment', freelance: 'freelance', investment: 'investment', rental: 'rental income', other: 'other' };
+
+let streams = [
+  { id: 1, name: 'Primary role', type: 'employment', gross: 59488, net: 43747, status: 'active', primary: true, startDate: '2026-06-29' }
+];
+
+let mode = 'net'; // net | gross
+const startTime = Date.now();
+
+// ── Helpers ──────────────────────────────────────────────────────────
+const fmt = (n, dec = 0) => '€' + Number(n).toLocaleString('en-IE', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+const fmtMono = (n, dec = 2) => '€' + n.toFixed(dec);
+
+function totalGross() { return streams.filter(s => s.status === 'active').reduce((a, s) => a + s.gross, 0); }
+function totalNet()   { return streams.filter(s => s.status === 'active').reduce((a, s) => a + s.net, 0); }
+function totalDeductions() { return totalGross() - totalNet(); }
+
+function perSecond(annual) { return annual / (260 * 8 * 3600); }
+
+// ── Live clock ────────────────────────────────────────────────────────
+function updateClock() {
+  const now = new Date();
+  document.getElementById('live-date').textContent = now.toLocaleDateString('en-IE', { day: '2-digit', month: 'short', year: 'numeric' });
+  document.getElementById('live-time').textContent = now.toLocaleTimeString('en-IE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+// ── Ticker ────────────────────────────────────────────────────────────
+function updateTicker() {
+  const elapsed = (Date.now() - startTime) / 1000;
+  const annual = mode === 'net' ? totalNet() : totalGross();
+  const earned = elapsed * perSecond(annual);
+  document.getElementById('ticker').textContent = fmtMono(earned, 4);
+  const mins = Math.floor(elapsed / 60);
+  const secs = Math.floor(elapsed % 60);
+  document.getElementById('ticker-sub').textContent =
+    `session started ${mins > 0 ? mins + 'm ' : ''}${secs}s ago · ${mode} rate`;
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('btn-net').classList.toggle('active', m === 'net');
+  document.getElementById('btn-gross').classList.toggle('active', m === 'gross');
+  renderStats();
+}
+
+// ── Stats ─────────────────────────────────────────────────────────────
+function renderStats() {
+  const annual = mode === 'net' ? totalNet() : totalGross();
+  const cards = [
+    { label: 'annual', value: fmt(annual), sub: mode + ' / year' },
+    { label: 'monthly', value: fmt(annual / 12), sub: mode + ' / month' },
+    { label: 'weekly', value: fmt(annual / 52), sub: mode + ' / week' },
+    { label: 'daily', value: fmt(annual / 260), sub: '8h day' },
+    { label: 'hourly', value: fmt(annual / 2080, 2), sub: 'per hour' },
+    { label: 'per minute', value: fmtMono(annual / (2080 * 60), 3), sub: 'every 60s' },
+  ];
+  document.getElementById('stats-grid').innerHTML = cards.map(c => `
+    <div class="stat-card">
+      <div class="stat-icon">${c.label}</div>
+      <div class="stat-value">${c.value}</div>
+      <div class="stat-label">${c.sub}</div>
+    </div>
+  `).join('');
+}
+
+// ── Sources ───────────────────────────────────────────────────────────
+function renderSources() {
+  document.getElementById('sources-list').innerHTML = streams.map(s => `
+    <div class="source-card ${s.primary ? 'primary' : ''}">
+      <div class="source-badge">${ICONS[s.type] || '✦'}</div>
+      <div class="source-info">
+        <div class="source-name">${s.name}</div>
+        <div class="source-type">${TYPE_LABELS[s.type]}${s.startDate ? ' · from ' + s.startDate : ''}</div>
+      </div>
+      <div class="source-amounts">
+        <div class="source-gross">${fmt(s.gross)} gross</div>
+        <div class="source-net">${fmt(s.net)} net</div>
+      </div>
+      <span class="source-status ${s.status === 'active' ? 'status-active' : 'status-soon'}">${s.status}</span>
+      ${!s.primary ? `<button onclick="removeStream(${s.id})" style="background:none;border:none;color:var(--text-3);cursor:pointer;font-size:16px;padding:4px;line-height:1;" title="remove">×</button>` : ''}
+    </div>
+  `).join('');
+}
+
+// ── Breakdown ─────────────────────────────────────────────────────────
+function renderBreakdown() {
+  const gross = totalGross();
+  const net = totalNet();
+  const deductions = gross - net;
+  const effectiveRate = ((deductions / gross) * 100).toFixed(1);
+
+  // Approximate individual deductions based on primary employment
+  const primaryGross = streams.find(s => s.primary)?.gross || gross;
+  const incomeTax = Math.round(primaryGross > 42000 ? (42000 * 0.20 + (primaryGross - 42000) * 0.40) - 3750 : primaryGross * 0.20 - 3750);
+  const usc = Math.round(primaryGross * 0.0299);
+  const prsi = Math.round(primaryGross * 0.04);
+  const credits = 3750;
+  const extraDeductions = deductions - (incomeTax + usc + prsi);
+
+  const rows = [
+    { label: 'Total gross income', tag: null, value: fmt(gross), cls: 'neutral' },
+    { label: 'Income tax', tag: '20% / 40%', value: '−' + fmt(incomeTax), cls: 'neg' },
+    { label: 'USC', tag: 'universal social charge', value: '−' + fmt(usc), cls: 'neg' },
+    { label: 'PRSI', tag: '4%', value: '−' + fmt(prsi), cls: 'neg' },
+    { label: 'Tax credits', tag: 'personal + PAYE', value: '+' + fmt(credits), cls: 'pos' },
+    ...(extraDeductions > 0 ? [{ label: 'Other deductions', tag: 'additional streams', value: '−' + fmt(extraDeductions), cls: 'neg' }] : []),
+  ];
+
+  const rowsHTML = rows.map(r => `
+    <div class="breakdown-row">
+      <span class="br-label">${r.label}${r.tag ? `<span class="tag">${r.tag}</span>` : ''}</span>
+      <span class="br-value ${r.cls}">${r.value}</span>
+    </div>
+  `).join('');
+
+  const totalHTML = `
+    <div class="breakdown-row total">
+      <span class="br-label">Net take-home <span class="tag">${effectiveRate}% effective deduction</span></span>
+      <span class="br-value pos">${fmt(net)}</span>
+    </div>
+  `;
+
+  document.getElementById('breakdown-table').innerHTML = rowsHTML + totalHTML;
+}
+
+// ── Rate bars ─────────────────────────────────────────────────────────
+function renderRateBars() {
+  const annual = totalNet();
+  const items = [
+    { name: 'annual net', value: annual, display: fmt(annual), pct: 100 },
+    { name: 'monthly net', value: annual/12, display: fmt(annual/12), pct: (annual/12)/annual*100 },
+    { name: 'weekly net', value: annual/52, display: fmt(annual/52), pct: (annual/52)/annual*100 },
+    { name: 'daily net', value: annual/260, display: fmt(annual/260), pct: (annual/260)/annual*100 },
+    { name: 'hourly net', value: annual/2080, display: fmt(annual/2080, 2), pct: (annual/2080)/annual*100 },
+  ];
+  document.getElementById('rate-bars').innerHTML = items.map(item => `
+    <div class="progress-item">
+      <div class="progress-meta">
+        <span class="progress-name">${item.name}</span>
+        <span class="progress-val">${item.display}</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill ${item.pct < 5 ? 'muted' : ''}" style="width:${Math.max(item.pct, 0.5)}%"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────
+function openModal() { document.getElementById('modal').classList.add('open'); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+
+function addStream() {
+  const name = document.getElementById('inp-name').value.trim();
+  const type = document.getElementById('inp-type').value;
+  const gross = parseFloat(document.getElementById('inp-gross').value);
+  const netRaw = document.getElementById('inp-net').value;
+  const status = document.getElementById('inp-status').value;
+  if (!name || isNaN(gross) || gross <= 0) { alert('Please enter a name and valid gross amount.'); return; }
+  const net = netRaw ? parseFloat(netRaw) : Math.round(gross * 0.75);
+  const id = Date.now();
+  streams.push({ id, name, type, gross, net, status, primary: false });
+  closeModal();
+  ['inp-name','inp-gross','inp-net'].forEach(id => document.getElementById(id).value = '');
+  renderAll();
+}
+
+function removeStream(id) {
+  streams = streams.filter(s => s.id !== id);
+  renderAll();
+}
+
+// ── Footer ────────────────────────────────────────────────────────────
+function renderFooter() {
+  document.getElementById('footer-updated').textContent = 'updated ' + new Date().toLocaleTimeString('en-IE', { hour: '2-digit', minute: '2-digit' });
+}
+
+// ── Render all ────────────────────────────────────────────────────────
+function renderAll() {
+  renderStats();
+  renderSources();
+  renderBreakdown();
+  renderRateBars();
+  renderFooter();
+}
+
+// ── Init ──────────────────────────────────────────────────────────────
+renderAll();
+updateClock();
+
+setInterval(updateTicker, 100);
+setInterval(updateClock, 1000);
+setInterval(renderFooter, 60000);
+</script>
+</body>
+</html>
