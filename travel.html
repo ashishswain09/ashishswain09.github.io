@@ -12,7 +12,7 @@
     --surface:   #161616;
     --border:    rgba(255,255,255,0.07);
     --text:      #f0ede8;
-    --muted:     rgba(240,237,232,0.45);
+    --muted:     rgba(240,237,232,0.45)
     --accent:    #c8a96e;
     --radius:    4px;
     --font-disp: 'Cormorant Garamond', Georgia, serif;
@@ -324,7 +324,7 @@
 <script>
   // 1. Get a free API key at https://console.cloud.google.com
   //    Enable "Google Drive API", create an API key, restrict it to your domain.
-  const GOOGLE_API_KEY = 'YOUR_GOOGLE_API_KEY_HERE';
+  const GOOGLE_API_KEY = 'AIzaSyCAfgyTcZ5RjGbtl_rtMUxHJBd8gBZikjc';
 
   // 2. This is your "Travel" folder ID from Google Drive
   //    (already pre-filled from your Drive)
@@ -353,7 +353,7 @@
 
 <nav>
   <a href="/" class="nav-logo">A<span>.</span>travels</a>
-  <span class="nav-count" id="nav-count">loading…</span>
+  <span class="nav-count" id="nav-count">loading…</span
 </nav>
 
 <div class="hero">
@@ -406,7 +406,7 @@ function showSetupHint() {
         <li>Go to <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a> → New Project</li>
         <li>Enable <strong>Google Drive API</strong></li>
         <li>Create an <strong>API Key</strong> → restrict it to your domain (e.g. <code>yourdomain.com</code>)</li>
-        <li>In this file, replace <code>YOUR_GOOGLE_API_KEY_HERE</code> with your key</li>
+        <li>In this file, replace <code>AIzaSyCAfgyTcZ5RjGbtl_rtMUxHJBd8gBZikjc</code> with your key</li>
         <li>In Google Drive, right-click your <strong>Travel</strong> folder → Share → <strong>Anyone with the link can view</strong></li>
         <li>Repeat for each country subfolder (or share the parent Travel folder — permissions cascade)</li>
         <li>Deploy to Cloudflare Pages — the gallery auto-updates whenever you add photos!</li>
@@ -441,7 +441,7 @@ function driveFullView(fileId) {
 
 // ── Build gallery ─────────────────────────────────────
 async function buildGallery() {
-  if (GOOGLE_API_KEY === 'YOUR_GOOGLE_API_KEY_HERE') {
+  if (GOOGLE_API_KEY === 'AIzaSyCAfgyTcZ5RjGbtl_rtMUxHJBd8gBZikjc') {
     showSetupHint();
     renderDemoMode();
     return;
