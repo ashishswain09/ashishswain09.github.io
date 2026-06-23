@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travels — Ashish</title>
+<style>
+  /* ── CONFIG: swap your API key + folder IDs below ── */
+
+  :root {
+    --bg:        #0e0e0e;
+    --surface:   #161616;
+    --border:    rgba(255,255,255,0.07);
+    --text:      #f0ede8;
+    --muted:     rgba(240,237,232,0.45);
+    --accent:    #c8a96e;
+    --radius:    4px;
+    --font-disp: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Google Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap');
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    height: 56px;
+    background: rgba(14,14,14,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-disp);
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-count {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 140px 2rem 64px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: var(--font-disp);
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 480px;
+    line-height: 1.75;
+  }
+
+  /* ── COUNTRY FILTER TABS ── */
+  .filter-bar {
+    position: sticky; top: 56px; z-index: 90;
+    background: rgba(14,14,14,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .filter-inner {
+    display: flex; gap: 0; white-space: nowrap;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .filter-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 16px 20px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .filter-btn:hover { color: var(--text); }
+  .filter-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── MAIN CONTENT ── */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  /* ── COUNTRY SECTION ── */
+  .country-section {
+    margin-bottom: 4rem;
+    transition: opacity 0.3s;
+  }
+  .country-section.hidden { display: none; }
+
+  .country-header {
+    display: flex; align-items: baseline; gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .country-name {
+    font-family: var(--font-disp);
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+  .country-flag { font-size: 1.4rem; }
+  .country-photo-count {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-left: auto;
+  }
+
+  /* ── SUBFOLDER LABEL ── */
+  .subfolder-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  /* ── PHOTO GRID ── */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 6px;
+  }
+
+  .photo-item {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: var(--surface);
+    border-radius: var(--radius);
+    cursor: pointer;
+    position: relative;
+  }
+  .photo-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.3s;
+    opacity: 0;
+  }
+  .photo-item img.loaded { opacity: 1; }
+  .photo-item:hover img { transform: scale(1.04); }
+  .photo-item .photo-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .photo-item:hover .photo-overlay { opacity: 1; }
+
+  /* ── SKELETON LOADER ── */
+  .skeleton {
+    aspect-ratio: 4/3;
+    background: var(--surface);
+    border-radius: var(--radius);
+    animation: shimmer 1.4s infinite;
+  }
+  @keyframes shimmer {
+    0%   { background-color: #1a1a1a; }
+    50%  { background-color: #222; }
+    100% { background-color: #1a1a1a; }
+  }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    padding: 3rem 0;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── ERROR BANNER ── */
+  .error-banner {
+    background: rgba(200, 60, 60, 0.12);
+    border: 0.5px solid rgba(200,60,60,0.3);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    color: #e88;
+    font-size: 13px;
+    margin-bottom: 2rem;
+    display: none;
+  }
+  .error-banner.visible { display: block; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.95);
+    align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-img-wrap {
+    position: relative;
+    max-width: 90vw; max-height: 85vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox img {
+    max-width: 90vw; max-height: 85vh;
+    object-fit: contain;
+    border-radius: var(--radius);
+    display: block;
+  }
+  .lightbox-close {
+    position: fixed; top: 1.25rem; right: 1.5rem;
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 1.5rem; line-height: 1;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover { color: var(--text); }
+  .lightbox-nav {
+    position: fixed;
+    top: 50%; transform: translateY(-50%);
+    background: none; border: 0.5px solid var(--border);
+    color: var(--muted); cursor: pointer;
+    width: 44px; height: 44px; border-radius: 50%;
+    font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .lightbox-nav:hover { color: var(--text); border-color: rgba(255,255,255,0.3); }
+  .lightbox-prev { left: 1.5rem; }
+  .lightbox-next { right: 1.5rem; }
+  .lightbox-caption {
+    margin-top: 1rem;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  .lightbox-counter {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── SETUP BANNER (shown when API key missing) ── */
+  .setup-banner {
+    background: rgba(200,169,110,0.08);
+    border: 0.5px solid rgba(200,169,110,0.3);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .setup-banner h3 {
+    font-family: var(--font-disp);
+    font-size: 1.1rem; font-weight: 400;
+    color: var(--accent); margin-bottom: 0.75rem;
+  }
+  .setup-banner code {
+    background: rgba(255,255,255,0.06);
+    padding: 2px 6px; border-radius: 3px;
+    font-size: 12px; font-family: monospace;
+    color: var(--text);
+  }
+  .setup-banner ol { padding-left: 1.25rem; color: var(--muted); font-size: 13px; line-height: 2; }
+  .setup-banner ol li { margin-bottom: 0.25rem; }
+  .setup-banner a { color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .hero { padding: 120px 1.25rem 48px; }
+    main { padding: 2rem 1.25rem 5rem; }
+    nav { padding: 0 1.25rem; }
+    .filter-bar { padding: 0 1.25rem; }
+    .photo-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px; }
+    .lightbox-prev { left: 0.5rem; }
+    .lightbox-next { right: 0.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo-item img, .photo-item .photo-overlay, .lightbox-nav { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     CONFIGURATION — edit these two values, nothing else
+     ═══════════════════════════════════════════════════ -->
+<script>
+  // 1. Get a free API key at https://console.cloud.google.com
+  //    Enable "Google Drive API", create an API key, restrict it to your domain.
+  const GOOGLE_API_KEY = 'YOUR_GOOGLE_API_KEY_HERE';
+
+  // 2. This is your "Travel" folder ID from Google Drive
+  //    (already pre-filled from your Drive)
+  const TRAVEL_FOLDER_ID = '10t11U5P9ieBZYjwCEYh4cXc69eKVjdEl';
+
+  // 3. Country flags (add more as you travel!)
+  const COUNTRY_FLAGS = {
+    'Croatia':        '🇭🇷',
+    'France':         '🇫🇷',
+    'Belgium':        '🇧🇪',
+    'Netherland':     '🇳🇱',
+    'Netherlands':    '🇳🇱',
+    'Luxembourg':     '🇱🇺',
+    'Ireland':        '🇮🇪',
+    'United Kingdom': '🇬🇧',
+    'England':        '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    'Scotland':       '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    'India':          '🇮🇳',
+    'Germany':        '🇩🇪',
+    'Italy':          '🇮🇹',
+    'Spain':          '🇪🇸',
+    'Portugal':       '🇵🇹',
+  };
+</script>
+<!-- ═══════════════════════════════════════════════════ -->
+
+<nav>
+  <a href="/" class="nav-logo">A<span>.</span>travels</a>
+  <span class="nav-count" id="nav-count">loading…</span>
+</nav>
+
+<div class="hero">
+  <p class="hero-eyebrow">A visual journal</p>
+  <h1>Places<br>I've been.</h1>
+  <p>Photographs from across Europe and beyond, organised by country. Updated automatically as new photos are added.</p>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-inner" id="filter-bar">
+    <button class="filter-btn active" data-country="all">All</button>
+  </div>
+</div>
+
+<main>
+  <div class="error-banner" id="error-banner"></div>
+  <div id="setup-hint"></div>
+  <div id="gallery"></div>
+</main>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lightbox-close" id="lb-close" aria-label="Close">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lb-prev" aria-label="Previous photo">‹</button>
+  <div class="lightbox-img-wrap">
+    <img id="lb-img" src="" alt="">
+  </div>
+  <button class="lightbox-nav lightbox-next" id="lb-next" aria-label="Next photo">›</button>
+  <p class="lightbox-caption" id="lb-caption"></p>
+  <p class="lightbox-counter" id="lb-counter"></p>
+</div>
+
+<script>
+// ── Globals ──────────────────────────────────────────
+const BASE = 'https://www.googleapis.com/drive/v3';
+const gallery = document.getElementById('gallery');
+const filterBar = document.getElementById('filter-bar');
+const navCount = document.getElementById('nav-count');
+const errorBanner = document.getElementById('error-banner');
+
+let allPhotos = []; // flat list for lightbox navigation
+let lbIndex = 0;
+
+// ── Setup check ──────────────────────────────────────
+function showSetupHint() {
+  document.getElementById('setup-hint').innerHTML = `
+    <div class="setup-banner">
+      <h3>One-time setup needed</h3>
+      <ol>
+        <li>Go to <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a> → New Project</li>
+        <li>Enable <strong>Google Drive API</strong></li>
+        <li>Create an <strong>API Key</strong> → restrict it to your domain (e.g. <code>yourdomain.com</code>)</li>
+        <li>In this file, replace <code>YOUR_GOOGLE_API_KEY_HERE</code> with your key</li>
+        <li>In Google Drive, right-click your <strong>Travel</strong> folder → Share → <strong>Anyone with the link can view</strong></li>
+        <li>Repeat for each country subfolder (or share the parent Travel folder — permissions cascade)</li>
+        <li>Deploy to Cloudflare Pages — the gallery auto-updates whenever you add photos!</li>
+      </ol>
+    </div>`;
+}
+
+// ── Drive API helpers ─────────────────────────────────
+async function driveList(query, fields = 'files(id,name,mimeType,thumbnailLink,webContentLink)') {
+  const params = new URLSearchParams({
+    q: query,
+    fields,
+    pageSize: 1000,
+    key: GOOGLE_API_KEY,
+    supportsAllDrives: true,
+    includeItemsFromAllDrives: true,
+  });
+  const res = await fetch(`${BASE}/files?${params}`);
+  if (!res.ok) throw new Error(`Drive API error ${res.status}: ${await res.text()}`);
+  const data = await res.json();
+  return data.files || [];
+}
+
+function driveThumb(fileId, size = 400) {
+  // Drive serves HEIC as JPEG thumbnails automatically
+  return `https://lh3.googleusercontent.com/d/${fileId}=w${size}`;
+}
+
+function driveFullView(fileId) {
+  return `https://lh3.googleusercontent.com/d/${fileId}=w1600`;
+}
+
+// ── Build gallery ─────────────────────────────────────
+async function buildGallery() {
+  if (GOOGLE_API_KEY === 'YOUR_GOOGLE_API_KEY_HERE') {
+    showSetupHint();
+    renderDemoMode();
+    return;
+  }
+
+  try {
+    // 1. Fetch country folders inside Travel
+    const countryFolders = await driveList(
+      `'${TRAVEL_FOLDER_ID}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`
+    );
+
+    if (!countryFolders.length) {
+      gallery.innerHTML = '<p class="empty-state">No country folders found. Make sure your Travel folder is shared publicly.</p>';
+      return;
+    }
+
+    // Sort alphabetically
+    countryFolders.sort((a, b) => a.name.localeCompare(b.name));
+
+    // 2. Add filter buttons
+    countryFolders.forEach(f => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.dataset.country = f.name;
+      const flag = COUNTRY_FLAGS[f.name] || '📍';
+      btn.textContent = `${flag} ${f.name}`;
+      filterBar.appendChild(btn);
+    });
+
+    // 3. Render each country section
+    let totalPhotos = 0;
+    for (const folder of countryFolders) {
+      const section = await renderCountry(folder);
+      gallery.appendChild(section);
+      const count = section.querySelectorAll('.photo-item').length;
+      totalPhotos += count;
+      // Update count in section header
+      section.querySelector('.country-photo-count').textContent =
+        count ? `${count} photo${count !== 1 ? 's' : ''}` : '';
+    }
+
+    navCount.textContent = `${totalPhotos} photo${totalPhotos !== 1 ? 's' : ''} · ${countryFolders.length} countr${countryFolders.length !== 1 ? 'ies' : 'y'}`;
+
+    // 4. Wire filter buttons
+    filterBar.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.country;
+        document.querySelectorAll('.country-section').forEach(sec => {
+          sec.classList.toggle('hidden', target !== 'all' && sec.dataset.country !== target);
+        });
+      });
+    });
+
+  } catch (err) {
+    console.error(err);
+    errorBanner.textContent = `Could not load photos: ${err.message}. Check your API key and folder sharing settings.`;
+    errorBanner.classList.add('visible');
+    navCount.textContent = 'error';
+  }
+}
+
+async function renderCountry(folder) {
+  const section = document.createElement('div');
+  section.className = 'country-section';
+  section.dataset.country = folder.name;
+
+  const flag = COUNTRY_FLAGS[folder.name] || '📍';
+  section.innerHTML = `
+    <div class="country-header">
+      <span class="country-flag">${flag}</span>
+      <h2 class="country-name">${folder.name}</h2>
+      <span class="country-photo-count"></span>
+    </div>`;
+
+  // Check for subfolders first
+  const subfolders = await driveList(
+    `'${folder.id}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`
+  );
+
+  if (subfolders.length) {
+    // Render by subfolder (e.g. Croatia → Dubrovnik)
+    for (const sub of subfolders) {
+      const label = document.createElement('p');
+      label.className = 'subfolder-label';
+      label.textContent = sub.name;
+      section.appendChild(label);
+      const grid = await renderPhotoGrid(sub.id, folder.name, sub.name);
+      section.appendChild(grid);
+    }
+    // Also check for loose photos directly in country folder
+    const loosePhotos = await fetchPhotos(folder.id);
+    if (loosePhotos.length) {
+      const grid = renderGrid(loosePhotos, folder.name, '');
+      section.appendChild(grid);
+    }
+  } else {
+    // Photos directly in country folder
+    const grid = await renderPhotoGrid(folder.id, folder.name, '');
+    section.appendChild(grid);
+  }
+
+  return section;
+}
+
+async function renderPhotoGrid(folderId, countryName, subfolderName) {
+  const photos = await fetchPhotos(folderId);
+  return renderGrid(photos, countryName, subfolderName);
+}
+
+function renderGrid(photos, countryName, subfolderName) {
+  const grid = document.createElement('div');
+  grid.className = 'photo-grid';
+
+  if (!photos.length) {
+    const empty = document.createElement('p');
+    empty.className = 'empty-state';
+    empty.textContent = 'No photos yet — add some to this Drive folder and they'll appear here.';
+    return empty;
+  }
+
+  photos.forEach((photo, i) => {
+    const item = document.createElement('div');
+    item.className = 'photo-item';
+    item.setAttribute('role', 'button');
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('aria-label', `View photo ${photo.name}`);
+
+    const img = document.createElement('img');
+    img.src = driveThumb(photo.id, 400);
+    img.alt = photo.name;
+    img.loading = 'lazy';
+    img.onload = () => img.classList.add('loaded');
+    img.onerror = () => { img.src = ''; item.style.background = '#1e1e1e'; };
+
+    const overlay = document.createElement('div');
+    overlay.className = 'photo-overlay';
+
+    item.appendChild(img);
+    item.appendChild(overlay);
+    grid.appendChild(item);
+
+    // Register in global photo list for lightbox
+    const globalIndex = allPhotos.length;
+    allPhotos.push({ id: photo.id, name: photo.name, country: countryName, subfolder: subfolderName });
+
+    item.addEventListener('click', () => openLightbox(globalIndex));
+    item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openLightbox(globalIndex); });
+  });
+
+  return grid;
+}
+
+async function fetchPhotos(folderId) {
+  return driveList(
+    `'${folderId}' in parents and mimeType contains 'image/' and trashed = false`,
+    'files(id,name,mimeType)'
+  );
+}
+
+// ── Lightbox ──────────────────────────────────────────
+function openLightbox(index) {
+  lbIndex = index;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function updateLightbox() {
+  const photo = allPhotos[lbIndex];
+  const img = document.getElementById('lb-img');
+  img.src = driveFullView(photo.id);
+  img.alt = photo.name;
+  const caption = photo.subfolder ? `${photo.country} — ${photo.subfolder}` : photo.country;
+  document.getElementById('lb-caption').textContent = caption;
+  document.getElementById('lb-counter').textContent = `${lbIndex + 1} / ${allPhotos.length}`;
+}
+
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lb-prev').addEventListener('click', () => {
+  lbIndex = (lbIndex - 1 + allPhotos.length) % allPhotos.length;
+  updateLightbox();
+});
+document.getElementById('lb-next').addEventListener('click', () => {
+  lbIndex = (lbIndex + 1) % allPhotos.length;
+  updateLightbox();
+});
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeLightbox();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') { lbIndex = (lbIndex - 1 + allPhotos.length) % allPhotos.length; updateLightbox(); }
+  if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % allPhotos.length; updateLightbox(); }
+});
+
+// ── Demo mode (API key not set yet) ──────────────────
+function renderDemoMode() {
+  const countries = [
+    { name: 'Croatia', flag: '🇭🇷', count: 12 },
+    { name: 'France', flag: '🇫🇷', count: 0 },
+    { name: 'Belgium', flag: '🇧🇪', count: 0 },
+    { name: 'Netherlands', flag: '🇳🇱', count: 0 },
+    { name: 'Luxembourg', flag: '🇱🇺', count: 0 },
+    { name: 'Ireland', flag: '🇮🇪', count: 0 },
+    { name: 'United Kingdom', flag: '🇬🇧', count: 0 },
+  ];
+
+  // Filter buttons
+  countries.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.country = c.name;
+    btn.textContent = `${c.flag} ${c.name}`;
+    filterBar.appendChild(btn);
+  });
+
+  navCount.textContent = 'demo mode — add API key to load real photos';
+
+  countries.forEach(c => {
+    const section = document.createElement('div');
+    section.className = 'country-section';
+    section.dataset.country = c.name;
+    section.innerHTML = `
+      <div class="country-header">
+        <span class="country-flag">${c.flag}</span>
+        <h2 class="country-name">${c.name}</h2>
+        <span class="country-photo-count">${c.count ? c.count + ' photos' : ''}</span>
+      </div>`;
+    const grid = document.createElement('div');
+    grid.className = 'photo-grid';
+    const count = c.count || 4;
+    for (let i = 0; i < count; i++) {
+      const skel = document.createElement('div');
+      skel.className = 'skeleton';
+      grid.appendChild(skel);
+    }
+    section.appendChild(grid);
+    gallery.appendChild(section);
+  });
+
+  // Wire filters
+  filterBar.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.dataset.country;
+      document.querySelectorAll('.country-section').forEach(sec => {
+        sec.classList.toggle('hidden', target !== 'all' && sec.dataset.country !== target);
+      });
+    });
+  });
+}
+
+// ── Kick off ──────────────────────────────────────────
+buildGallery();
+</script>
+</body>
+</html>
