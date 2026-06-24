@@ -526,12 +526,34 @@ async function renderCountry(folder) {
   if (subfolders.length) {
     // Render by subfolder (e.g. Croatia → Dubrovnik)
     for (const sub of subfolders) {
-      const label = document.createElement('p');
-      label.className = 'subfolder-label';
-      label.textContent = sub.name;
-      section.appendChild(label);
-      const grid = await renderPhotoGrid(sub.id, folder.name, sub.name);
-      section.appendChild(grid);
+      // Check if this subfolder has its own subfolders (3-level nesting, e.g. UK > Scotland > Glasgow)
+      const subSubs = await driveList(
+        `'${sub.id}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`
+      );
+      if (subSubs.length) {
+        // 3-level: Country > Region (sub) > City (subSub)
+        const regionLabel = document.createElement('p');
+        regionLabel.className = 'subfolder-label';
+        regionLabel.textContent = sub.name;
+        section.appendChild(regionLabel);
+        for (const subSub of subSubs) {
+          const cityLabel = document.createElement('p');
+          cityLabel.className = 'subfolder-label';
+          cityLabel.style.cssText = 'padding-left:1.5rem;font-size:10px;opacity:0.7';
+          cityLabel.textContent = subSub.name;
+          section.appendChild(cityLabel);
+          const cityGrid = await renderPhotoGrid(subSub.id, folder.name, subSub.name);
+          section.appendChild(cityGrid);
+        }
+      } else {
+        // 2-level: Country > City (sub) - original behaviour
+        const label = document.createElement('p');
+        label.className = 'subfolder-label';
+        label.textContent = sub.name;
+        section.appendChild(label);
+        const grid = await renderPhotoGrid(sub.id, folder.name, sub.name);
+        section.appendChild(grid);
+      }
     }
     // Also check for loose photos directly in country folder
     const loosePhotos = await fetchPhotos(folder.id);
