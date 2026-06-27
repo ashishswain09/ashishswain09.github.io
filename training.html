@@ -372,7 +372,7 @@ const MACRO_PHASES=[
   {label:'Cyc P5',  cal:2025,protein:180,carbs:225,fats:45,start:88, color:'#2ecc71'},
   {label:'Rev D P1',cal:2270,protein:180,carbs:275,fats:50,start:100,color:'#9b59b6'},
   {label:'Rev D P2',cal:2320,protein:180,carbs:287,fats:50,start:115,color:'#8e44ad'},
-  {label:'Rev D P3',cal:2370,protein:180,carbs:300,fats:50,start:130,color:'#c8a96e'},
+  {label:'Rev D P3',cal:2570,calRest:2170,protein:180,carbs:350,carbsRest:250,fats:50,start:130,color:'#c8a96e'},
 ];
 const DIET_SCORES=[4,4,3.5,2.5,3.5,3.5,2.5,4,4,2,1.5,1.5,2.5,4,4,4,3.5,4,3.5,3.5,5,5,5,5,5,2.5,4,4,4,1.5,4,4,4,4,4,3.5,3.5,4,4,2.5,1.5,2.5,4,3.5,3.5,3.5,3.5,3.5,4,4,4,4,1.5,2.5,3.5,3.5,3.5,4,3.5,3.5,3.5,4,2.5,4,4,4,4,1.5,3.5,3.5,3.5,2.5,3.5,4,4,4,4,3.5,4,4,4,4,4,5,5,5,1.5,1.5,2.5,5,5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,4,4,4,1.5,4,4,5,4,4,2.5,4,1.5,1.5,2.5,2.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,1.5,1.5,3.5,3.5,3.5,3.5,4,4,3.5,3.5,3.5,3.5,3.5,3.5,5,5,5,5,1.5,4,3.5,3.5,3.5];
 const GYM_SCORES=[4,2,3.5,4,4,3,4.5,4,4,4,4,4,3,5,4,4,5,4,4,4,4.5,4,4,4,4,4,4,4,4,5,4,4,4,4,3,4,4,5,3,4,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4.5,4,4,4,4,4,4,4,4.5,4,4,4,4,4,4,4,4,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1.5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1.5,4,4,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4];
@@ -451,8 +451,7 @@ function renderOverview() {
     <div class="card"><div class="card-lbl">Current Weight</div><div class="card-val accent">${curr}</div><div class="card-sub">lbs · check-in #${W.length}</div></div>
     <div class="card"><div class="card-lbl">Total Change</div><div class="card-val ${curr>start?'green':'red'}">${curr>start?'+':''}${(curr-start).toFixed(1)}</div><div class="card-sub">lbs from CI #1</div></div>
     <div class="card"><div class="card-lbl">Peak (Bulk)</div><div class="card-val">${peak}</div><div class="card-sub">lbs — CI #${W.indexOf(peak)+1}</div></div>
-    <div class="card"><div class="card-lbl">Current Cals</div><div class="card-val accent">${cp.cal}</div><div class="card-sub">${cp.label}</div></div>
-    <div class="card"><div class="card-lbl">Diet Score</div><div class="card-val">${dietAvg}</div><div class="card-sub">${onTrack}/${W.length} on track</div></div>
+    <div class="card"><div class="card-lbl">Current Cals</div><div class="card-val accent">${cp.cal}</div><div class="${cp.cal}${cp.calRest ? ' / ' + cp.calRest : ''}</div><div class="card-sub">${cp.calRest ? 'Train / Rest' : cp.label}</div></div> class="card-lbl">Diet Score</div><div class="card-val">${dietAvg}</div><div class="card-sub">${onTrack}/${W.length} on track</div></div>
     <div class="card"><div class="card-lbl">Gym Score</div><div class="card-val green">${gymAvg}</div><div class="card-sub">avg / 5.0</div></div>
   `;
 
@@ -487,12 +486,14 @@ function renderOverview() {
 
   // Macro bars
   const mp = MACRO_PHASES[MACRO_PHASES.length-1];
-  document.getElementById('ov-macros').innerHTML = `
-    <div class="mbar"><div class="mbar-lbl">Calories (train)</div><div class="mbar-wrap"><div class="mbar-fill" style="width:100%;background:#c8a96e;height:2px;border-radius:1px"></div></div><div class="mbar-val" style="color:#c8a96e">${mp.cal}</div></div>
-    <div class="mbar"><div class="mbar-lbl">Protein</div><div class="mbar-wrap"><div class="mbar-fill" style="width:${mp.protein/2.2}%;background:#4caf7d;height:2px;border-radius:1px"></div></div><div class="mbar-val" style="color:#4caf7d">${mp.protein}g</div></div>
-    <div class="mbar"><div class="mbar-lbl">Carbs</div><div class="mbar-wrap"><div class="mbar-fill" style="width:${mp.carbs/3.5}%;background:#6b9fd4;height:2px;border-radius:1px"></div></div><div class="mbar-val" style="color:#6b9fd4">${mp.carbs}g</div></div>
-    <div class="mbar"><div class="mbar-lbl">Fats</div><div class="mbar-wrap"><div class="mbar-fill" style="width:${mp.fats}%;background:#d4956b;height:2px;border-radius:1px"></div></div><div class="mbar-val" style="color:#d4956b">${mp.fats}g</div></div>
-  `;
+document.getElementById('ov-macros').innerHTML = `
+    <div class="mbar"><div class="mbar-lbl">Calories (train)</div><div class="mbar-wrap"><div class="mbar-fill" style="width:${mp.cal/30}%;background:var(--accent)"></div></div><div class="mbar-val">${mp.cal}</div></div>
+    ${mp.calRest ? `<div class="mbar"><div class="mbar-lbl">Calories (rest)</div><div class="mbar-wrap"><div class="mbar-fill" style="width:${mp.calRest/30}%;background:var(--blue)"></div></div><div class="mbar-val">${mp.calRest}</div></div>` : ''}
+    <div class="mbar"><div class="mbar-lbl">Protein</div><div class="mbar-wrap"><div class="mbar-fill" style="width:${mp.protein/2}%;background:var(--green)"></div></div><div class="mbar-val">${mp.protein}g</div></div>
+    <div class="mbar"><div class="mbar-lbl">Carbs (train)</div><div class="mbar-wrap"><div class="mbar-fill" style="width:${mp.carbs/4}%;background:var(--accent)"></div></div><div class="mbar-val">${mp.carbs}g</div></div>
+    ${mp.carbsRest ? `<div class="mbar"><div class="mbar-lbl">Carbs (rest)</div><div class="mbar-wrap"><div class="mbar-fill" style="width:${mp.carbsRest/4}%;background:var(--blue)"></div></div><div class="mbar-val">${mp.carbsRest}g</div></div>` : ''}
+    <div class="mbar"><div class="mbar-lbl">Fats</div><div class="mbar-wrap"><div class="mbar-fill" style="width:${mp.fats}%;background:var(--orange)"></div></div><div class="mbar-val">${mp.fats}g</div></div>
+`;
 
   document.getElementById('ov-load').style.display='none';
   document.getElementById('ov-body').style.display='block';
