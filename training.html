@@ -391,20 +391,21 @@ async function fetchLiveWeights() {
     const raw = await res.text();
     // Strip JSONP wrapper
     const json = JSON.parse(raw.replace(/^[^(]*\(/, '').replace(/\);?\s*$/, ''));
-    // Find the row of weights (numbers between 100–300)
-    const nums = [];
-    for (const row of json.table.rows) {
-      for (const cell of (row.c || [])) {
-        if (cell && cell.v !== null && cell.v !== undefined) {
-          const val = parseFloat(cell.v); if (!isNaN(val) && val > 0 && val < 300) nums.push(val);
+        // Body weights are in row index 42 (sheet row 43), spread across columns (one per check-in)
+        const weightRow = json.table.rows[42];
+        const nums = [];
+        if (weightRow) {
+          for (const cell of (weightRow.c || [])) {
+            if (cell && cell.v !== null && cell.v !== undefined) {
+              const val = parseFloat(cell.v);
+              if (!isNaN(val) && val > 100 && val < 300) nums.push(val);
+            }
+          }
         }
-      }
-      if (nums.length > 10) break;
-    }
-    if (nums.length > 10) {
-      liveWeights = nums;
-      return true;
-    }
+        if (nums.length > 0) {
+          liveWeights = nums;
+          return true;
+        }}
   } catch(e) {}
   return false;
 }
