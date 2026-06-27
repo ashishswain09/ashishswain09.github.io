@@ -451,7 +451,7 @@ function renderOverview() {
     <div class="card"><div class="card-lbl">Current Weight</div><div class="card-val accent">${curr}</div><div class="card-sub">lbs · check-in #${W.length}</div></div>
     <div class="card"><div class="card-lbl">Total Change</div><div class="card-val ${curr>start?'green':'red'}">${curr>start?'+':''}${(curr-start).toFixed(1)}</div><div class="card-sub">lbs from CI #1</div></div>
     <div class="card"><div class="card-lbl">Peak (Bulk)</div><div class="card-val">${peak}</div><div class="card-sub">lbs — CI #${W.indexOf(peak)+1}</div></div>
-    <div class="card"><div class="card-lbl">Current Cals</div><div class="card-val accent">${cp.cal}</div><div class="${cp.cal}${cp.calRest ? ' / ' + cp.calRest : ''}</div><div class="card-sub">${cp.calRest ? 'Train / Rest' : cp.label}</div></div> class="card-lbl">Diet Score</div><div class="card-val">${dietAvg}</div><div class="card-sub">${onTrack}/${W.length} on track</div></div>
+    <div class="card"><div class="card-lbl">Current Cals</div><div class="card-val accent">${cp.cal}${cp.calRest ? ' / ' + cp.calRest : ''}</div><div class="card-sub">${cp.calRest ? 'Train / Rest' : cp.label}</div></div> class="card-lbl">Diet Score</div><div class="card-val">${dietAvg}</div><div class="card-sub">${onTrack}/${W.length} on track</div></div>
     <div class="card"><div class="card-lbl">Gym Score</div><div class="card-val green">${gymAvg}</div><div class="card-sub">avg / 5.0</div></div>
   `;
 
