@@ -395,8 +395,8 @@ async function fetchLiveWeights() {
     const nums = [];
     for (const row of json.table.rows) {
       for (const cell of (row.c || [])) {
-        if (cell && typeof cell.v === 'number' && cell.v > 100 && cell.v < 300) {
-          nums.push(cell.v);
+        if (cell && cell.v !== null && cell.v !== undefined) {
+          const val = parseFloat(cell.v); if (!isNaN(val) && val > 0 && val < 300) nums.push(val);
         }
       }
       if (nums.length > 10) break;
