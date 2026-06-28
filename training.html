@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Training — Ashish Kumar Swain</title>
-<meta name="description" content="360° training dashboard — weight, nutrition, and strength tracking.">
+<title>Training â Ashish Kumar Swain</title>
+<meta name="description" content="360Â° training dashboard â weight, nutrition, and strength tracking.">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400;500&display=swap');
@@ -29,7 +29,7 @@
 html, body { min-height: 100%; }
 body { background: var(--bg); color: var(--text); font-family: var(--font-b); font-weight: 300; font-size: 13px; }
 
-/* ── HEADER ── */
+/* ââ HEADER ââ */
 .site-header {
   max-width: 860px; margin: 0 auto; padding: 2rem 2.5rem 0;
   display: flex; align-items: center; justify-content: space-between;
@@ -43,13 +43,13 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-b); fo
 .live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
 
-/* ── PAGE TITLE ── */
+/* ââ PAGE TITLE ââ */
 .page-title-wrap { max-width: 860px; margin: 0 auto; padding: 1.75rem 2.5rem 0; }
 .page-title { font-family: var(--font-d); font-size: clamp(2rem,5vw,3rem); font-weight: 300; letter-spacing: -.01em; line-height: 1; }
 .page-title span { color: var(--accent); }
 .page-sub { font-size: 11px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-top: .5rem; }
 
-/* ── NAV ── */
+/* ââ NAV ââ */
 .dash-nav { max-width: 860px; margin: 2rem auto 0; padding: 0 2.5rem; display: flex; gap: 0; border-bottom: .5px solid var(--border); overflow-x: auto; }
 .tab-btn {
   padding: .65rem 1rem; font-size: 11px; font-weight: 400; letter-spacing: .08em; text-transform: uppercase;
@@ -59,12 +59,12 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-b); fo
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 .tab-btn:hover:not(.active) { color: var(--text); }
 
-/* ── CONTENT ── */
+/* ââ CONTENT ââ */
 .dash-content { max-width: 860px; margin: 0 auto; padding: 1.5rem 2.5rem 4rem; }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
-/* ── STAT CARDS ── */
+/* ââ STAT CARDS ââ */
 .cards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--border); border: .5px solid var(--border); border-radius: 2px; margin-bottom: 1.75rem; overflow: hidden; }
 .card { background: var(--bg2); padding: 1.1rem 1.25rem; }
 .card-lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .4rem; }
@@ -74,12 +74,12 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-b); fo
 .card-val.red { color: var(--red); }
 .card-sub { font-size: 10px; color: var(--muted); margin-top: .3rem; }
 
-/* ── SECTIONS ── */
+/* ââ SECTIONS ââ */
 .sec { margin-bottom: 2rem; }
 .sec-title { font-size: 10px; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: .5px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 .sec-title span { font-size: 9px; color: rgba(240,237,232,.2); letter-spacing: .08em; }
 
-/* ── CHARTS ── */
+/* ââ CHARTS ââ */
 .ch { position: relative; }
 .ch-xl { height: 220px; }
 .ch-lg { height: 175px; }
@@ -87,7 +87,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-b); fo
 .ch-sm { height: 115px; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 
-/* ── EXERCISE ROWS ── */
+/* ââ EXERCISE ROWS ââ */
 .ex-row { display: flex; align-items: center; gap: .7rem; padding: .65rem .8rem; border-bottom: .5px solid var(--border); }
 .ex-row:first-child { border-top: .5px solid var(--border); }
 .ex-name { flex: 1; font-size: 12px; }
@@ -104,7 +104,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-b); fo
 .pbar { flex: 1; height: 2px; background: var(--border); border-radius: 1px; min-width: 30px; }
 .pbar-f { height: 2px; border-radius: 1px; }
 
-/* ── SUGGESTIONS ── */
+/* ââ SUGGESTIONS ââ */
 .sug { border: .5px solid var(--border); border-radius: 2px; padding: .85rem 1rem; margin-bottom: .75rem; }
 .sug.good { border-color: rgba(76,175,125,.25); background: rgba(76,175,125,.04); }
 .sug.warn { border-color: rgba(212,149,107,.25); background: rgba(212,149,107,.04); }
@@ -112,52 +112,52 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-b); fo
 .sug-title { font-size: 11px; font-weight: 500; margin-bottom: .3rem; color: var(--text); }
 .sug-body { font-size: 11px; color: var(--muted); line-height: 1.65; }
 
-/* ── MINI BARS ── */
+/* ââ MINI BARS ââ */
 .mbar { display: flex; align-items: center; gap: .7rem; margin-bottom: .6rem; }
 .mbar-lbl { font-size: 10px; color: var(--muted); width: 100px; }
 .mbar-wrap { flex: 1; height: 2px; background: var(--border); border-radius: 1px; }
 .mbar-fill { height: 2px; border-radius: 1px; }
 .mbar-val { font-size: 10px; font-weight: 500; width: 40px; text-align: right; }
 
-/* ── TABLE ── */
+/* ââ TABLE ââ */
 .wtbl { width: 100%; border-collapse: collapse; font-size: 11px; }
 .wtbl th { text-align: left; padding: .4rem .5rem; color: var(--muted); font-weight: 400; font-size: 9px; text-transform: uppercase; letter-spacing: .08em; border-bottom: .5px solid var(--border); }
 .wtbl td { padding: .55rem .5rem; border-bottom: .5px solid rgba(240,237,232,.04); color: var(--muted); }
 .wtbl tr:hover td { background: rgba(255,255,255,.02); }
 .wtbl td:first-child { color: var(--text); }
 
-/* ── PHASE LEGEND ── */
+/* ââ PHASE LEGEND ââ */
 .phase-legend { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 .pdot { display: flex; align-items: center; gap: .3rem; font-size: 9px; color: var(--muted); }
 .pdot-col { width: 8px; height: 8px; border-radius: 1px; }
 
-/* ── STAT BOX ── */
+/* ââ STAT BOX ââ */
 .stat-trio { display: flex; gap: 1px; background: var(--border); border: .5px solid var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 1rem; }
 .stat-box { flex: 1; background: var(--bg2); padding: .85rem 1rem; text-align: center; }
 .stat-box .val { font-family: var(--font-d); font-size: 1.75rem; font-weight: 300; color: var(--text); line-height: 1; }
 .stat-box .lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: .25rem; }
 
-/* ── FILTER ── */
+/* ââ FILTER ââ */
 .filter-row { display: flex; gap: .4rem; margin-bottom: 1rem; flex-wrap: wrap; }
 .filter-btn { padding: .35rem .75rem; background: none; border: .5px solid var(--border); border-radius: 2px; color: var(--muted); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: all .15s; }
 .filter-btn.active { border-color: var(--accent); color: var(--accent); }
 .filter-btn:hover:not(.active) { border-color: rgba(240,237,232,.2); color: var(--text); }
 
-/* ── SELECT ── */
+/* ââ SELECT ââ */
 select { font-size: 11px; padding: .35rem .6rem; background: var(--bg2); border: .5px solid var(--border); border-radius: 2px; color: var(--muted); margin-bottom: .75rem; font-family: var(--font-b); cursor: pointer; }
 select:focus { outline: none; border-color: var(--accent); }
 option { background: var(--bg2); }
 
-/* ── LOADING ── */
+/* ââ LOADING ââ */
 .loading { display: flex; align-items: center; gap: .6rem; color: var(--muted); font-size: 11px; padding: 1.5rem 0; letter-spacing: .04em; }
 .spinner { width: 12px; height: 12px; border: 1.5px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: sp .7s linear infinite; }
 @keyframes sp { to { transform: rotate(360deg); } }
 .load-note { font-size: 10px; color: var(--muted); margin-top: .4rem; opacity: .6; }
 
-/* ── CURSOR ── */
+/* ââ CURSOR ââ */
 .cursor { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 999; opacity: 0; transform: translate(-50%,-50%); transition: opacity .3s; }
 
-/* ── RESPONSIVE ── */
+/* ââ RESPONSIVE ââ */
 @media (max-width: 600px) {
   .site-header, .page-title-wrap, .dash-nav, .dash-content { padding-left: 1.25rem; padding-right: 1.25rem; }
   .grid2 { grid-template-columns: 1fr; }
@@ -170,13 +170,13 @@ option { background: var(--bg2); }
 <div class="cursor" id="cursor"></div>
 
 <header class="site-header">
-  <a class="back" href="/">← Ashish Kumar Swain</a>
+  <a class="back" href="/">â Ashish Kumar Swain</a>
   <div class="live-pill"><div class="live-dot"></div> Live data</div>
 </header>
 
 <div class="page-title-wrap">
   <h1 class="page-title">Training<span>.</span></h1>
-  <p class="page-sub" id="page-sub">Loading · Block 22 · Pete Coaching</p>
+  <p class="page-sub" id="page-sub">Loading Â· Block 22 Â· Pete Coaching</p>
 </div>
 
 <nav class="dash-nav" aria-label="Dashboard sections">
@@ -184,16 +184,17 @@ option { background: var(--bg2); }
   <button class="tab-btn" onclick="showTab('bodyweight',this)">Body Weight</button>
   <button class="tab-btn" onclick="showTab('nutrition',this)">Nutrition</button>
   <button class="tab-btn" onclick="showTab('training',this)">Training</button>
-  <button class="tab-btn" onclick="showTab('correlation',this)">Diet × Gym</button>
+  <button class="tab-btn" onclick="showTab('correlation',this)">Diet Ã Gym</button>
   <button class="tab-btn" onclick="showTab('insights',this)">Insights</button>
+  <button class="tab-btn" onclick="showTab('progression',this)">Progression</button>
 </nav>
 
 <div class="dash-content">
 
 <!-- OVERVIEW -->
 <div id="tab-overview" class="tab-panel active">
-  <div id="ov-load" class="loading"><div class="spinner"></div>Fetching latest check-in data…</div>
-  <p class="load-note" id="ov-note" style="display:none">⚠️ Live fetch failed — showing last known data. Make sure the Google Sheet is set to <strong>Anyone with the link → Viewer</strong>.</p>
+  <div id="ov-load" class="loading"><div class="spinner"></div>Fetching latest check-in dataâ¦</div>
+  <p class="load-note" id="ov-note" style="display:none">â ï¸ Live fetch failed â showing last known data. Make sure the Google Sheet is set to <strong>Anyone with the link â Viewer</strong>.</p>
   <div id="ov-body" style="display:none">
     <div class="cards" id="ov-cards"></div>
     <div class="sec">
@@ -202,7 +203,7 @@ option { background: var(--bg2); }
     </div>
     <div class="grid2">
       <div class="sec">
-        <div class="sec-title">Top gainers — Block 22</div>
+        <div class="sec-title">Top gainers â Block 22</div>
         <div id="ov-gainers"></div>
       </div>
       <div class="sec">
@@ -243,7 +244,7 @@ option { background: var(--bg2); }
 <!-- NUTRITION -->
 <div id="tab-nutrition" class="tab-panel">
   <div class="sec">
-    <div class="sec-title">Calorie evolution — 12 phases over 142 weeks</div>
+    <div class="sec-title">Calorie evolution â 12 phases over 142 weeks</div>
     <div class="ch ch-lg"><canvas id="ch-cal"></canvas></div>
   </div>
   <div class="sec">
@@ -251,7 +252,7 @@ option { background: var(--bg2); }
     <div class="ch ch-lg"><canvas id="ch-mac"></canvas></div>
   </div>
   <div class="sec">
-    <div class="sec-title">Diet compliance — weekly score</div>
+    <div class="sec-title">Diet compliance â weekly score</div>
     <div class="ch ch-lg"><canvas id="ch-diet"></canvas></div>
   </div>
   <div class="sec">
@@ -263,7 +264,7 @@ option { background: var(--bg2); }
 <!-- TRAINING -->
 <div id="tab-training" class="tab-panel">
   <div class="sec">
-    <div class="sec-title">Block 22 — exercise progress <span>W1 → W11</span></div>
+    <div class="sec-title">Block 22 â exercise progress <span>W1 â W11</span></div>
     <div class="filter-row">
       <button class="filter-btn active" onclick="filterM('All',this)">All</button>
       <button class="filter-btn" onclick="filterM('Push',this)">Push</button>
@@ -302,11 +303,11 @@ option { background: var(--bg2); }
     <div class="stat-trio" id="corr-stats"></div>
     <div class="grid2">
       <div>
-        <div class="sec-title" style="margin-top:.5rem">When diet ✓ on track</div>
+        <div class="sec-title" style="margin-top:.5rem">When diet â on track</div>
         <div class="ch ch-sm"><canvas id="ch-on"></canvas></div>
       </div>
       <div>
-        <div class="sec-title" style="margin-top:.5rem">When diet ✗ off track</div>
+        <div class="sec-title" style="margin-top:.5rem">When diet â off track</div>
         <div class="ch ch-sm"><canvas id="ch-off"></canvas></div>
       </div>
     </div>
@@ -329,10 +330,33 @@ option { background: var(--bg2); }
   </div>
 </div>
 
-</div><!-- /dash-content -->
+
+
+  <!-- PROGRESSION -->
+  <div id="tab-progression" class="tab-panel">
+    <div class="sec">
+      <div class="sec-title">Body weight arc — B1 → B22 <span>avg per block · Pete coaching</span></div>
+      <div class="ch ch-xl"><canvas id="ch-prog-bw"></canvas></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">Block summary <span>2023 → present</span></div>
+      <div id="prog-block-table"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">Key lift progression <span>peak load per block</span></div>
+      <div class="filter-row" style="margin-bottom:.75rem">
+        <select id="prog-lift-pick" onchange="updateProgLift()" style="background:var(--bg3);color:var(--text);border:.5px solid var(--border);padding:.4rem .75rem;font-size:11px;border-radius:2px;font-family:var(--font-b)"><option>Hack Squat</option><option>Wide Grip Pulldown</option><option>Incline DB Press</option><option>Single Arm Machine Row</option><option>Hamstring Curls</option><option>Dumbbell Shoulder Press</option><option>Leg Extensions</option><option>V Bar Tricep Pressdown</option><option>Straight Bar Cable Curl</option></select>
+      </div>
+      <div class="ch ch-xl"><canvas id="ch-prog-lift"></canvas></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">Progression insights <span>lead &amp; lag lifts across all blocks</span></div>
+      <div id="prog-insights"></div>
+    </div>
+  </div></div><!-- /dash-content -->
 
 <script>
-// ══ DATA ══
+// ââ DATA ââ
 const WEEKS_B22=['W1','W2','W3','W4','W5','W6','W7','W8 Deload','W9','W10','W11','W12'];
 const EXERCISES=[
   {name:'Incline DB Press',         day:'Day 1',muscle:'Push',weights:[26,26,27.5,27.5,28,28,28,20,28,28,28,null]},
@@ -380,8 +404,8 @@ const FALLBACK_WEIGHTS=[164.2,166,165.4,164.4,167.4,163.6,167.2,166,167,167.2,16
 
 let liveWeights = FALLBACK_WEIGHTS;
 
-// ══ LIVE FETCH from Google Sheets (GViz JSON API) ══
-// Sheet must be shared publicly (Anyone with link → Viewer)
+// ââ LIVE FETCH from Google Sheets (GViz JSON API) ââ
+// Sheet must be shared publicly (Anyone with link â Viewer)
 const SHEET_ID = '1zPf2Vd2lXfSBdrJ04-H_GaolQ6SUiSARiGPrNHgF63k';
 
 async function fetchLiveWeights() {
@@ -410,7 +434,7 @@ async function fetchLiveWeights() {
   return false;
 }
 
-// ══ HELPERS ══
+// ââ HELPERS ââ
 function getExStats(ex) {
   const f = ex.weights.filter(w => w !== null);
   const nd = ex.weights.filter((w,i) => w !== null && i !== 7);
@@ -425,7 +449,7 @@ function phaseFor(i) {
   return p;
 }
 
-// ══ CHART DEFAULTS ══
+// ââ CHART DEFAULTS ââ
 const charts = {};
 function mk(id, cfg) {
   if (charts[id]) charts[id].destroy();
@@ -435,7 +459,7 @@ const darkGrid = { color: 'rgba(240,237,232,0.04)' };
 const darkTick = { font: { size: 9 }, color: 'rgba(240,237,232,0.35)' };
 const baseScale = { x: { grid: { display:false }, ticks: { ...darkTick, maxTicksLimit:14 } }, y: { grid: darkGrid, ticks: darkTick } };
 
-// ══ OVERVIEW ══
+// ââ OVERVIEW ââ
 function renderOverview() {
   const W = liveWeights;
   const curr = W[W.length-1], start = W[0], peak = Math.max(...W), low = Math.min(...W);
@@ -444,13 +468,13 @@ function renderOverview() {
   const onTrack = DIET_SCORES.filter(s=>s>=3.5).length;
   const cp = phaseFor(W.length-1);
 
-  document.getElementById('page-sub').textContent = `CI #${W.length} · ${curr} lbs · ${cp.label} · Block 22 · Pete Coaching`;
-  document.getElementById('ov-span').textContent = `CI #1 → #${W.length}`;
+  document.getElementById('page-sub').textContent = `CI #${W.length} Â· ${curr} lbs Â· ${cp.label} Â· Block 22 Â· Pete Coaching`;
+  document.getElementById('ov-span').textContent = `CI #1 â #${W.length}`;
 
   document.getElementById('ov-cards').innerHTML = `
-    <div class="card"><div class="card-lbl">Current Weight</div><div class="card-val accent">${curr}</div><div class="card-sub">lbs · check-in #${W.length}</div></div>
+    <div class="card"><div class="card-lbl">Current Weight</div><div class="card-val accent">${curr}</div><div class="card-sub">lbs Â· check-in #${W.length}</div></div>
     <div class="card"><div class="card-lbl">Total Change</div><div class="card-val ${curr>start?'green':'red'}">${curr>start?'+':''}${(curr-start).toFixed(1)}</div><div class="card-sub">lbs from CI #1</div></div>
-    <div class="card"><div class="card-lbl">Peak (Bulk)</div><div class="card-val">${peak}</div><div class="card-sub">lbs — CI #${W.indexOf(peak)+1}</div></div>
+    <div class="card"><div class="card-lbl">Peak (Bulk)</div><div class="card-val">${peak}</div><div class="card-sub">lbs â CI #${W.indexOf(peak)+1}</div></div>
     <div class="card"><div class="card-lbl">Current Cals</div><div class="card-val accent">${cp.cal}${cp.calRest ? ' / ' + cp.calRest : ''}</div><div class="card-sub">${cp.calRest ? 'Train / Rest' : cp.label}</div></div>
     <div class="card"><div class="card-lbl">Diet Score</div><div class="card-val">${dietAvg}</div><div class="card-sub">${onTrack}/${W.length} on track</div></div>
     <div class="card"><div class="card-lbl">Gym Score</div><div class="card-val green">${gymAvg}</div><div class="card-sub">avg / 5.0</div></div>
@@ -467,7 +491,7 @@ function renderOverview() {
     plugins:{legend:{display:true,labels:{color:'rgba(240,237,232,.4)',font:{size:9},boxWidth:10}},
       tooltip:{callbacks:{label:ctx=>ctx.datasetIndex===0?`${ctx.raw} lbs`:`${(ctx.raw*10).toFixed(0)} cal`}}},
     scales:{...baseScale, y2:{position:'right',grid:{display:false},ticks:{...darkTick,callback:v=>`${v*10}`}}},
-    datasets:[{label:'Weight (lbs)'},{label:'Calories ÷10'}],
+    datasets:[{label:'Weight (lbs)'},{label:'Calories Ã·10'}],
     elements:{line:{tension:.3},point:{radius:0}}
   }});
 
@@ -500,7 +524,7 @@ document.getElementById('ov-macros').innerHTML = `
   document.getElementById('ov-body').style.display='block';
 }
 
-// ══ BODY WEIGHT ══
+// ââ BODY WEIGHT ââ
 let bwDone=false;
 function renderBW(){
   if(bwDone)return; bwDone=true;
@@ -509,7 +533,7 @@ function renderBW(){
   const lgEl=document.getElementById('ph-leg');
   MACRO_PHASES.forEach(p=>lgEl.innerHTML+=`<div class="pdot"><div class="pdot-col" style="background:${p.color}"></div>${p.label}</div>`);
   mk('ch-bw',{type:'line',data:{labels,datasets:[{data:W,borderColor:'#c8a96e',backgroundColor:'rgba(200,169,110,.05)',fill:true,borderWidth:1.5,pointRadius:0,pointHoverRadius:4,segment:{borderColor:ctx=>phaseFor(ctx.p0DataIndex).color}}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const p=phaseFor(ctx.dataIndex);return[`${ctx.raw} lbs`,`${p.label} · ${p.cal} cal`];}}}},scales:baseScale,elements:{line:{tension:.3},point:{radius:0}}}});
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const p=phaseFor(ctx.dataIndex);return[`${ctx.raw} lbs`,`${p.label} Â· ${p.cal} cal`];}}}},scales:baseScale,elements:{line:{tension:.3},point:{radius:0}}}});
 
   const blockMap={};
   W.forEach((w,i)=>{const b=i<6?'B1':i<18?'B2-6':i<30?'B7-8':i<42?'B8-9':i<54?'B10-11':i<66?'B12-13':i<78?'B14-15':i<90?'B16-17':i<102?'B18-19':i<114?'B20-21':'B22';if(!blockMap[b])blockMap[b]=[];blockMap[b].push(w);});
@@ -523,7 +547,7 @@ function renderBW(){
     const next=MACRO_PHASES[i+1],si=p.start-1,ei=next?Math.min(next.start-2,W.length-1):W.length-1;
     if(si>=W.length)return;
     const sw=W[si],ew=W[Math.min(ei,W.length-1)],d=ew-sw;
-    ptEl.innerHTML+=`<tr><td style="color:${p.color}">● ${p.label}</td><td>${sw}</td><td>${ew}</td><td class="${d>0?'up':d<0?'dn':'flat'}">${d>=0?'+':''}${d.toFixed(1)}</td><td>${p.cal}</td></tr>`;
+    ptEl.innerHTML+=`<tr><td style="color:${p.color}">â ${p.label}</td><td>${sw}</td><td>${ew}</td><td class="${d>0?'up':d<0?'dn':'flat'}">${d>=0?'+':''}${d.toFixed(1)}</td><td>${p.cal}</td></tr>`;
   });
 
   const rec=W.slice(-20);
@@ -531,23 +555,23 @@ function renderBW(){
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:baseScale,elements:{line:{tension:.3}}}});
 }
 
-// ══ NUTRITION ══
+// ââ NUTRITION ââ
 let nutDone=false;
 function renderNut(){
   if(nutDone)return; nutDone=true;
   const W=liveWeights,labels=W.map((_,i)=>`CI ${i+1}`);
   const calD=W.map((_,i)=>phaseFor(i).cal),proD=W.map((_,i)=>phaseFor(i).protein),carD=W.map((_,i)=>phaseFor(i).carbs),fatD=W.map((_,i)=>phaseFor(i).fats);
   const leg={display:true,labels:{color:'rgba(240,237,232,.4)',font:{size:9},boxWidth:10}};
-  mk('ch-cal',{type:'line',data:{labels,datasets:[{data:calD,borderColor:'#c8a96e',backgroundColor:'rgba(200,169,110,.07)',fill:true,borderWidth:1.5,pointRadius:0,label:'Calories'},{data:W.map(w=>w*5),borderColor:'rgba(76,175,125,.4)',borderWidth:1,borderDash:[4,3],pointRadius:0,fill:false,label:'Weight ×5'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:baseScale,elements:{line:{tension:.1}}}});
+  mk('ch-cal',{type:'line',data:{labels,datasets:[{data:calD,borderColor:'#c8a96e',backgroundColor:'rgba(200,169,110,.07)',fill:true,borderWidth:1.5,pointRadius:0,label:'Calories'},{data:W.map(w=>w*5),borderColor:'rgba(76,175,125,.4)',borderWidth:1,borderDash:[4,3],pointRadius:0,fill:false,label:'Weight Ã5'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:baseScale,elements:{line:{tension:.1}}}});
   mk('ch-mac',{type:'line',data:{labels,datasets:[{data:proD,borderColor:'#4caf7d',borderWidth:1.5,pointRadius:0,fill:false,label:'Protein'},{data:carD,borderColor:'#6b9fd4',borderWidth:1.5,pointRadius:0,fill:false,label:'Carbs'},{data:fatD,borderColor:'#d4956b',borderWidth:1.5,pointRadius:0,fill:false,label:'Fats'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:baseScale,elements:{line:{tension:.1}}}});
   mk('ch-diet',{type:'line',data:{labels,datasets:[{data:DIET_SCORES,borderColor:'rgba(200,169,110,.7)',backgroundColor:'rgba(200,169,110,.06)',fill:true,borderWidth:1.5,pointRadius:0,label:'Diet'},{data:GYM_SCORES,borderColor:'rgba(76,175,125,.6)',borderWidth:1.5,pointRadius:0,fill:false,label:'Gym'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:{x:baseScale.x,y:{...baseScale.y,min:0,max:6}},elements:{line:{tension:.3}}}});
   const ntEl=document.getElementById('nut-table');
   const goals=['Lean Bulk','Lean Bulk','Lean Bulk','Cut','Carb Cycle','Carb Cycle','Carb Cycle','Carb Cycle','Carb Cycle','Reverse Diet','Reverse Diet','Reverse Diet'];
   ntEl.innerHTML=`<tr><th>Phase</th><th>Cals</th><th>Protein</th><th>Carbs</th><th>Fats</th><th>Goal</th></tr>`;
-  MACRO_PHASES.forEach((p,i)=>ntEl.innerHTML+=`<tr><td style="color:${p.color}">● ${p.label}</td><td>${p.cal}</td><td>${p.protein}g</td><td>${p.carbs}g</td><td>${p.fats}g</td><td style="color:rgba(240,237,232,.3);font-size:10px">${goals[i]}</td></tr>`);
+  MACRO_PHASES.forEach((p,i)=>ntEl.innerHTML+=`<tr><td style="color:${p.color}">â ${p.label}</td><td>${p.cal}</td><td>${p.protein}g</td><td>${p.carbs}g</td><td>${p.fats}g</td><td style="color:rgba(240,237,232,.3);font-size:10px">${goals[i]}</td></tr>`);
 }
 
-// ══ TRAINING ══
+// ââ TRAINING ââ
 let trDone=false,liftC=null;
 function renderTr(){
   if(trDone)return; trDone=true;
@@ -566,7 +590,7 @@ function renderExList(muscle){
   const exs=muscle==='All'?EXERCISES:EXERCISES.filter(e=>e.muscle===muscle);
   exs.forEach(e=>{
     const{pct,start,latest,status}=getExStats(e),bar=Math.min(100,Math.abs(pct)*2);
-    el.innerHTML+=`<div class="ex-row"><div class="ex-name">${e.name}</div><span class="tag ${e.muscle}">${e.muscle}</span><div class="pbar"><div class="pbar-f" style="width:${bar}%;background:${pct>3?'#4caf7d':pct<-3?'#e05a5a':'#d4956b'}"></div></div><div class="ex-pct ${pct>0?'up':pct<0?'dn':'flat'}">${pct>=0?'+':''}${pct}%</div><div class="ex-wt">${start}→${latest}kg</div></div>`;
+    el.innerHTML+=`<div class="ex-row"><div class="ex-name">${e.name}</div><span class="tag ${e.muscle}">${e.muscle}</span><div class="pbar"><div class="pbar-f" style="width:${bar}%;background:${pct>3?'#4caf7d':pct<-3?'#e05a5a':'#d4956b'}"></div></div><div class="ex-pct ${pct>0?'up':pct<0?'dn':'flat'}">${pct>=0?'+':''}${pct}%</div><div class="ex-wt">${start}â${latest}kg</div></div>`;
   });
 }
 function filterM(m,el){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderExList(m);}
@@ -576,7 +600,7 @@ function updateLift(){
   liftC=new Chart(document.getElementById('ch-lift'),{type:'line',data:{labels:WEEKS_B22,datasets:[{data:ex.weights,borderColor:'#c8a96e',backgroundColor:'rgba(200,169,110,.07)',fill:true,borderWidth:2,pointBackgroundColor:WEEKS_B22.map((_,i)=>i===7?'#d4956b':'#c8a96e'),pointBorderColor:'#0e0e0e',pointBorderWidth:1,pointRadius:5,spanGaps:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:baseScale,elements:{line:{tension:.3}}}});
 }
 
-// ══ CORRELATION ══
+// ââ CORRELATION ââ
 let corrDone=false;
 function renderCorr(){
   if(corrDone)return; corrDone=true;
@@ -587,8 +611,8 @@ function renderCorr(){
   const onG=GYM_SCORES.filter((_,i)=>DIET_SCORES[i]>=3.5),offG=GYM_SCORES.filter((_,i)=>DIET_SCORES[i]<3.5);
   const onA=(onG.reduce((a,b)=>a+b,0)/onG.length).toFixed(2),offA=(offG.reduce((a,b)=>a+b,0)/offG.length).toFixed(2);
   document.getElementById('corr-stats').innerHTML=`
-    <div class="stat-box"><div class="val" style="color:#4caf7d">${onA}</div><div class="lbl">Gym when diet ✓</div></div>
-    <div class="stat-box"><div class="val" style="color:#e05a5a">${offA}</div><div class="lbl">Gym when diet ✗</div></div>
+    <div class="stat-box"><div class="val" style="color:#4caf7d">${onA}</div><div class="lbl">Gym when diet â</div></div>
+    <div class="stat-box"><div class="val" style="color:#e05a5a">${offA}</div><div class="lbl">Gym when diet â</div></div>
     <div class="stat-box"><div class="val" style="color:#c8a96e">+${(onA-offA).toFixed(2)}</div><div class="lbl">Performance delta</div></div>
   `;
   const bkt=gs=>{const b=[0,0,0,0,0];gs.forEach(s=>{if(s>=4.5)b[4]++;else if(s>=4)b[3]++;else if(s>=3)b[2]++;else if(s>=2)b[1]++;else b[0]++;});return b;};
@@ -598,8 +622,102 @@ function renderCorr(){
   mk('ch-off',{type:'doughnut',data:{labels:['Struggling','OK','Good','Great','Superb'],datasets:[{data:bkt(offG),backgroundColor:dc,borderWidth:1,borderColor:'#161616'}]},options:dco});
 }
 
-// ══ INSIGHTS ══
+// ââ INSIGHTS ââ
 let insDone=false;
+function renderProg() {
+  const BLOCKS = ['B1','B2-6','B7-8','B8-9','B10-11','B12-13','B14-15','B16-17','B18-19','B20-21','B22'];
+  const BW_AVG  = [165.2,172.4,177.4,180.5,181.0,179.6,177.9,170.2,171.2,171.1,169.7];
+  const BLK_LABELS = ['Block 1','Blocks 2-6','Blocks 7-8','Blocks 8-9','Blocks 10-11','Blocks 12-13','Blocks 14-15','Blocks 16-17','Blocks 18-19','Blocks 20-21','Block 22 (Current)'];
+  const PHASE  = ['Bulk','Bulk','Bulk','Bulk/Peak','Peak/Cut','Cut/Cyc','Cyc','Cyc/Rev D','Rev D','Rev D','Rev D P3'];
+  const LIFT_DATA = {
+    'Hack Squat':           [null,null,60,65,72.5,75,80,75,70,72.5,72.5],
+    'Wide Grip Pulldown':   [null,null,60,65,70,72.5,75,70,72.5,75,80],
+    'Incline DB Press':     [null,null,20,22,24,24,26,24,24,26,28],
+    'Single Arm Machine Row':[null,null,60,65,72,79,86,86,93,96,100],
+    'Hamstring Curls':      [null,null,40,45,47.5,50,52,45,50,52,53.25],
+    'Dumbbell Shoulder Press':[null,null,16,18,20,22,22,20,22,24,27.5],
+    'Leg Extensions':       [null,null,60,62.5,65,67.5,70,67.5,70,72.5,72.5],
+    'V Bar Tricep Pressdown':[null,null,55,60,65,68,72,68,70,74,77],
+    'Straight Bar Cable Curl':[null,null,40,45,47.5,50,52,50,52,55,59]
+  };
+  const BLOCK_NOTES = [
+    'Foundation block — establishing baseline movement patterns.',
+    'Progressive overload phase, bulk diet. Multiple blocks building linear strength.',
+    'Peak bulk strength. Highest body weight period (177-181 lbs).',
+    'Transition to cut. Maintaining strength under caloric deficit.',
+    'Cut phase. Body recomposition focus — strength preservation.',
+    'Carb cycling introduced. Body weight variability, gym score steady.',
+    'Cycle phase — lowest body weight trough. Strength maintained.',
+    'Reverse diet begins. Body weight climbing from 170 lbs.',
+    'Rev diet stabilisation. Strength returning with increased calories.',
+    'Rev diet continuation. Performance metrics trending positive.',
+    'Current block. Pull dominant gains. Leg volume needs attention.'
+  ];
+  const bwCtx = document.getElementById('ch-prog-bw');
+  if (bwCtx && !bwCtx._progChart) {
+    bwCtx._progChart = new Chart(bwCtx, {
+      type: 'line',
+      data: {
+        labels: BLOCKS,
+        datasets: [{
+          data: BW_AVG, borderColor: '#c8a96e', backgroundColor: 'rgba(200,169,110,.08)',
+          pointBackgroundColor: '#c8a96e', pointRadius: 5, tension: 0.35, fill: true
+        }]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.parsed.y+' lbs — '+PHASE[ctx.dataIndex]}}},
+        scales:{
+          x:{grid:{color:'rgba(240,237,232,.05)'},ticks:{color:'rgba(240,237,232,.38)',font:{family:'Inter',size:10}}},
+          y:{grid:{color:'rgba(240,237,232,.05)'},ticks:{color:'rgba(240,237,232,.38)',font:{size:10}},title:{display:true,text:'lbs',color:'rgba(240,237,232,.38)',font:{size:9}}}
+        }
+      }
+    });
+  }
+  const tbl = document.getElementById('prog-block-table');
+  if (tbl && !tbl.innerHTML) {
+    let html='<table class="wtbl"><tbody><tr><th>Block</th><th>Phase</th><th>Avg BW (lbs)</th><th>Notes</th></tr></tbody>';
+    BLOCKS.forEach((b,i)=>{
+      const prev=BW_AVG[i-1];
+      const delta=prev?(BW_AVG[i]-prev).toFixed(1):'—';
+      const cls=delta!=='—'&&parseFloat(delta)>0?'up':parseFloat(delta)<0?'dn':'';
+      html+='<tbody><tr><td>'+BLK_LABELS[i]+'</td><td style="color:rgba(240,237,232,.55)">'+PHASE[i]+'</td><td>'+BW_AVG[i]+(delta!=='—'?' <span class="'+cls+'" style="font-size:10px">('+(parseFloat(delta)>0?'+':'')+delta+')</span>':'')+'</td><td style="color:rgba(240,237,232,.45);font-size:11px">'+BLOCK_NOTES[i]+'</td></tr></tbody>';
+    });
+    html+='</table>';
+    tbl.innerHTML=html;
+  }
+  window.updateProgLift=function(){
+    const pick=document.getElementById('prog-lift-pick');
+    const liftName=pick?pick.value:'Hack Squat';
+    const liftData=LIFT_DATA[liftName]||[];
+    const liftCtx=document.getElementById('ch-prog-lift');
+    if(!liftCtx)return;
+    if(liftCtx._progLiftChart){liftCtx._progLiftChart.destroy();liftCtx._progLiftChart=null;}
+    liftCtx._progLiftChart=new Chart(liftCtx,{
+      type:'bar',
+      data:{labels:BLOCKS,datasets:[{data:liftData,backgroundColor:liftData.map(v=>v?'rgba(200,169,110,.7)':'transparent'),borderColor:liftData.map(v=>v?'#c8a96e':'transparent'),borderWidth:1,borderRadius:2}]},
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.parsed.y?ctx.parsed.y+' kg':'No data'}}},
+        scales:{
+          x:{grid:{color:'rgba(240,237,232,.05)'},ticks:{color:'rgba(240,237,232,.38)',font:{size:10}}},
+          y:{grid:{color:'rgba(240,237,232,.05)'},ticks:{color:'rgba(240,237,232,.38)',font:{size:10}},title:{display:true,text:'kg',color:'rgba(240,237,232,.38)',font:{size:9}}}
+        }
+      }
+    });
+  };
+  window.updateProgLift();
+  const ins=document.getElementById('prog-insights');
+  if(ins&&!ins.innerHTML){
+    ins.innerHTML=
+      '<div class="sug good"><div class="sug-title">Pull strength — consistent lead lift</div><div class="sug-body">Pull movements show the most consistent progression across all blocks. Single Arm Machine Row has grown from 60 kg (B7-8) to 100 kg (B22) — a 67% increase over 15 blocks with Pete.</div></div>'+
+      '<div class="sug good"><div class="sug-title">Hack Squat — reliable responder</div><div class="sug-body">Hack Squat has tracked from 60 kg (B7-8) to 72.5 kg (B22) across varied diet phases. Responds well in both bulk and deficit — a lead lift for lower body.</div></div>'+
+      '<div class="sug warn"><div class="sug-title">Leg Extensions — persistent lag lift</div><div class="sug-body">Leg Extensions have not moved meaningfully across 6+ blocks. Possible neural fatigue or placement issue. Worth discussing with Pete for B23 — consider load, rep range, or swap.</div></div>'+
+      '<div class="sug info"><div class="sug-title">Reverse diet lifting performance</div><div class="sug-body">Since entering reverse diet (B16-17 onwards), body weight has climbed from 170 lbs while gym score has held at 3.9 avg. Calories are supporting strength recovery without excessive fat gain.</div></div>'+
+      '<div class="sug info"><div class="sug-title">Peak strength window: B10-11 to B14-15</div><div class="sug-body">Body weight peak (181 lbs) aligned with highest absolute loads across push and pull. The bulk + carb cycling phase produced the strongest numbers in the 2+ year Pete coaching journey.</div></div>';
+  }
+}
+
 function renderIns(){
   if(insDone)return; insDone=true;
   const W=liveWeights,curr=W[W.length-1],start=W[0],peak=Math.max(...W),low=Math.min(...W);
@@ -610,19 +728,19 @@ function renderIns(){
   const top=exStats.sort((a,b)=>b.pct-a.pct).slice(0,3);
 
   document.getElementById('milestones').innerHTML=`
-    <div class="sug info"><div class="sug-title">All-time body weight arc</div><div class="sug-body">Started at ${start} lbs → Bulk peak ${peak} lbs (CI #${W.indexOf(peak)+1}) → Cut low ${low} lbs (CI #${W.indexOf(low)+1}) → Current reverse diet ${curr} lbs. Net change from day one: ${curr>start?'+':''}${(curr-start).toFixed(1)} lbs over ${W.length} weeks with Pete.</div></div>
-    <div class="sug info"><div class="sug-title">12 macro phase adjustments</div><div class="sug-body">Lean bulk (2250–2350 cal) → Cut (1990 cal) → Carb cycling (1705–2165 cal) → Reverse diet (currently 2370 cal on training days). Protein anchored at 180–200g throughout every phase.</div></div>
+    <div class="sug info"><div class="sug-title">All-time body weight arc</div><div class="sug-body">Started at ${start} lbs â Bulk peak ${peak} lbs (CI #${W.indexOf(peak)+1}) â Cut low ${low} lbs (CI #${W.indexOf(low)+1}) â Current reverse diet ${curr} lbs. Net change from day one: ${curr>start?'+':''}${(curr-start).toFixed(1)} lbs over ${W.length} weeks with Pete.</div></div>
+    <div class="sug info"><div class="sug-title">12 macro phase adjustments</div><div class="sug-body">Lean bulk (2250â2350 cal) â Cut (1990 cal) â Carb cycling (1705â2165 cal) â Reverse diet (currently 2370 cal on training days). Protein anchored at 180â200g throughout every phase.</div></div>
   `;
 
   let obsHtml='';
-  obsHtml+=`<div class="sug good"><div class="sug-title">Diet drives performance — proven</div><div class="sug-body">Across ${W.length} weeks, gym score when on diet: ${onA}/5 vs when off: ${offA}/5. A +${(onA-offA).toFixed(2)} point gap is consistent and statistically meaningful. Your training quality is directly fuel-dependent.</div></div>`;
-  obsHtml+=`<div class="sug good"><div class="sug-title">Pull strength — standout this block</div><div class="sug-body">${top.filter(e=>e.muscle==='Pull').map(e=>`${e.name} +${e.pct}%`).join(', ')||top.slice(0,2).map(e=>`${e.name} +${e.pct}%`).join(', ')}. Back and posterior chain responding exceptionally to Block 22's programming.</div></div>`;
-  if(lagging.length){obsHtml+=`<div class="sug warn"><div class="sug-title">Lagging — bring to Pete for Block 23</div><div class="sug-body">${lagging.map(e=>`${e.name} (${e.pct>=0?'+':''}${e.pct}%)`).join(', ')}. These have not responded in 11 weeks. Request a loading or technique adjustment in the next block.</div></div>`;}
+  obsHtml+=`<div class="sug good"><div class="sug-title">Diet drives performance â proven</div><div class="sug-body">Across ${W.length} weeks, gym score when on diet: ${onA}/5 vs when off: ${offA}/5. A +${(onA-offA).toFixed(2)} point gap is consistent and statistically meaningful. Your training quality is directly fuel-dependent.</div></div>`;
+  obsHtml+=`<div class="sug good"><div class="sug-title">Pull strength â standout this block</div><div class="sug-body">${top.filter(e=>e.muscle==='Pull').map(e=>`${e.name} +${e.pct}%`).join(', ')||top.slice(0,2).map(e=>`${e.name} +${e.pct}%`).join(', ')}. Back and posterior chain responding exceptionally to Block 22's programming.</div></div>`;
+  if(lagging.length){obsHtml+=`<div class="sug warn"><div class="sug-title">Lagging â bring to Pete for Block 23</div><div class="sug-body">${lagging.map(e=>`${e.name} (${e.pct>=0?'+':''}${e.pct}%)`).join(', ')}. These have not responded in 11 weeks. Request a loading or technique adjustment in the next block.</div></div>`;}
   obsHtml+=`<div class="sug info"><div class="sug-title">Reverse diet is working</div><div class="sug-body">Weight has been climbing gradually from ${W[129]?.toFixed(1)} lbs (CI #130) to ${curr} lbs over the last ${W.length-129} weeks while strength continues progressing. Metabolic rate is building as planned.</div></div>`;
   document.getElementById('obs-list').innerHTML=obsHtml;
 }
 
-// ══ TAB ROUTING ══
+// ââ TAB ROUTING ââ
 function showTab(name, el) {
   document.querySelectorAll('.tab-panel').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -632,10 +750,11 @@ function showTab(name, el) {
   if(name==='nutrition')  renderNut();
   if(name==='training')   renderTr();
   if(name==='correlation')renderCorr();
-  if(name==='insights')   renderIns();
+  if(name==='progression') renderProg();
+    if(name==='insights')   renderIns();
 }
 
-// ══ INIT ══
+// ââ INIT ââ
 async function init() {
   const ok = await fetchLiveWeights();
   if (!ok) document.getElementById('ov-note').style.display='block';
