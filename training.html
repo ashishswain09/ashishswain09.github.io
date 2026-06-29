@@ -176,7 +176,7 @@ option { background: var(--bg2); }
 
 <div class="page-title-wrap">
   <h1 class="page-title">Training<span>.</span></h1>
-  <p class="page-sub" id="page-sub">Loading &#183; Block 22 &#183; Pete Coaching</p>
+  <p class="page-sub" id="page-sub">Pete Coaching &#8212; Jakked LLC</p>
 </div>
 
 <nav class="dash-nav" aria-label="Dashboard sections">
@@ -405,7 +405,7 @@ const FALLBACK_WEIGHTS=[164.2,166,165.4,164.4,167.4,163.6,167.2,166,167,167.2,16
 let liveWeights = FALLBACK_WEIGHTS;
 
 // &#9552;&#9552; LIVE FETCH from Google Sheets (GViz JSON API) &#9552;&#9552;
-// Sheet must be shared publicly (Anyone with link &#8594; Viewer)
+// Sheet must be shared publicly (Anyone with link \u2192 Viewer)
 const SHEET_ID = '1zPf2Vd2lXfSBdrJ04-H_GaolQ6SUiSARiGPrNHgF63k';
 
 async function fetchLiveWeights() {
@@ -468,13 +468,13 @@ function renderOverview() {
   const onTrack = DIET_SCORES.filter(s=>s>=3.5).length;
   const cp = phaseFor(W.length-1);
 
-  document.getElementById('page-sub').textContent = `CI #${W.length} &#183; ${curr} lbs &#183; ${cp.label} &#183; Block 22 &#183; Pete Coaching`;
-  document.getElementById('ov-span').textContent = `CI #1 &#8594; #${W.length}`;
+  document.getElementById('page-sub').textContent = 'Pete Coaching \u2014 Jakked LLC'
+  document.getElementById('ov-span').textContent = `CI #1 \u2192 #${W.length}`;
 
   document.getElementById('ov-cards').innerHTML = `
-    <div class="card"><div class="card-lbl">Current Weight</div><div class="card-val accent">${curr}</div><div class="card-sub">lbs &#183; check-in #${W.length}</div></div>
+    <div class="card"><div class="card-lbl">Current Weight</div><div class="card-val accent">${curr}</div><div class="card-sub">lbs \u00b7 check-in #${W.length}</div></div>
     <div class="card"><div class="card-lbl">Total Change</div><div class="card-val ${curr>start?'green':'red'}">${curr>start?'+':''}${(curr-start).toFixed(1)}</div><div class="card-sub">lbs from CI #1</div></div>
-    <div class="card"><div class="card-lbl">Peak (Bulk)</div><div class="card-val">${peak}</div><div class="card-sub">lbs &#8212; CI #${W.indexOf(peak)+1}</div></div>
+    <div class="card"><div class="card-lbl">Peak (Bulk)</div><div class="card-val">${peak}</div><div class="card-sub">lbs \u2014 CI #${W.indexOf(peak)+1}</div></div>
     <div class="card"><div class="card-lbl">Current Cals</div><div class="card-val accent">${cp.cal}${cp.calRest ? ' / ' + cp.calRest : ''}</div><div class="card-sub">${cp.calRest ? 'Train / Rest' : cp.label}</div></div>
     <div class="card"><div class="card-lbl">Diet Score</div><div class="card-val">${dietAvg}</div><div class="card-sub">${onTrack}/${W.length} on track</div></div>
     <div class="card"><div class="card-lbl">Gym Score</div><div class="card-val green">${gymAvg}</div><div class="card-sub">avg / 5.0</div></div>
@@ -533,7 +533,7 @@ function renderBW(){
   const lgEl=document.getElementById('ph-leg');
   MACRO_PHASES.forEach(p=>lgEl.innerHTML+=`<div class="pdot"><div class="pdot-col" style="background:${p.color}"></div>${p.label}</div>`);
   mk('ch-bw',{type:'line',data:{labels,datasets:[{data:W,borderColor:'#c8a96e',backgroundColor:'rgba(200,169,110,.05)',fill:true,borderWidth:1.5,pointRadius:0,pointHoverRadius:4,segment:{borderColor:ctx=>phaseFor(ctx.p0DataIndex).color}}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const p=phaseFor(ctx.dataIndex);return[`${ctx.raw} lbs`,`${p.label} &#183; ${p.cal} cal`];}}}},scales:baseScale,elements:{line:{tension:.3},point:{radius:0}}}});
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const p=phaseFor(ctx.dataIndex);return[`${ctx.raw} lbs`,`${p.label} \u00b7 ${p.cal} cal`];}}}},scales:baseScale,elements:{line:{tension:.3},point:{radius:0}}}});
 
   const blockMap={};
   W.forEach((w,i)=>{const b=i<6?'B1':i<18?'B2-6':i<30?'B7-8':i<42?'B8-9':i<54?'B10-11':i<66?'B12-13':i<78?'B14-15':i<90?'B16-17':i<102?'B18-19':i<114?'B20-21':'B22';if(!blockMap[b])blockMap[b]=[];blockMap[b].push(w);});
@@ -562,7 +562,7 @@ function renderNut(){
   const W=liveWeights,labels=W.map((_,i)=>`CI ${i+1}`);
   const calD=W.map((_,i)=>phaseFor(i).cal),proD=W.map((_,i)=>phaseFor(i).protein),carD=W.map((_,i)=>phaseFor(i).carbs),fatD=W.map((_,i)=>phaseFor(i).fats);
   const leg={display:true,labels:{color:'rgba(240,237,232,.4)',font:{size:9},boxWidth:10}};
-  mk('ch-cal',{type:'line',data:{labels,datasets:[{data:calD,borderColor:'#c8a96e',backgroundColor:'rgba(200,169,110,.07)',fill:true,borderWidth:1.5,pointRadius:0,label:'Calories'},{data:W.map(w=>w*5),borderColor:'rgba(76,175,125,.4)',borderWidth:1,borderDash:[4,3],pointRadius:0,fill:false,label:'Weight &#215;5'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:baseScale,elements:{line:{tension:.1}}}});
+  mk('ch-cal',{type:'line',data:{labels,datasets:[{data:calD,borderColor:'#c8a96e',backgroundColor:'rgba(200,169,110,.07)',fill:true,borderWidth:1.5,pointRadius:0,label:'Calories'},{data:W.map(w=>w*5),borderColor:'rgba(76,175,125,.4)',borderWidth:1,borderDash:[4,3],pointRadius:0,fill:false,label:'Weight \u00d75'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:baseScale,elements:{line:{tension:.1}}}});
   mk('ch-mac',{type:'line',data:{labels,datasets:[{data:proD,borderColor:'#4caf7d',borderWidth:1.5,pointRadius:0,fill:false,label:'Protein'},{data:carD,borderColor:'#6b9fd4',borderWidth:1.5,pointRadius:0,fill:false,label:'Carbs'},{data:fatD,borderColor:'#d4956b',borderWidth:1.5,pointRadius:0,fill:false,label:'Fats'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:baseScale,elements:{line:{tension:.1}}}});
   mk('ch-diet',{type:'line',data:{labels,datasets:[{data:DIET_SCORES,borderColor:'rgba(200,169,110,.7)',backgroundColor:'rgba(200,169,110,.06)',fill:true,borderWidth:1.5,pointRadius:0,label:'Diet'},{data:GYM_SCORES,borderColor:'rgba(76,175,125,.6)',borderWidth:1.5,pointRadius:0,fill:false,label:'Gym'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:{x:baseScale.x,y:{...baseScale.y,min:0,max:6}},elements:{line:{tension:.3}}}});
   const ntEl=document.getElementById('nut-table');
@@ -590,7 +590,7 @@ function renderExList(muscle){
   const exs=muscle==='All'?EXERCISES:EXERCISES.filter(e=>e.muscle===muscle);
   exs.forEach(e=>{
     const{pct,start,latest,status}=getExStats(e),bar=Math.min(100,Math.abs(pct)*2);
-    el.innerHTML+=`<div class="ex-row"><div class="ex-name">${e.name}</div><span class="tag ${e.muscle}">${e.muscle}</span><div class="pbar"><div class="pbar-f" style="width:${bar}%;background:${pct>3?'#4caf7d':pct<-3?'#e05a5a':'#d4956b'}"></div></div><div class="ex-pct ${pct>0?'up':pct<0?'dn':'flat'}">${pct>=0?'+':''}${pct}%</div><div class="ex-wt">${start}&#8594;${latest}kg</div></div>`;
+    el.innerHTML+=`<div class="ex-row"><div class="ex-name">${e.name}</div><span class="tag ${e.muscle}">${e.muscle}</span><div class="pbar"><div class="pbar-f" style="width:${bar}%;background:${pct>3?'#4caf7d':pct<-3?'#e05a5a':'#d4956b'}"></div></div><div class="ex-pct ${pct>0?'up':pct<0?'dn':'flat'}">${pct>=0?'+':''}${pct}%</div><div class="ex-wt">${start}\u2192${latest}kg</div></div>`;
   });
 }
 function filterM(m,el){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderExList(m);}
@@ -691,14 +691,14 @@ function renderIns(){
   const top=exStats.sort((a,b)=>b.pct-a.pct).slice(0,3);
 
   document.getElementById('milestones').innerHTML=`
-    <div class="sug info"><div class="sug-title">All-time body weight arc</div><div class="sug-body">Started at ${start} lbs &#8594; Bulk peak ${peak} lbs (CI #${W.indexOf(peak)+1}) &#8594; Cut low ${low} lbs (CI #${W.indexOf(low)+1}) &#8594; Current reverse diet ${curr} lbs. Net change from day one: ${curr>start?'+':''}${(curr-start).toFixed(1)} lbs over ${W.length} weeks with Pete.</div></div>
-    <div class="sug info"><div class="sug-title">12 macro phase adjustments</div><div class="sug-body">Lean bulk (2250&#8211;2350 cal) &#8594; Cut (1990 cal) &#8594; Carb cycling (1705&#8211;2165 cal) &#8594; Reverse diet (currently 2370 cal on training days). Protein anchored at 180&#8211;200g throughout every phase.</div></div>
+    <div class="sug info"><div class="sug-title">All-time body weight arc</div><div class="sug-body">Started at ${start} lbs \u2192 Bulk peak ${peak} lbs (CI #${W.indexOf(peak)+1}) \u2192 Cut low ${low} lbs (CI #${W.indexOf(low)+1}) \u2192 Current reverse diet ${curr} lbs. Net change from day one: ${curr>start?'+':''}${(curr-start).toFixed(1)} lbs over ${W.length} weeks with Pete.</div></div>
+    <div class="sug info"><div class="sug-title">12 macro phase adjustments</div><div class="sug-body">Lean bulk (2250&#8211;2350 cal) \u2192 Cut (1990 cal) \u2192 Carb cycling (1705&#8211;2165 cal) \u2192 Reverse diet (currently 2370 cal on training days). Protein anchored at 180&#8211;200g throughout every phase.</div></div>
   `;
 
   let obsHtml='';
-  obsHtml+=`<div class="sug good"><div class="sug-title">Diet drives performance &#8212; proven</div><div class="sug-body">Across ${W.length} weeks, gym score when on diet: ${onA}/5 vs when off: ${offA}/5. A +${(onA-offA).toFixed(2)} point gap is consistent and statistically meaningful. Your training quality is directly fuel-dependent.</div></div>`;
-  obsHtml+=`<div class="sug good"><div class="sug-title">Pull strength &#8212; standout this block</div><div class="sug-body">${top.filter(e=>e.muscle==='Pull').map(e=>`${e.name} +${e.pct}%`).join(', ')||top.slice(0,2).map(e=>`${e.name} +${e.pct}%`).join(', ')}. Back and posterior chain responding exceptionally to Block 22's programming.</div></div>`;
-  if(lagging.length){obsHtml+=`<div class="sug warn"><div class="sug-title">Lagging &#8212; bring to Pete for Block 23</div><div class="sug-body">${lagging.map(e=>`${e.name} (${e.pct>=0?'+':''}${e.pct}%)`).join(', ')}. These have not responded in 11 weeks. Request a loading or technique adjustment in the next block.</div></div>`;}
+  obsHtml+=`<div class="sug good"><div class="sug-title">Diet drives performance \u2014 proven</div><div class="sug-body">Across ${W.length} weeks, gym score when on diet: ${onA}/5 vs when off: ${offA}/5. A +${(onA-offA).toFixed(2)} point gap is consistent and statistically meaningful. Your training quality is directly fuel-dependent.</div></div>`;
+  obsHtml+=`<div class="sug good"><div class="sug-title">Pull strength \u2014 standout this block</div><div class="sug-body">${top.filter(e=>e.muscle==='Pull').map(e=>`${e.name} +${e.pct}%`).join(', ')||top.slice(0,2).map(e=>`${e.name} +${e.pct}%`).join(', ')}. Back and posterior chain responding exceptionally to Block 22's programming.</div></div>`;
+  if(lagging.length){obsHtml+=`<div class="sug warn"><div class="sug-title">Lagging \u2014 bring to Pete for Block 23</div><div class="sug-body">${lagging.map(e=>`${e.name} (${e.pct>=0?'+':''}${e.pct}%)`).join(', ')}. These have not responded in 11 weeks. Request a loading or technique adjustment in the next block.</div></div>`;}
   obsHtml+=`<div class="sug info"><div class="sug-title">Reverse diet is working</div><div class="sug-body">Weight has been climbing gradually from ${W[129]?.toFixed(1)} lbs (CI #130) to ${curr} lbs over the last ${W.length-129} weeks while strength continues progressing. Metabolic rate is building as planned.</div></div>`;
   document.getElementById('obs-list').innerHTML=obsHtml;
 }
