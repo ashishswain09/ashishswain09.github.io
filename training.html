@@ -767,7 +767,7 @@ function showTab(name, el) {
 }
 
 // ═══ EXERCISE WEIGHTS (Dynamic from Google Sheet) ═══
-  async function () {
+  async function fetchExerciseWeights() {
       const SHEET_ID = '1zPf2Vd2lXfSBdrJ04-H_GaolQ6SUiSARiGPrNHgF63k';
       const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Exercises&tq=select+*`;
       try {
