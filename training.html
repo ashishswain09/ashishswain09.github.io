@@ -203,7 +203,7 @@ option { background: var(--bg2); }
     </div>
     <div class="grid2">
       <div class="sec">
-        <div class="sec-title">Top gainers &#8212; Block 22</div>
+        <div class="sec-title">Top gainers &#8212; Block <span id="gainers-block-num">22</span></div>
         <div id="ov-gainers"></div>
       </div>
       <div class="sec">
@@ -212,7 +212,7 @@ option { background: var(--bg2); }
       </div>
     </div>
     <div class="sec">
-      <div class="sec-title">Current macro phase <span>Rev Diet P3</span></div>
+      <div class="sec-title">Current macro phase <span id="ov-macro-phase-label">Rev Diet P3</span></div>
       <div id="ov-macros"></div>
     </div>
   </div>
@@ -264,7 +264,7 @@ option { background: var(--bg2); }
 <!-- TRAINING -->
 <div id="tab-training" class="tab-panel">
   <div class="sec">
-    <div class="sec-title">Block 22 &#8212; exercise progress <span>W1 &#8594; W11</span></div>
+    <div class="sec-title"><span id="ex-block-title">Block 22 &#8212; exercise progress</span> <span id="ex-progress-weeks">W1 &#8594; W11</span></div>
     <div class="filter-row">
       <button class="filter-btn active" onclick="filterM('All',this)">All</button>
       <button class="filter-btn" onclick="filterM('Push',this)">Push</button>
@@ -295,7 +295,7 @@ option { background: var(--bg2); }
 <!-- CORRELATION -->
 <div id="tab-correlation" class="tab-panel">
   <div class="sec">
-    <div class="sec-title">Diet compliance vs gym performance <span>142 weeks</span></div>
+    <div class="sec-title">Diet compliance vs gym performance <span id="corr-weeks">142 weeks</span></div>
     <div class="ch ch-xl"><canvas id="ch-corr"></canvas></div>
   </div>
   <div class="sec">
@@ -335,7 +335,7 @@ option { background: var(--bg2); }
   <!-- PROGRESSION -->
   <div id="tab-progression" class="tab-panel">
     <div class="sec">
-      <div class="sec-title">Body weight arc &mdash; B1 &rarr; B22 <span>avg per block &middot; Pete coaching</span></div>
+      <div class="sec-title">Body weight arc &mdash; B1 &rarr; B<span id="prog-max-block">22</span> <span>avg per block &middot; Pete coaching</span></div>
       <div class="ch ch-xl"><canvas id="ch-prog-bw"></canvas></div>
     </div>
     <div class="sec">
@@ -357,6 +357,63 @@ option { background: var(--bg2); }
 
 <script>
 // &#9552;&#9552; DATA &#9552;&#9552;
+
+// ══════════════════════════════════════════════════════════
+// ✦ HOW TO ADD A NEW TRAINING BLOCK (each block = ~11-12 weeks)
+// ══════════════════════════════════════════════════════════
+// 1. Update CURRENT_BLOCK to the new block number
+// 2. Add week labels to WEEKS_B22 (e.g. push 'W12', 'W13' etc)
+// 3. For each exercise in EXERCISES[], push the new week's weight
+//    (use null if session not yet done)
+// 4. Add the block's avg body weight to BLOCKS_DATA.bwAvg[]
+// 5. Add the new block label to BLOCKS_DATA.labels[] and BLOCKS_DATA.blkIds[]
+// 6. Add the diet phase to BLOCKS_DATA.phase[]
+// 7. For each lift in LIFT_HISTORY, push the peak load for the new block
+// 8. Add a BLOCK_NOTES entry describing the block
+// 9. Append weekly DIET_SCORES and GYM_SCORES (one entry per check-in week)
+// ══════════════════════════════════════════════════════════
+
+// ─── Current block number — update this when a new block starts ───
+const CURRENT_BLOCK = 22;
+
+// ─── Block-level progression data (one entry per training block) ───
+// To add Block 23: push to bwAvg, labels, blkIds, phase + add entry in LIFT_HISTORY + BLOCK_NOTES
+const BLOCKS_DATA = {
+  blkIds:   ['B1','B2-6','B7-8','B8-9','B10-11','B12-13','B14-15','B16-17','B18-19','B20-21','B22'],
+  bwAvg:    [165.2,172.4,177.4,180.5,181.0,179.6,177.9,170.2,171.2,171.1,169.7],
+  labels:   ['Block 1','Blocks 2-6','Blocks 7-8','Blocks 8-9','Blocks 10-11','Blocks 12-13','Blocks 14-15','Blocks 16-17','Blocks 18-19','Blocks 20-21','Block 22 (Current)'],
+  phase:    ['Bulk','Bulk','Bulk','Bulk/Peak','Peak/Cut','Cut/Cyc','Cyc','Cyc/Rev D','Rev D','Rev D','Rev D P3']
+};
+
+// ─── Peak load per block for key lifts (null = lift not tracked that block) ───
+// To extend: push one value per lift for the new block
+const LIFT_HISTORY = {
+  'Hack Squat':             [null,null,60,65,72.5,75,80,75,70,72.5,72.5],
+  'Wide Grip Pulldown':     [null,null,60,65,70,72.5,75,70,72.5,75,80],
+  'Incline DB Press':       [null,null,20,22,24,24,26,24,24,26,28],
+  'Single Arm Machine Row': [null,null,60,65,72,79,86,86,93,96,100],
+  'Hamstring Curls':        [null,null,40,45,47.5,50,52,45,50,52,53.25],
+  'Dumbbell Shoulder Press':[null,null,16,18,20,22,22,20,22,24,27.5],
+  'Leg Extensions':         [null,null,60,62.5,65,67.5,70,67.5,70,72.5,72.5],
+  'V Bar Tricep Pressdown': [null,null,55,60,65,68,72,68,70,74,77],
+  'Straight Bar Cable Curl':[null,null,40,45,47.5,50,52,50,52,55,59]
+};
+
+// ─── Block narrative notes (one per entry in BLOCKS_DATA.blkIds) ───
+const BLOCK_NOTES = [
+  'Foundation block — establishing baseline movement patterns.',
+  'Progressive overload phase, bulk diet. Multiple blocks building linear strength.',
+  'Peak bulk strength. Highest body weight period (177–181 lbs).',
+  'Transition to cut. Maintaining strength under caloric deficit.',
+  'Cut phase. Body recomposition focus — strength preservation.',
+  'Carb cycling introduced. Body weight variability, gym score steady.',
+  'Cycle phase — lowest body weight trough. Strength maintained.',
+  'Reverse diet begins. Body weight climbing from 170 lbs.',
+  'Rev diet stabilisation. Strength returning with increased calories.',
+  'Rev diet continuation. Performance metrics trending positive.',
+  'Current block. Pull dominant gains. Leg volume needs attention.'
+];
+
 const WEEKS_B22=['W1','W2','W3','W4','W5','W6','W7','W8 Deload','W9','W10','W11','W12'];
 const EXERCISES=[
   {name:'Incline DB Press',         day:'Day 1',muscle:'Push',weights:[26,26,27.5,27.5,28,28,28,20,28,28,28,null]},
@@ -522,6 +579,20 @@ document.getElementById('ov-macros').innerHTML = `
 
   document.getElementById('ov-load').style.display='none';
   document.getElementById('ov-body').style.display='block';
+
+  // ─── Sync dynamic titles with CURRENT_BLOCK ───
+  const _blkN = CURRENT_BLOCK;
+  const _lastWeek = WEEKS_B22.filter(w => w !== null);
+  const _weekRange = _lastWeek.length > 0 ? 'W1 → ' + _lastWeek[_lastWeek.length - 1] : '';
+  const _macroPhase = MACRO_PHASES[MACRO_PHASES.length - 1];
+  const _el = (id) => document.getElementById(id);
+  if (_el('gainers-block-num')) _el('gainers-block-num').textContent = _blkN;
+  if (_el('ex-block-title'))    _el('ex-block-title').textContent = 'Block ' + _blkN + ' — exercise progress';
+  if (_el('ex-progress-weeks')) _el('ex-progress-weeks').textContent = _weekRange;
+  if (_el('ov-macro-phase-label')) _el('ov-macro-phase-label').textContent = _macroPhase.label;
+  if (_el('ov-span')) _el('ov-span').textContent = 'CI #1 → #' + W.length;
+  if (_el('prog-max-block')) _el('prog-max-block').textContent = CURRENT_BLOCK;
+  if (_el('corr-weeks')) _el('corr-weeks').textContent = W.length + ' weeks';
 }
 
 // &#9552;&#9552; BODY WEIGHT &#9552;&#9552;
@@ -625,34 +696,12 @@ function renderCorr(){
 // &#9552;&#9552; INSIGHTS &#9552;&#9552;
 let insDone=false;
 function renderProg() {
-  const BLOCKS = ['B1','B2-6','B7-8','B8-9','B10-11','B12-13','B14-15','B16-17','B18-19','B20-21','B22'];
-  const BW_AVG  = [165.2,172.4,177.4,180.5,181.0,179.6,177.9,170.2,171.2,171.1,169.7];
-  const BLK_LABELS = ['Block 1','Blocks 2-6','Blocks 7-8','Blocks 8-9','Blocks 10-11','Blocks 12-13','Blocks 14-15','Blocks 16-17','Blocks 18-19','Blocks 20-21','Block 22 (Current)'];
-  const PHASE  = ['Bulk','Bulk','Bulk','Bulk/Peak','Peak/Cut','Cut/Cyc','Cyc','Cyc/Rev D','Rev D','Rev D','Rev D P3'];
-  const LIFT_DATA = {
-    'Hack Squat':           [null,null,60,65,72.5,75,80,75,70,72.5,72.5],
-    'Wide Grip Pulldown':   [null,null,60,65,70,72.5,75,70,72.5,75,80],
-    'Incline DB Press':     [null,null,20,22,24,24,26,24,24,26,28],
-    'Single Arm Machine Row':[null,null,60,65,72,79,86,86,93,96,100],
-    'Hamstring Curls':      [null,null,40,45,47.5,50,52,45,50,52,53.25],
-    'Dumbbell Shoulder Press':[null,null,16,18,20,22,22,20,22,24,27.5],
-    'Leg Extensions':       [null,null,60,62.5,65,67.5,70,67.5,70,72.5,72.5],
-    'V Bar Tricep Pressdown':[null,null,55,60,65,68,72,68,70,74,77],
-    'Straight Bar Cable Curl':[null,null,40,45,47.5,50,52,50,52,55,59]
-  };
-  const BLOCK_NOTES = [
-    'Foundation block &mdash; establishing baseline movement patterns.',
-    'Progressive overload phase, bulk diet. Multiple blocks building linear strength.',
-    'Peak bulk strength. Highest body weight period (177&ndash;181 lbs).',
-    'Transition to cut. Maintaining strength under caloric deficit.',
-    'Cut phase. Body recomposition focus &mdash; strength preservation.',
-    'Carb cycling introduced. Body weight variability, gym score steady.',
-    'Cycle phase &mdash; lowest body weight trough. Strength maintained.',
-    'Reverse diet begins. Body weight climbing from 170 lbs.',
-    'Rev diet stabilisation. Strength returning with increased calories.',
-    'Rev diet continuation. Performance metrics trending positive.',
-    'Current block. Pull dominant gains. Leg volume needs attention.'
-  ];
+  // ─── Data references (defined in the DATA section at top of file) ───
+  const BLOCKS      = BLOCKS_DATA.blkIds;
+  const BW_AVG      = BLOCKS_DATA.bwAvg;
+  const BLK_LABELS  = BLOCKS_DATA.labels;
+  const PHASE       = BLOCKS_DATA.phase;
+  const LIFT_DATA   = LIFT_HISTORY;
   const bwCtx = document.getElementById('ch-prog-bw');
   if (bwCtx && !bwCtx._progChart) {
     bwCtx._progChart = new Chart(bwCtx, {
