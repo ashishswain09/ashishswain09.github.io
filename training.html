@@ -414,7 +414,7 @@ const BLOCK_NOTES = [
   'Current block. Pull dominant gains. Leg volume needs attention.'
 ];
 
-const WEEKS_B22=['W1','W2','W3','W4','W5','W6','W7','W8 Deload','W9','W10','W11','W12'];
+let WEEKS_B22=['W1','W2','W3','W4','W5','W6','W7','W8 Deload','W9','W10','W11','W12'];
 const EXERCISES=[
   {name:'Incline DB Press',         day:'Day 1',muscle:'Push',weights:[26,26,27.5,27.5,28,28,28,20,28,28,28,null]},
   {name:'Flat Machine Press',       day:'Day 1',muscle:'Push',weights:[70,70,70,70,70,70,72.5,50,72.5,75,75,null]},
@@ -766,9 +766,33 @@ function showTab(name, el) {
     if(name==='insights')   renderIns();
 }
 
-// &#9552;&#9552; INIT &#9552;&#9552;
-async function init() {
-  const ok = await fetchLiveWeights();
+// ═══ EXERCISE WEIGHTS (Dynamic from Google Sheet) ═══
+  async function fetchExerciseWeights() {
+      const SHEET_ID = '1zPf2Vd2lXfSBdrJ04-H_GaolQ6SUiSARiGPrNHgF63k';
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Exercises&tq=select+*`;
+      try {
+            const resp = await fetch(url);
+            const text = await resp.text();
+            const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\((.+)\)/)[1]);
+            const table = json.table;
+            // Derive week labels from column headers (cols 4 onwards)
+            WEEKS_B22 = table.cols.slice(3).map(c => c.label.replace(/^B\d+-/, ''));
+            // Update EXERCISES weights from sheet data
+            table.rows.forEach((row, i) => {
+                    if (i < EXERCISES.length) {
+                              EXERCISES[i].weights = row.c.slice(3).map(c => (c && c.v !== null && c.v !== undefined) ? c.v : null);
+                    }
+            });
+            return true;
+      } catch(e) {
+            console.warn('Exercise weights fetch failed, using fallback:', e);
+            return false;
+      }
+  }
+  
+  // &#9552;&#9552; INIT &#9552;&#9552;
+aasync function init() {
+  await fetchExerciseWeights();  const ok = await fetchLiveWeights();
   if (!ok) document.getElementById('ov-note').style.display='block';
   renderOverview();
 }
