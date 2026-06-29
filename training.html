@@ -767,7 +767,7 @@ function showTab(name, el) {
 }
 
 // ═══ EXERCISE WEIGHTS (Dynamic from Google Sheet) ═══
-  async function fetchExerciseWeights() {
+  async function () {
       const SHEET_ID = '1zPf2Vd2lXfSBdrJ04-H_GaolQ6SUiSARiGPrNHgF63k';
       const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Exercises&tq=select+*`;
       try {
@@ -791,7 +791,7 @@ function showTab(name, el) {
   }
   
   // &#9552;&#9552; INIT &#9552;&#9552;
-aasync function init() {
+async function init() {
   await fetchExerciseWeights();  const ok = await fetchLiveWeights();
   if (!ok) document.getElementById('ov-note').style.display='block';
   renderOverview();
