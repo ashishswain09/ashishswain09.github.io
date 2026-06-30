@@ -12,7 +12,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --bg:     #0e0e0e;
-  --bg2:    #161616;
+  --bg2:    #161616
   --bg3:    #1e1e1e;
   --text:   #f0ede8;
   --muted:  rgba(240,237,232,0.38);
@@ -768,21 +768,19 @@ function showTab(name, el) {
 
 // ═══ EXERCISE WEIGHTS (Dynamic from Google Sheet) ═══
   async function fetchExerciseWeights() {
-      const SHEET_ID = '1zPf2Vd2lXfSBdrJ04-H_GaolQ6SUiSARiGPrNHgF63k';
-      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Exercises&tq=select+*`;
+      const SHEET_ID = '1ybf0OFXPZyjCN97WbXLl_ALrDWwDR8w1';
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Block+22-1-1-1&tq=select+*&headers=0`;
       try {
             const resp = await fetch(url);
             const text = await resp.text();
             const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\((.+)\)/)[1]);
             const table = json.table;
-            // Derive week labels from column headers (cols 4 onwards)
-            WEEKS_B22 = table.cols.slice(3).map(c => c.label.replace(/^B\d+-/, ''));
-            // Update EXERCISES weights from sheet data
-            table.rows.forEach((row, i) => {
-                    if (i < EXERCISES.length) {
-                              EXERCISES[i].weights = row.c.slice(3).map(c => (c && c.v !== null && c.v !== undefined) ? c.v : null);
-                    }
-            });
+            // Parse week labels from row 2 (every 5 cols starting at col 1)
+            const weekRow = table.rows[1]; WEEKS_B22 = []; for(let c=1;c<table.cols.length;c+=5){const v=weekRow.c[c]&&weekRow.c[c].v;if(v){WEEKS_B22.push(String(v).trim().replace(/^Week\s*/i,'').replace(/\s*\(Deload\)/i,' Deload').trim());}}
+            // Build name->weights map from training block sheet (wide format)
+            const parseWt=s=>{if(!s&&s!==0)return null;const n=parseFloat(String(s).replace(/[^\d.]/g,''));return isNaN(n)?null:n;}; const wtMap={}; table.rows.slice(2).forEach(row=>{if(!row.c)return;const nm=row.c[1]&&row.c[1].v?String(row.c[1].v).trim().replace(/\s+/g,' '):null;if(!nm||nm.length<3)return;const wts=[];for(let c=5;c<row.c.length;c+=5){wts.push(parseWt(row.c[c]&&row.c[c].v));}if(wts.some(w=>w!==null))wtMap[nm]=wts;}); EXERCISES.forEach(ex=>{
+                    const nm=ex.name.trim().replace(/\s+/g,' ');const key=Object.keys(wtMap).find(k=>k.replace(/\s+/g,' ').toLowerCase()===nm.toLowerCase()||k.replace(/\s+/g,' ').toLowerCase().startsWith(nm.toLowerCase().slice(0,15)));if(key){ex.weights=wtMap[key];}
+                              });
             return true;
       } catch(e) {
             console.warn('Exercise weights fetch failed, using fallback:', e);
