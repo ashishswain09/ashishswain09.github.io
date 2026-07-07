@@ -277,12 +277,12 @@ option { background: var(--bg2); }
   <div class="sec">
     <div class="sec-title">Weekly lift tracker</div>
     <select id="lift-pick" onchange="updateLift()">
-      <option>Wide Grip Pulldown</option><option>Single Arm Machine Row</option>
-      <option>Incline DB Press</option><option>Flat Machine Press</option>
-      <option>Pec Dec</option><option>Dumbbell Shoulder Press</option>
-      <option>Hack Squat</option><option>RDL</option>
-      <option>Hamstring Curls</option><option>Leg Extensions</option>
-      <option>V Bar Tricep Pressdown</option><option>Straight Bar Cable Curl</option>
+              <option>Flat DB Press</option><option>Incline Machine Press</option>
+            <option>Pec Dec</option><option>Dumbbell Lateral Raise</option>
+            <option>V Bar Tricep Pressdown</option><option>Leg Press</option>
+            <option>Single Arm Lat Pulldown</option><option>1 Arm Dumbbell Row</option>
+            <option>Straight Bar Cable Curl</option><option>Dumbbell Shoulder Press</option>
+            <option>Hack Squat</option><option>RDL</option>
     </select>
     <div class="ch ch-lg"><canvas id="ch-lift"></canvas></div>
   </div>
@@ -416,31 +416,31 @@ const BLOCK_NOTES = [
 
 let WEEKS_B22=['W1','W2','W3','W4','W5','W6','W7','W8 Deload','W9','W10','W11','W12'];
 const EXERCISES=[
-  {name:'Incline DB Press',         day:'Day 1',muscle:'Push',weights:[26,26,27.5,27.5,28,28,28,20,28,28,28,null]},
-  {name:'Flat Machine Press',       day:'Day 1',muscle:'Push',weights:[70,70,70,70,70,70,72.5,50,72.5,75,75,null]},
-  {name:'DB Lateral Raise',         day:'Day 1',muscle:'Push',weights:[10,12.5,12.5,12.5,12.5,12.5,12.5,8,12.5,12.5,12.5,null]},
-  {name:'Wide Grip Pulldown',       day:'Day 1',muscle:'Pull',weights:[75,70,75,77.5,77.5,77.5,77.5,60,77.5,80,80,null]},
-  {name:'Wide Overhand Cable Row',  day:'Day 1',muscle:'Pull',weights:[50,50,50,55,55,55,55,45,60,60,60,null]},
-  {name:'Rope Face Pull',           day:'Day 1',muscle:'Pull',weights:[36,36,36,37.25,37.25,38.5,38.5,25,43,43,43,null]},
-  {name:'V Bar Tricep Pressdown',   day:'Day 2',muscle:'Arms',weights:[74.25,74.25,75.5,75.5,75.5,77,77,54,77,null,77,null]},
-  {name:'Straight Bar Cable Curl',  day:'Day 2',muscle:'Arms',weights:[55.25,55.25,56.5,56.5,56.5,59,59,41,59,null,59,null]},
-  {name:'Hack Squat',               day:'Day 2',muscle:'Legs',weights:[67.5,67.5,70,70,70,70,72.5,60,72.5,null,72.5,null]},
-  {name:'Leg Extensions',           day:'Day 2',muscle:'Legs',weights:[72.5,72.5,72.5,72.5,72.5,72.5,72.5,60,72.5,null,72.5,null]},
-  {name:'Hamstring Curls',          day:'Day 2',muscle:'Legs',weights:[52,52,52,52,52,52,53.25,37,53.25,null,53.25,null]},
-  {name:'Straight Leg Calf Raise',  day:'Day 2',muscle:'Legs',weights:[79,79,79,79,86,86,86,60,86,null,86,null]},
-  {name:'Dumbbell Shoulder Press',  day:'Day 3',muscle:'Push',weights:[22,26,26,26,26,26,27.5,20,27.5,null,27.5,null]},
-  {name:'Pec Dec',                  day:'Day 3',muscle:'Push',weights:[60,66,66,67.25,68.5,67.25,67.25,50,68.5,null,68.5,null]},
-  {name:'Single Arm Lat Pulldown',  day:'Day 3',muscle:'Pull',weights:[57,57,57,64,64,64,70,50,73,null,73,null]},
-  {name:'Single Arm Machine Row',   day:'Day 3',muscle:'Pull',weights:[72,79,86,86,93,93,100,60,100,null,100,null]},
-  {name:'Chest Supported T-bar Row',day:'Day 3',muscle:'Pull',weights:[50,50,55,55,55,55,55,40,55,null,60,null]},
-  {name:'Rope Face Pull (D3)',       day:'Day 3',muscle:'Pull',weights:[36,36,37.25,37.25,38.5,38.5,38.5,25,38.5,null,38.5,null]},
-  {name:'Alternating DB Curl',       day:'Day 4',muscle:'Arms',weights:[16,16,16,17.5,17.5,17.5,17.5,12.5,17.5,null,17.5,null]},
-  {name:'OH DB Tricep Extension',    day:'Day 4',muscle:'Arms',weights:[30,30,30,32.5,32.5,31.25,31.25,23,32.5,null,32.5,null]},
-  {name:'Hamstring Curls (D4)',      day:'Day 4',muscle:'Legs',weights:[52,52,52,52,52,52,53.25,85,53.25,null,53.25,null]},
-  {name:'RDL',                       day:'Day 4',muscle:'Legs',weights:[122.5,122.5,122.5,122.5,125,125,125,85,127.5,null,127.5,null]},
-  {name:'Single Leg Press',          day:'Day 4',muscle:'Legs',weights:[42.5,42.5,42.5,42.5,45,45,45,30,45,null,45,null]},
-  {name:'Seated Calf Raise',         day:'Day 4',muscle:'Legs',weights:[40,40,40,40,40,40,40,25,41.25,null,41.25,null]},
-];
+  {name:'Flat DB Press',              day:'Day 1',muscle:'Push',weights:[26,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Incline Machine Press',      day:'Day 1',muscle:'Push',weights:[59,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Pec Dec',                    day:'Day 1',muscle:'Push',weights:[72,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Dumbbell Lateral Raise',     day:'Day 1',muscle:'Push',weights:[12,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'V Bar Tricep Pressdown',     day:'Day 1',muscle:'Arms',weights:[77,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Leg Press',                  day:'Day 1',muscle:'Legs',weights:[100,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Single Arm Lat Pulldown',    day:'Day 2',muscle:'Pull',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'1 Arm Dumbbell Row',         day:'Day 2',muscle:'Pull',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Reverse Pec Dec',            day:'Day 2',muscle:'Pull',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Alternating DB Curl',        day:'Day 2',muscle:'Arms',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Straight Bar Cable Curl',    day:'Day 2',muscle:'Arms',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Lying Hamstring Curl',       day:'Day 2',muscle:'Legs',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Dumbbell Shoulder Press',    day:'Day 3',muscle:'Push',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Close Grip Smith Machine Bench',day:'Day 3',muscle:'Push',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Flat Machine Press',         day:'Day 3',muscle:'Push',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Dumbbell Lateral Raise (D3)',day:'Day 3',muscle:'Push',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Leg Extension',              day:'Day 3',muscle:'Legs',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Hack Squat',                 day:'Day 3',muscle:'Legs',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Seated Hamstring Curls',     day:'Day 4',muscle:'Legs',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'RDL',                        day:'Day 4',muscle:'Legs',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Chest Supported DB Row',     day:'Day 4',muscle:'Pull',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Wide Grip Lat Pulldown',     day:'Day 4',muscle:'Pull',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Seated Cable Row',           day:'Day 4',muscle:'Pull',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  {name:'Single Arm Cable Curl',      day:'Day 4',muscle:'Arms',weights:[null,null,null,null,null,null,null,null,null,null,null,null]},
+  ];
 const MACRO_PHASES=[
   {label:'Bulk P1', cal:2250,protein:200,carbs:250,fats:50,start:1,  color:'#4ecdc4'},
   {label:'Bulk P2', cal:2290,protein:200,carbs:260,fats:50,start:13, color:'#45b7d1'},
