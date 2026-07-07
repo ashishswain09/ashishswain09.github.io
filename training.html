@@ -374,7 +374,7 @@ option { background: var(--bg2); }
 // ══════════════════════════════════════════════════════════
 
 // ─── Current block number — update this when a new block starts ───
-const CURRENT_BLOCK = 22;
+const CURRENT_BLOCK = 23;
 
 // ─── Block-level progression data (one entry per training block) ───
 // To add Block 23: push to bwAvg, labels, blkIds, phase + add entry in LIFT_HISTORY + BLOCK_NOTES
@@ -768,7 +768,7 @@ function showTab(name, el) {
 
 // ═══ EXERCISE WEIGHTS (Dynamic from Google Sheet) ═══
   async function fetchExerciseWeights() {
-      const SHEET_ID = '1ybf0OFXPZyjCN97WbXLl_ALrDWwDR8w1';
+      const SHEET_ID = '18-Zd-GONcgC1zw2DTUdvIQn4nARfDKDP';
       const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Block+22-1-1-1&tq=select+*&headers=0`;
       try {
             const resp = await fetch(url);
