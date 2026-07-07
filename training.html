@@ -381,7 +381,7 @@ const CURRENT_BLOCK = 23;
 const BLOCKS_DATA = {
   blkIds:   ['B1','B2-6','B7-8','B8-9','B10-11','B12-13','B14-15','B16-17','B18-19','B20-21','B22'],
   bwAvg:    [165.2,172.4,177.4,180.5,181.0,179.6,177.9,170.2,171.2,171.1,169.7],
-  labels:   ['Block 1','Blocks 2-6','Blocks 7-8','Blocks 8-9','Blocks 10-11','Blocks 12-13','Blocks 14-15','Blocks 16-17','Blocks 18-19','Blocks 20-21','Block 22 (Current)'],
+  labels:   ['Block 1','Blocks 2-6','Blocks 7-8','Blocks 8-9','Blocks 10-11','Blocks 12-13','Blocks 14-15','Blocks 16-17','Blocks 18-19','Blocks 20-21','Block 22'],
   phase:    ['Bulk','Bulk','Bulk','Bulk/Peak','Peak/Cut','Cut/Cyc','Cyc','Cyc/Rev D','Rev D','Rev D','Rev D P3']
 };
 
@@ -695,13 +695,48 @@ function renderCorr(){
 
 // &#9552;&#9552; INSIGHTS &#9552;&#9552;
 let insDone=false;
-function renderProg() {
+// ─── Live auto-update for the CURRENT block (Progression tab) ───
+  // Body-weight point = latest live check-in weight; lift bars = best weight logged
+  // so far this block. Exact-name matches continue an existing lift's history line;
+  // any exercise name not seen before starts a fresh line (nulls for prior blocks).
+  function liveBlockEntry() {
+      const bw = (liveWeights && liveWeights.length) ? Math.round(liveWeights[liveWeights.length-1]*10)/10 : BLOCKS_DATA.bwAvg[BLOCKS_DATA.bwAvg.length-1];
+      return {
+            blkId: 'B'+CURRENT_BLOCK,
+            label: 'Block '+CURRENT_BLOCK+' (Current)',
+            bwAvg: bw,
+            phase: 'In Progress',
+            note: 'Block '+CURRENT_BLOCK+' — in progress. Live data from training log.'
+      };
+  }
+  function liveLiftPeak(name) {
+      const ex = (typeof EXERCISES !== 'undefined') ? EXERCISES.find(e => e.name === name) : null;
+      if (!ex) return null;
+      const vals = ex.weights.filter(w => w !== null && w !== undefined);
+      return vals.length ? Math.max(...vals) : null;
+  }
+  function liveLiftHistory() {
+      const combined = {};
+      Object.keys(LIFT_HISTORY).forEach(key => { combined[key] = [...LIFT_HISTORY[key], liveLiftPeak(key)]; });
+      EXERCISES.forEach(ex => {
+            if (!(ex.name in combined)) combined[ex.name] = [...Array(BLOCKS_DATA.blkIds.length).fill(null), liveLiftPeak(ex.name)];
+      });
+      return combined;
+  }
+  function renderProg() {
   // ─── Data references (defined in the DATA section at top of file) ───
-  const BLOCKS      = BLOCKS_DATA.blkIds;
-  const BW_AVG      = BLOCKS_DATA.bwAvg;
-  const BLK_LABELS  = BLOCKS_DATA.labels;
-  const PHASE       = BLOCKS_DATA.phase;
-  const LIFT_DATA   = LIFT_HISTORY;
+  const _live       = liveBlockEntry();
+      const BLOCKS      = [...BLOCKS_DATA.blkIds, _live.blkId];
+      const BW_AVG      = [...BLOCKS_DATA.bwAvg, _live.bwAvg];
+      const BLK_LABELS  = [...BLOCKS_DATA.labels, _live.label];
+      const PHASE       = [...BLOCKS_DATA.phase, _live.phase];
+      const NOTES       = [...BLOCK_NOTES, _live.note];
+      const LIFT_DATA   = liveLiftHistory();
+      const pick = document.getElementById('prog-lift-pick');
+      if (pick && !pick._liveBuilt) {
+            pick._liveBuilt = true;
+            pick.innerHTML = Object.keys(LIFT_DATA).map(function(k){ return '<option>'+k+'</option>'; }).join('');
+                                                                         }
   const bwCtx = document.getElementById('ch-prog-bw');
   if (bwCtx && !bwCtx._progChart) {
     bwCtx._progChart = new Chart(bwCtx, {
@@ -713,7 +748,7 @@ function renderProg() {
   const tbl = document.getElementById('prog-block-table');
   if (tbl && !tbl.innerHTML) {
     var html='<table class="wtbl"><tbody><tr><th>Block</th><th>Phase</th><th>Avg BW (lbs)</th><th>Notes</th></tr></tbody>';
-    for(var i=0;i<BLOCKS.length;i++){var prev=BW_AVG[i-1];var delta=prev?(BW_AVG[i]-prev).toFixed(1):'--';var cls=delta!=='--'&&parseFloat(delta)>0?'up':parseFloat(delta)<0?'dn':'';html+='<tbody><tr><td>'+BLK_LABELS[i]+'</td><td style="color:rgba(240,237,232,.55)">'+PHASE[i]+'</td><td>'+BW_AVG[i]+(delta!=='--'?' <span class="'+cls+'" style="font-size:10px">('+(parseFloat(delta)>0?'+':'')+delta+')</span>':'')+'</td><td style="color:rgba(240,237,232,.45);font-size:11px">'+BLOCK_NOTES[i]+'</td></tr></tbody>';}
+    for(var i=0;i<BLOCKS.length;i++){var prev=BW_AVG[i-1];var delta=prev?(BW_AVG[i]-prev).toFixed(1):'--';var cls=delta!=='--'&&parseFloat(delta)>0?'up':parseFloat(delta)<0?'dn':'';html+='<tbody><tr><td>'+BLK_LABELS[i]+'</td><td style="color:rgba(240,237,232,.55)">'+PHASE[i]+'</td><td>'+BW_AVG[i]+(delta!=='--'?' <span class="'+cls+'" style="font-size:10px">('+(parseFloat(delta)>0?'+':'')+delta+')</span>':'')+'</td><td style="color:rgba(240,237,232,.45);font-size:11px">'+NOTES[i]+'</td></tr></tbody>';}
     html+='</table>';
     tbl.innerHTML=html;
   }
