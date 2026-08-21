@@ -221,7 +221,7 @@ option { background: var(--bg2); }
 <!-- BODY WEIGHT -->
 <div id="tab-bodyweight" class="tab-panel">
   <div class="sec">
-    <div class="sec-title">142-week weight + macro phases <span>lbs</span></div>
+    <div class="sec-title"><span id="bw-weeks">142</span>-week weight + macro phases <span>lbs</span></div>
     <div class="phase-legend" id="ph-leg"></div>
     <div class="ch ch-xl"><canvas id="ch-bw"></canvas></div>
   </div>
@@ -454,6 +454,12 @@ const MACRO_PHASES=[
   {label:'Rev D P1',cal:2270,protein:180,carbs:275,fats:50,start:100,color:'#9b59b6'},
   {label:'Rev D P2',cal:2320,protein:180,carbs:287,fats:50,start:115,color:'#8e44ad'},
   {label:'Rev D P3',cal:2570,calRest:2170,protein:180,carbs:350,carbsRest:250,fats:50,start:130,color:'#c8a96e'},
+  // Rev D P4 = the newest rung of the reverse-diet ladder in the nutrition sheet
+  // (Training 2670 / Non-training 2270, carbs 375/275). The sheet does not record
+  // which check-in each rung began, so `start` is ESTIMATED from the cadence of the
+  // previous rungs (P1@100, P2@115, P3@130 -> every 15 check-ins). Correct this one
+  // number if the step-up actually happened on a different check-in.
+  {label:'Rev D P4',cal:2670,calRest:2270,protein:180,carbs:375,carbsRest:275,fats:50,start:145,color:'#d9bd8a'},
 ];
 const DIET_SCORES=[4,4,3.5,2.5,3.5,3.5,2.5,4,4,2,1.5,1.5,2.5,4,4,4,3.5,4,3.5,3.5,5,5,5,5,5,2.5,4,4,4,1.5,4,4,4,4,4,3.5,3.5,4,4,2.5,1.5,2.5,4,3.5,3.5,3.5,3.5,3.5,4,4,4,4,1.5,2.5,3.5,3.5,3.5,4,3.5,3.5,3.5,4,2.5,4,4,4,4,1.5,3.5,3.5,3.5,2.5,3.5,4,4,4,4,3.5,4,4,4,4,4,5,5,5,1.5,1.5,2.5,5,5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,4,4,4,1.5,4,4,5,4,4,2.5,4,1.5,1.5,2.5,2.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,1.5,1.5,3.5,3.5,3.5,3.5,4,4,3.5,3.5,3.5,3.5,3.5,3.5,5,5,5,5,1.5,4,3.5,3.5,3.5];
 const GYM_SCORES=[4,2,3.5,4,4,3,4.5,4,4,4,4,4,3,5,4,4,5,4,4,4,4.5,4,4,4,4,4,4,4,4,5,4,4,4,4,3,4,4,5,3,4,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4.5,4,4,4,4,4,4,4,4.5,4,4,4,4,4,4,4,4,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1.5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1.5,4,4,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4];
@@ -550,8 +556,8 @@ function renderOverview() {
     <div class="card"><div class="card-lbl">Total Change</div><div class="card-val ${curr>start?'green':'red'}">${curr>start?'+':''}${(curr-start).toFixed(1)}</div><div class="card-sub">lbs from CI #1</div></div>
     <div class="card"><div class="card-lbl">Peak (Bulk)</div><div class="card-val">${peak}</div><div class="card-sub">lbs \u2014 CI #${W.indexOf(peak)+1}</div></div>
     <div class="card"><div class="card-lbl">Current Cals</div><div class="card-val accent">${cp.cal}${cp.calRest ? ' / ' + cp.calRest : ''}</div><div class="card-sub">${cp.calRest ? 'Train / Rest' : cp.label}</div></div>
-    <div class="card"><div class="card-lbl">Diet Score</div><div class="card-val">${dietAvg}</div><div class="card-sub">${onTrack}/${W.length} on track</div></div>
-    <div class="card"><div class="card-lbl">Gym Score</div><div class="card-val green">${gymAvg}</div><div class="card-sub">avg / 5.0</div></div>
+    <div class="card"><div class="card-lbl">Diet Score</div><div class="card-val">${dietAvg}</div><div class="card-sub">${onTrack}/${DIET_SCORES.length} scored on track</div></div>
+    <div class="card"><div class="card-lbl">Gym Score</div><div class="card-val green">${gymAvg}</div><div class="card-sub">avg / 5.0 \u00b7 ${GYM_SCORES.length} wks</div></div>
 `
 
   mk('ch-ov', {type:'line', data:{
@@ -608,7 +614,10 @@ document.getElementById('ov-macros').innerHTML = `
   if (_el('ov-macro-phase-label')) _el('ov-macro-phase-label').textContent = _macroPhase.label;
   if (_el('ov-span')) _el('ov-span').textContent = 'CI #1 → #' + W.length;
   if (_el('prog-max-block')) _el('prog-max-block').textContent = CURRENT_BLOCK;
-  if (_el('corr-weeks')) _el('corr-weeks').textContent = W.length + ' weeks';
+  // The correlation view can only use check-ins where BOTH scores exist.
+  const _scored = Math.min(W.length, DIET_SCORES.length, GYM_SCORES.length);
+  if (_el('corr-weeks')) _el('corr-weeks').textContent = _scored + ' weeks';
+  if (_el('bw-weeks'))   _el('bw-weeks').textContent = W.length;
 }
 
 // &#9552;&#9552; BODY WEIGHT &#9552;&#9552;
@@ -651,9 +660,12 @@ function renderNut(){
   const leg={display:true,labels:{color:'rgba(240,237,232,.4)',font:{size:9},boxWidth:10}};
   mk('ch-cal',{type:'line',data:{labels,datasets:[{data:calD,borderColor:'#c8a96e',backgroundColor:'rgba(200,169,110,.07)',fill:true,borderWidth:1.5,pointRadius:0,label:'Calories'},{data:W.map(w=>w*5),borderColor:'rgba(76,175,125,.4)',borderWidth:1,borderDash:[4,3],pointRadius:0,fill:false,label:'Weight \u00d75'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:baseScale,elements:{line:{tension:.1}}}});
   mk('ch-mac',{type:'line',data:{labels,datasets:[{data:proD,borderColor:'#4caf7d',borderWidth:1.5,pointRadius:0,fill:false,label:'Protein'},{data:carD,borderColor:'#6b9fd4',borderWidth:1.5,pointRadius:0,fill:false,label:'Carbs'},{data:fatD,borderColor:'#d4956b',borderWidth:1.5,pointRadius:0,fill:false,label:'Fats'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:baseScale,elements:{line:{tension:.1}}}});
-  mk('ch-diet',{type:'line',data:{labels,datasets:[{data:DIET_SCORES,borderColor:'rgba(200,169,110,.7)',backgroundColor:'rgba(200,169,110,.06)',fill:true,borderWidth:1.5,pointRadius:0,label:'Diet'},{data:GYM_SCORES,borderColor:'rgba(76,175,125,.6)',borderWidth:1.5,pointRadius:0,fill:false,label:'Gym'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:{x:baseScale.x,y:{...baseScale.y,min:0,max:6}},elements:{line:{tension:.3}}}});
+  // Scores are entered by hand and lag the live weight series, so the diet/gym
+  // axis stops at the last scored week instead of running on to the last check-in.
+  const scoredLabels = labels.slice(0, Math.max(DIET_SCORES.length, GYM_SCORES.length));
+  mk('ch-diet',{type:'line',data:{labels:scoredLabels,datasets:[{data:DIET_SCORES,borderColor:'rgba(200,169,110,.7)',backgroundColor:'rgba(200,169,110,.06)',fill:true,borderWidth:1.5,pointRadius:0,label:'Diet'},{data:GYM_SCORES,borderColor:'rgba(76,175,125,.6)',borderWidth:1.5,pointRadius:0,fill:false,label:'Gym'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:leg},scales:{x:baseScale.x,y:{...baseScale.y,min:0,max:6}},elements:{line:{tension:.3}}}});
   const ntEl=document.getElementById('nut-table');
-  const goals=['Lean Bulk','Lean Bulk','Lean Bulk','Cut','Carb Cycle','Carb Cycle','Carb Cycle','Carb Cycle','Carb Cycle','Reverse Diet','Reverse Diet','Reverse Diet'];
+  const goals=['Lean Bulk','Lean Bulk','Lean Bulk','Cut','Carb Cycle','Carb Cycle','Carb Cycle','Carb Cycle','Carb Cycle','Reverse Diet','Reverse Diet','Reverse Diet','Reverse Diet'];
   ntEl.innerHTML=`<tr><th>Phase</th><th>Cals</th><th>Protein</th><th>Carbs</th><th>Fats</th><th>Goal</th></tr>`;
   MACRO_PHASES.forEach((p,i)=>ntEl.innerHTML+=`<tr><td style="color:${p.color}">&#9679; ${p.label}</td><td>${p.cal}</td><td>${p.protein}g</td><td>${p.carbs}g</td><td>${p.fats}g</td><td style="color:rgba(240,237,232,.3);font-size:10px">${goals[i]}</td></tr>`);
 }
