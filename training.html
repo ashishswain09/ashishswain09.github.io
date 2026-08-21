@@ -472,14 +472,29 @@ async function fetchLiveWeights() {
     const raw = await res.text();
     // Strip JSONP wrapper
     const json = JSON.parse(raw.replace(/^[^(]*\(/, '').replace(/\);?\s*$/, ''));
-        // Body weights are in row index 42 (sheet row 43), spread across columns (one per check-in)
-        const weightRow = json.table.rows[42];
+        // Body weights sit on a single row, one column per check-in.
+        // The row index is NOT stable: inserting a row in the sheet shifts it
+        // (it moved 42 -> 44 when the "Check In Info" header rows were added),
+        // so find it by content — the row with the most plausible body weights.
+        const rows = json.table.rows || [];
+        const inRange = v => !isNaN(v) && v > 100 && v < 300;
+        const countIn = r => (r && r.c || [])
+          .reduce((n, c) => n + (inRange(parseFloat(c && c.v)) ? 1 : 0), 0);
+
+        let weightRow = null, bestN = 0;
+        for (const r of rows) {
+          const n = countIn(r);
+          if (n > bestN) { bestN = n; weightRow = r; }
+        }
+        // Guard: if nothing looks like a weight series, keep the fallback data
+        if (bestN < 20) weightRow = null;
+
         const nums = [];
         if (weightRow) {
           for (const cell of (weightRow.c || [])) {
             if (cell && cell.v !== null && cell.v !== undefined) {
               const val = parseFloat(cell.v);
-              if (!isNaN(val) && val > 100 && val < 300) nums.push(val);
+              if (inRange(val)) nums.push(val);
             }
           }
         }
@@ -487,7 +502,9 @@ async function fetchLiveWeights() {
           liveWeights = nums;
           return true;
         }
-  } catch(e) {}
+  } catch(e) {
+    console.warn('[training] live body-weight fetch failed:', e);
+  }
   return false;
 }
 
@@ -540,15 +557,14 @@ function renderOverview() {
   mk('ch-ov', {type:'line', data:{
     labels: W.map((_,i)=>`CI ${i+1}`),
     datasets:[
-      {data:W, borderColor:'#c8a96e', backgroundColor:'rgba(200,169,110,.06)', fill:true, borderWidth:1.5, pointRadius:0, pointHoverRadius:4,
+      {label:'Weight (lbs)', data:W, borderColor:'#c8a96e', backgroundColor:'rgba(200,169,110,.06)', fill:true, borderWidth:1.5, pointRadius:0, pointHoverRadius:4,
        segment:{borderColor:ctx=>phaseFor(ctx.p0DataIndex).color}},
-      {data:W.map((_,i)=>phaseFor(i).cal/10), borderColor:'rgba(107,159,212,.45)', borderWidth:1, borderDash:[4,3], pointRadius:0, fill:false, yAxisID:'y2'}
+      {label:'Calories ÷10', data:W.map((_,i)=>phaseFor(i).cal/10), borderColor:'rgba(107,159,212,.45)', borderWidth:1, borderDash:[4,3], pointRadius:0, fill:false, yAxisID:'y2'}
     ]
   }, options:{responsive:true, maintainAspectRatio:false,
     plugins:{legend:{display:true,labels:{color:'rgba(240,237,232,.4)',font:{size:9},boxWidth:10}},
       tooltip:{callbacks:{label:ctx=>ctx.datasetIndex===0?`${ctx.raw} lbs`:`${(ctx.raw*10).toFixed(0)} cal`}}},
     scales:{...baseScale, y2:{position:'right',grid:{display:false},ticks:{...darkTick,callback:v=>`${v*10}`}}},
-    datasets:[{label:'Weight (lbs)'},{label:'Calories &#247;10'}],
     elements:{line:{tension:.3},point:{radius:0}}
   }});
 
@@ -804,7 +820,11 @@ function showTab(name, el) {
 // ═══ EXERCISE WEIGHTS (Dynamic from Google Sheet) ═══
   async function fetchExerciseWeights() {
       const SHEET_ID = '18-Zd-GONcgC1zw2DTUdvIQn4nARfDKDP';
-      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=Block+22-1-1-1&tq=select+*&headers=0`;
+      // NOTE: this reads the FIRST tab of the training-log sheet. A previous
+      // `&sheet=Block+22-1-1-1` param matched no tab at all and gviz silently
+      // served the first tab anyway, so it was misleading rather than useful.
+      // To pin a specific tab, use `&gid=<tab gid>` instead of a tab name.
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq=select+*&headers=0`;
       try {
             const resp = await fetch(url);
             const text = await resp.text();
