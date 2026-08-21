@@ -221,7 +221,7 @@ option { background: var(--bg2); }
 <!-- BODY WEIGHT -->
 <div id="tab-bodyweight" class="tab-panel">
   <div class="sec">
-    <div class="sec-title"><span id="bw-weeks">142</span>-week weight + macro phases <span>lbs</span></div>
+    <div class="sec-title" id="bw-title">142-week weight + macro phases <span>lbs</span></div>
     <div class="phase-legend" id="ph-leg"></div>
     <div class="ch ch-xl"><canvas id="ch-bw"></canvas></div>
   </div>
@@ -617,7 +617,10 @@ document.getElementById('ov-macros').innerHTML = `
   // The correlation view can only use check-ins where BOTH scores exist.
   const _scored = Math.min(W.length, DIET_SCORES.length, GYM_SCORES.length);
   if (_el('corr-weeks')) _el('corr-weeks').textContent = _scored + ' weeks';
-  if (_el('bw-weeks'))   _el('bw-weeks').textContent = W.length;
+  // Rewrite the leading text node only — .sec-title is a flex row and its <span>
+  // children are styled as the small right-hand label, so the count cannot live in one.
+  if (_el('bw-title') && _el('bw-title').firstChild)
+    _el('bw-title').firstChild.nodeValue = W.length + '-week weight + macro phases ';
 }
 
 // &#9552;&#9552; BODY WEIGHT &#9552;&#9552;
