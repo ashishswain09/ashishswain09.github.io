@@ -34,16 +34,16 @@ strong, b { font-weight: 500; }
 
 /* ── Title ── */
 .shell { max-width: 960px; margin: 0 auto; padding: 1.75rem 2.5rem 4rem; }
-.hero { display: grid; grid-template-columns: 1.3fr .7fr; align-items: end; gap: 48px; }
+.hero { display: block; }
 .eyebrow, .kicker { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 400; color: var(--muted); }
 .eyebrow { margin: .5rem 0 0; order: 2; }
 .hero > div { display: flex; flex-direction: column; }
-h1 { font-family: var(--font-d); font-size: clamp(2.6rem, 6vw, 4rem); font-weight: 300; line-height: 1; letter-spacing: -.01em; margin: 0; }
+h1 { font-family: var(--font-d); font-size: clamp(2.4rem, 5vw, 3rem); font-weight: 300; line-height: 1; letter-spacing: -.01em; margin: 0; }
 h1 em { color: var(--accent); font-style: italic; font-weight: 300; }
-.hero-copy { color: var(--muted); font-size: 13px; line-height: 1.7; margin: 0 0 4px; }
+.hero-copy { color: var(--muted); font-size: 13px; line-height: 1.7; margin: 1rem 0 0; max-width: 640px; }
 
 /* ── Steps (styled like Training's tab nav) ── */
-.stepper { display: flex; align-items: center; margin: 2.5rem 0 2rem; border-bottom: .5px solid var(--border); }
+.stepper { display: flex; align-items: center; margin: 2rem 0 1.5rem; border-bottom: .5px solid var(--border); }
 .step { border: 0; border-bottom: 1.5px solid transparent; margin-bottom: -.5px; background: none; padding: .65rem 1rem; display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: color .2s, border-color .2s; white-space: nowrap; }
 .step span { font-size: 10px; color: var(--muted); }
 .step:hover:not(.active) { color: var(--text); }
@@ -55,9 +55,9 @@ h1 em { color: var(--accent); font-style: italic; font-weight: 300; }
 .panel.active { display: block; }
 @keyframes reveal { from { opacity: 0; transform: translateY(6px); } }
 
-.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 1.5rem; }
-.section-heading h2 { font-family: var(--font-d); font-size: 2rem; font-weight: 300; line-height: 1.1; margin: 6px 0 0; }
-.section-heading p:last-child { max-width: 400px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.section-heading { margin-bottom: 1.25rem; }
+.section-heading h2 { font-family: var(--font-d); font-size: 1.6rem; font-weight: 400; line-height: 1.15; margin: 4px 0 0; }
+.section-heading p:last-child { max-width: 640px; margin: .4rem 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
 .kicker { margin: 0; }
 
 /* ── Cards ── */
@@ -184,10 +184,7 @@ footer { max-width: 960px; margin: 0 auto; padding: 1.5rem 2.5rem 2.5rem; border
 
 @media (max-width: 800px) {
   .site-header, .shell, footer { padding-left: 1.25rem; padding-right: 1.25rem; }
-  .hero { grid-template-columns: 1fr; gap: 18px; }
   .stepper { overflow-x: auto; }
-  .section-heading { display: block; }
-  .section-heading p:last-child { margin-top: 10px; }
   .baseline-grid, .projection-layout, .comparison-grid { grid-template-columns: 1fr; }
   .photo-drop { min-height: 400px; }
   .verdict-card { grid-template-columns: 100px 1fr; }
