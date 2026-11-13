@@ -192,10 +192,15 @@ Anything on this page is public, so weight, waist and body-fat figures can be se
 
 It has three steps:
 
-1. **Baseline:** add a front-facing photo (JPG, PNG, or iPhone HEIC, which is converted in the browser) and record date, height, weight, waist, optional body fat, sleep, steps and training days. Then **tap your waist** on the photo and set the **body width** markers, so FORM knows where your body is in the picture.
-2. **Projection:** choose a time horizon and targets (weight, waist, body fat, strength change) and how consistent you expect to be. FORM flags aggressive weekly rates and reshapes **only your body** in the photo:
-   - the waist narrows or widens with the waist target
-   - overall width scales with the weight change
+1. **Baseline:** add a front-facing photo (JPG, PNG, or iPhone HEIC, which is converted in the browser) and record date, sex, age, height, weight, waist, neck (hip for women), optional measured body fat, sleep, steps and training days. Then **tap your waist** on the photo and set the **body width** markers, so FORM knows where your body is in the picture.
+2. **Projection:** set a target weight and timeline. A **validated body-composition model** (`form/model.js`) works out the rest:
+   - **resting energy:** Mifflin-St Jeor, scaled by an activity level from your steps and training
+   - **day-by-day weight change:** the Hall energy-balance model (the basis of the NIH Body Weight Planner), with Forbes' fat/lean split, adaptive slowdown, and trial-based adjustments for strength training (protects muscle) and short sleep (costs muscle)
+   - **body fat and waist:** the US Navy circumference equations, anchored to your own measurements
+
+   It shows the daily calories needed, the **likely** result at your stated consistency (with a ±150 kcal/day range), how much of the change is fat vs lean, a plan-vs-likely chart, and the **predicted waist and body fat**. It flags targets that would need an unsafe intake. The photo is then reshaped to the likely outcome. Only your body changes:
+   - the waist follows the predicted waist
+   - overall width scales with weight
    - the shoulders widen slightly with strength
    - a body-fat drop adds a touch of definition
 
@@ -207,7 +212,7 @@ It has three steps:
 
 Your photos, numbers, targets and last check-in are **saved in this browser** (localStorage), so they're still there on check-in day. **Start a new baseline** deletes them.
 
-The photo is never analysed to infer body fat or health. The image is a directional illustration, not a prediction. Not medical advice.
+The numbers come from validated equations, but they're population averages: individual results vary (typically ±1–2 kg over 12 weeks, and ±3–4% for tape-measured body fat). The photo is never analysed to infer body fat or health, and the reshaped image is an illustration of the predicted numbers, not a medical prediction of appearance. Not medical advice.
 
 Files: `index.html`, `app.js`, `styles.css`, with its own [README](form/README.md) and MIT [LICENSE](form/LICENSE). The forwarding page for the old address is `form-conditioning-app/index.html`.
 

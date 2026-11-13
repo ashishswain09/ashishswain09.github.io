@@ -14,7 +14,7 @@ const state = {
   guide: { x: 0.5, y: 0.55, w: 0.40 },  // waist point and body width, as fractions of the photo
 };
 
-const FIELDS = ["baseline-date", "height", "weight", "waist", "bodyfat", "sleep", "steps", "training",
+const FIELDS = ["baseline-date", "sex", "age", "neck", "hip", "height", "weight", "waist", "bodyfat", "sleep", "steps", "training",
   "weeks", "target-weight", "target-waist", "target-bodyfat", "strength-change", "nutrition", "adherence", "target-sleep",
   "checkin-date", "actual-weight", "actual-waist", "actual-bf", "body-width"];
 
@@ -173,32 +173,48 @@ $$(".next").forEach((b) => b.addEventListener("click", () => {
 
 function validateBaseline(loud) {
   let ok = true;
-  ["#baseline-date", "#height", "#weight", "#waist"].forEach((sel) => {
+  const req = ["#baseline-date", "#age", "#height", "#weight", "#waist"];
+  if ($("#sex").value === "female") req.push("#hip");
+  req.forEach((sel) => {
     const el = $(sel), good = el.type === "date" ? !!el.value : Number(el.value) > 0;
     el.style.borderColor = good || !loud ? "" : "#e05a5a"; ok = ok && good;
   });
-  if (!ok && loud) msg("#baseline-msg", "Add your date, height, weight and waist to continue.");
+  if (!ok && loud) msg("#baseline-msg", `Add your date, age, height, weight and waist${$("#sex").value === "female" ? " and hip" : ""} to continue.`);
   if (ok) initializeTargets();
   return ok;
 }
 function initializeTargets() {
-  if (!$("#target-weight").value) $("#target-weight").value = Math.max(35, n("#weight") * 0.94).toFixed(1);
-  if (!$("#target-waist").value) $("#target-waist").value = Math.max(45, n("#waist") * 0.94).toFixed(1);
-  if (!$("#target-bodyfat").value && has("#bodyfat")) $("#target-bodyfat").value = Math.max(3, n("#bodyfat") - 3).toFixed(1);
+  if (!$("#target-weight").value) $("#target-weight").value = Math.max(35, n("#weight") * 0.95).toFixed(1);
+}
+function syncSexFields() { document.querySelector(".hip-field").hidden = $("#sex").value !== "female"; }
+$("#sex").addEventListener("change", () => { syncSexFields(); updateProjection(); save(); });
+
+// ── Body-composition model (form/model.js) ─────────────────
+let modelCache = { key: "", out: null };
+function model() {
+  const inp = {
+    sex: $("#sex").value, age: n("#age") || 30, height: n("#height"), weight: n("#weight"), waist: n("#waist"),
+    neck: n("#neck"), hip: n("#hip"), bodyfat: n("#bodyfat"), steps: n("#steps"), training: n("#training"),
+    weeks: n("#weeks"), targetWeight: n("#target-weight") || n("#weight"),
+    nutritionConsistency: n("#nutrition") / 100, trainingConsistency: n("#adherence") / 100, sleep: n("#target-sleep"),
+  };
+  const key = JSON.stringify(inp);
+  if (key !== modelCache.key) {
+    modelCache = { key, out: inp.height && inp.weight && inp.waist ? window.FormModel.project(inp) : null };
+  }
+  return modelCache.out;
 }
 
 // ── The plan, at any point in time ─────────────────────────
 function targetDate() { const d = dateOf("#baseline-date"); d.setDate(d.getDate() + n("#weeks") * 7); return d; }
-// Expected values `p` of the way (0..1) from start to target.
+// The model's likely state `p` of the way (0..1) through the plan (uses the stated consistency).
 function planAt(p) {
-  const at = (a, b) => (a && b ? a + (b - a) * p : 0);
-  return {
-    weight: at(n("#weight"), n("#target-weight")),
-    waist: at(n("#waist"), n("#target-waist")),
-    bf: has("#bodyfat") && has("#target-bodyfat") ? at(n("#bodyfat"), n("#target-bodyfat")) : 0,
-    strength: n("#strength-change") * p,
-  };
+  const m = model();
+  if (!m) return { weight: 0, waist: 0, bf: 0, strength: 0 };
+  const pt = m.likely[Math.round(p * m.days)];
+  return { weight: pt.w, waist: pt.waist, bf: pt.bf, strength: n("#strength-change") * p };
 }
+const startBF = () => (model()?.start.bf0 || 0);
 function checkinProgress() {
   const start = dateOf("#baseline-date"), end = targetDate(), ci = dateOf("#checkin-date");
   return Math.max(0, Math.min(1, (ci - start) / Math.max(1, end - start)));
@@ -214,23 +230,44 @@ function updateProjection() {
   $("#adherence-output").textContent = `${n("#adherence")}%`;
   $("#target-sleep-output").textContent = `${n("#target-sleep").toFixed(1)}h`;
 
-  const w0 = n("#weight"), c0 = n("#waist"), b0 = n("#bodyfat");
-  const w1 = n("#target-weight"), c1 = n("#target-waist"), b1 = n("#target-bodyfat");
-  $("#projected-weight-display").textContent = w1 ? `${w1.toFixed(1)} kg` : "—";
-  $("#projected-waist-display").textContent = c1 ? `${c1.toFixed(1)} cm` : "—";
-  $("#projected-bf-display").textContent = b1 ? `${b1.toFixed(1)}%` : "—";
-  $("#projected-weight-delta").textContent = w1 ? `${signed(w1 - w0, " kg")} change` : "—";
-  $("#projected-waist-delta").textContent = c1 ? `${signed(c1 - c0, " cm")} change` : "—";
-  $("#projected-bf-delta").textContent = b1 && b0 ? `${signed(b1 - b0, " pts")} change` : "Add a start body fat %";
+  const m = model();
+  if (!m) return;
+  const fin = m.likely.at(-1), planEnd = m.plan.at(-1), st = m.start;
+  const w0 = st.w, c0 = st.waist, b0 = st.bf0;
+  $("#target-waist").value = planEnd.waist.toFixed(1);
+  $("#target-bodyfat").value = planEnd.bf.toFixed(1);
 
-  const rate = w0 && weeks ? Math.abs(w1 - w0) / w0 / weeks * 100 : 0;
-  const waistRate = c0 && weeks ? Math.abs(c1 - c0) / weeks : 0;
-  const warn = rate > 1 || (w1 < w0 && rate > 0.85) || waistRate > 1;
+  // Metric strip: the likely outcome at the stated consistency.
+  $("#projected-weight-display").textContent = `${fin.w.toFixed(1)} kg`;
+  $("#projected-waist-display").textContent = `${fin.waist.toFixed(1)} cm`;
+  $("#projected-bf-display").textContent = `${fin.bf.toFixed(1)}%`;
+  $("#projected-weight-delta").textContent = `${signed(fin.w - w0, " kg")} likely`;
+  $("#projected-waist-delta").textContent = `${signed(fin.waist - c0, " cm")} likely`;
+  $("#projected-bf-delta").textContent = `${signed(fin.bf - b0, " pts")} likely`;
+
+  // Model card.
+  const lost = w0 - planEnd.w, fatLost = st.F0 - planEnd.F, leanLost = st.L0 - planEnd.L;
+  $("#m-maint").textContent = Math.round(st.maintenance).toLocaleString();
+  $("#m-intake").textContent = `${Math.round(m.intake).toLocaleString()} kcal`;
+  $("#m-deficit").textContent = `${signed(m.dI, " kcal/day", 0)} vs maintenance`;
+  $("#m-likely").textContent = `${fin.w.toFixed(1)} kg`;
+  $("#m-range").textContent = `range ${Math.min(m.high.at(-1).w, m.low.at(-1).w).toFixed(1)}–${Math.max(m.high.at(-1).w, m.low.at(-1).w).toFixed(1)} kg at ${n("#nutrition")}% consistency`;
+  if (Math.abs(lost) > 0.2) {
+    const pf = Math.round(Math.abs(fatLost) / Math.abs(lost) * 100);
+    $("#m-fat").textContent = `${pf}% fat`;
+    $("#m-lean").textContent = `${Math.abs(fatLost).toFixed(1)} kg fat · ${Math.abs(leanLost).toFixed(1)} kg lean ${lost > 0 ? "lost" : "gained"}`;
+  } else { $("#m-fat").textContent = "—"; $("#m-lean").textContent = "Maintenance"; }
+  $("#m-bfsrc").textContent = `start ${st.bf0.toFixed(1)}%, ${st.bfSource}${st.neckGiven || $("#sex").value === "male" && has("#bodyfat") ? "" : "; waist prediction uses a typical neck size"}`;
+  drawModelChart(m);
+
+  // Pace guardrails, based on the model's required intake and weekly rate.
+  const rate = Math.abs(planEnd.w - w0) / w0 / weeks * 100;
+  const warn = m.belowFloor || rate > 1;
   $("#rate-card").classList.toggle("warning", warn);
-  $("#rate-title").textContent = warn ? "Aggressive pace" : "Sustainable pace";
-  $("#rate-copy").textContent = warn
-    ? `${rate.toFixed(2)}% of body weight and ${waistRate.toFixed(1)} cm of waist a week is hard to sustain. Consider more time or a smaller change.`
-    : `${rate.toFixed(2)}% of body weight and ${waistRate.toFixed(1)} cm of waist a week sits in a commonly manageable range.`;
+  $("#rate-title").textContent = m.belowFloor ? "Not safely achievable in this time" : warn ? "Aggressive pace" : "Sustainable pace";
+  $("#rate-copy").textContent = m.belowFloor
+    ? `It would take ${m.intake < 1000 ? "under 1,000" : "about " + Math.round(m.intake).toLocaleString()} kcal a day, below a safe minimum of ~${Math.round(m.floor).toLocaleString()} kcal. Allow more weeks or a smaller change.`
+    : `${rate.toFixed(2)}% of body weight a week (${Math.round(Math.abs(m.dI))} kcal/day ${m.dI < 0 ? "deficit" : "surplus"}). ${warn ? "Faster than ~1%/week risks more muscle loss and is hard to sustain." : "Within the commonly recommended 0.5–1% a week."}`;
   $(".rate-icon").textContent = warn ? "!" : "✓";
 
   if (state.baseline) {
@@ -238,6 +275,20 @@ function updateProjection() {
     $("#projection-canvas").style.display = "block";
     $("#empty-projection").style.display = "none";
   }
+}
+
+function drawModelChart(m) {
+  const svg = $("#model-chart"), W = 320, H = 120, pad = 4;
+  const all = [...m.plan, ...m.low, ...m.high].map((p) => p.w).concat(n("#target-weight"));
+  const lo = Math.min(...all) - 0.3, hi = Math.max(...all) + 0.3;
+  const X = (d) => pad + (W - 2 * pad) * d / m.days, Y = (w) => pad + (H - 2 * pad) * (1 - (w - lo) / (hi - lo));
+  const path = (arr) => arr.map((p, i) => `${i ? "L" : "M"}${X(p.day).toFixed(1)},${Y(p.w).toFixed(1)}`).join("");
+  const band = path(m.low) + m.high.slice().reverse().map((p) => `L${X(p.day).toFixed(1)},${Y(p.w).toFixed(1)}`).join("") + "Z";
+  const ty = Y(n("#target-weight")).toFixed(1);
+  svg.innerHTML = `<path d="${band}" fill="rgba(200,169,110,.16)"/>` +
+    `<line x1="${pad}" x2="${W - pad}" y1="${ty}" y2="${ty}" stroke="rgba(76,175,125,.55)" stroke-dasharray="3 3" stroke-width="1" vector-effect="non-scaling-stroke"/>` +
+    `<path d="${path(m.plan)}" fill="none" stroke="rgba(240,237,232,.5)" stroke-width="1.2" vector-effect="non-scaling-stroke"/>` +
+    `<path d="${path(m.likely)}" fill="none" stroke="#c8a96e" stroke-width="1.8" vector-effect="non-scaling-stroke"/>`;
 }
 
 // ── Projection rendering ───────────────────────────────────
@@ -264,7 +315,7 @@ function renderProjection(canvas, p) {
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
   const c = drawCover(ctx, img, W, H);
   const plan = planAt(p);
-  const w0 = n("#weight"), c0 = n("#waist"), b0 = n("#bodyfat");
+  const w0 = n("#weight"), c0 = n("#waist"), b0 = startBF();
 
   const cx = c.x + state.guide.x * img.naturalWidth * c.s;
   const waistY = c.y + state.guide.y * img.naturalHeight * c.s;
@@ -336,7 +387,7 @@ function syncComparison() {
   $("#cmp-start-date").textContent = readable(dateOf("#baseline-date"));
   $("#cmp-start-weight").textContent = fmt(n("#weight"), " kg");
   $("#cmp-start-waist").textContent = fmt(n("#waist"), " cm");
-  $("#cmp-start-bf").textContent = has("#bodyfat") ? fmt(n("#bodyfat"), "%") : "—";
+  $("#cmp-start-bf").textContent = fmt(startBF(), "%");
   $("#compare-projected-date").textContent = readable(ci);
   $("#compare-target-weight").textContent = fmt(plan.weight, " kg");
   $("#compare-target-waist").textContent = fmt(plan.waist, " cm");
@@ -379,7 +430,7 @@ function renderVariance(p, plan) {
   const rows = [
     { name: "Weight", unit: " kg", start: n("#weight"), exp: plan.weight, act: n("#actual-weight"), lowerIsGood: n("#target-weight") <= n("#weight") },
     { name: "Waist", unit: " cm", start: n("#waist"), exp: plan.waist, act: n("#actual-waist"), lowerIsGood: n("#target-waist") <= n("#waist") },
-    { name: "Body fat", unit: "%", start: has("#bodyfat") ? n("#bodyfat") : 0, exp: plan.bf, act: n("#actual-bf"), lowerIsGood: true },
+    { name: "Body fat", unit: "%", start: startBF(), exp: plan.bf, act: n("#actual-bf"), lowerIsGood: n("#target-bodyfat") <= startBF() },
   ];
   $("#variance-table tbody").innerHTML = rows.map((r) => {
     const vs = r.act && r.exp ? r.act - r.exp : null;
@@ -395,7 +446,7 @@ function calculateVerdict() {
   const metrics = [
     { name: "Weight", base: n("#weight"), target: n("#target-weight"), exp: plan.weight, act: n("#actual-weight"), unit: " kg" },
     { name: "Waist", base: n("#waist"), target: n("#target-waist"), exp: plan.waist, act: n("#actual-waist"), unit: " cm" },
-    { name: "Body fat", base: n("#bodyfat"), target: n("#target-bodyfat"), exp: plan.bf, act: n("#actual-bf"), unit: "%" },
+    { name: "Body fat", base: startBF(), target: n("#target-bodyfat"), exp: plan.bf, act: n("#actual-bf"), unit: "%" },
   ].filter((m) => m.base && m.target && m.act);
   if (!metrics.length) { msg("#actual-msg", "Add at least one actual measurement (weight, waist or body fat) to get a verdict."); return; }
   msg("#actual-msg", "");
@@ -411,7 +462,7 @@ function calculateVerdict() {
   $("#verdict-score").textContent = score;
   $("#verdict-title").textContent = title;
   $("#verdict-text").textContent = copy;
-  $("#verdict-deltas").innerHTML = scored.map((m) => `<span class="delta-pill">${m.name} vs plan<b>${signed(m.delta, m.unit)}</b></span>`).join("");
+  $("#verdict-deltas").innerHTML = scored.map((m) => `<span class="delta-pill">${m.name} vs projection<b>${signed(m.delta, m.unit)}</b></span>`).join("");
   $("#verdict-card").scrollIntoView({ behavior: "smooth", block: "center" });
 }
 $("#calculate-verdict").addEventListener("click", calculateVerdict);
@@ -430,6 +481,7 @@ $("#reset-app").addEventListener("click", () => {
   // Returning on check-in day: default the check-in to today unless a check-in was already recorded.
   const recorded = has("#actual-weight") || has("#actual-waist") || has("#actual-bf") || state.actual;
   if (!$("#checkin-date").value || !recorded) $("#checkin-date").value = today;
+  syncSexFields();
   updateProjection();
   if (restored && state.baseline) msg("#baseline-msg", "Restored your saved start photo and numbers from this device.");
 })();
