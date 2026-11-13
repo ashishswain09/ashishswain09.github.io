@@ -2,7 +2,7 @@
 
 FORM is a private, browser-only prototype for creating a measurable body-conditioning projection and comparing it with a later check-in.
 
-**Live site:** [ashishkumarswain.com/form](https://ashishkumarswain.com/form/)
+**Live site:** [ashishkumarswain.com/form](https://ashishkumarswain.com/form/) (the old `/form-conditioning-app/` address forwards here)
 
 ## Run it
 
