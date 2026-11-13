@@ -162,6 +162,8 @@ Anything on this page is public, so weight, waist and body-fat figures can be se
 
 <br>
 
+**Live at [ashishkumarswain.com/form](https://ashishkumarswain.com/form/).** The old address, `/form-conditioning-app/`, forwards here automatically.
+
 `form/` is a browser-only prototype for setting a measurable body-conditioning target and comparing it with a later check-in. Photos never leave the device.
 
 It has three steps:
@@ -172,7 +174,7 @@ It has three steps:
 
 The photo is never analysed to infer body fat or health. The image is a directional illustration, not a prediction. Not medical advice.
 
-Files: `index.html`, `app.js`, `styles.css`, with its own [README](form/README.md) and MIT [LICENSE](form/LICENSE).
+Files: `index.html`, `app.js`, `styles.css`, with its own [README](form/README.md) and MIT [LICENSE](form/LICENSE). The forwarding page for the old address is `form-conditioning-app/index.html`.
 
 </details>
 
