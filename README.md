@@ -214,7 +214,7 @@ Your photos, numbers, targets and last check-in are **saved in this browser** (l
 
 The numbers come from validated equations, but they're population averages: individual results vary (typically ±1–2 kg over 12 weeks, and ±3–4% for tape-measured body fat). The photo is never analysed to infer body fat or health, and the reshaped image is an illustration of the predicted numbers, not a medical prediction of appearance. Not medical advice.
 
-Files: `index.html`, `app.js`, `styles.css`, with its own [README](form/README.md) and MIT [LICENSE](form/LICENSE). The forwarding page for the old address is `form-conditioning-app/index.html`.
+Files: `index.html`, `app.js` (page logic), `model.js` (the body-composition model), `styles.css`, with its own [README](form/README.md) and MIT [LICENSE](form/LICENSE). The forwarding page for the old address is `form-conditioning-app/index.html`.
 
 </details>
 
