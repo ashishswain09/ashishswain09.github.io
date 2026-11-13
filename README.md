@@ -9,7 +9,6 @@ It's a small collection of personal tools: money, fitness and travel. Every page
 | Page | Path | What it is |
 |---|---|---|
 | Home | [`/`](https://ashishkumarswain.com/) | Landing page linking to everything below |
-| Wealth tracker | [`/wealth-tracker.html`](https://ashishkumarswain.com/wealth-tracker.html) | Personal finance dashboard |
 | **Wealth advisor** | [`/advisor.html`](https://ashishkumarswain.com/advisor.html) | Ireland-aware investing plan and AI research partner ([details below](#wealth-advisor)) |
 | Travel | [`/travel.html`](https://ashishkumarswain.com/travel.html) | Photographs by country |
 | Training | [`/training.html`](https://ashishkumarswain.com/training.html) | 360° fitness dashboard: weight, nutrition and strength tracking |
