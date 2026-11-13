@@ -33,6 +33,28 @@
   const f1 = (x) => (x == null ? '—' : x.toFixed(1));
   const sgn = (x) => (x == null ? '—' : (x > 0 ? '+' : x < 0 ? '−' : '') + Math.abs(x).toFixed(1));
   const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // Dates may arrive as 2026-09-14 (CSV snapshot) or in a sheet's display format
+  // (14/09/2026 in an Irish-locale sheet, 9/14/2026 in a US one). The day/month
+  // order is decided once from all the dates (any value above 12 settles it),
+  // defaulting to day/month. Everything is normalised to YYYY-MM-DD.
+  let monthFirst = false;
+  const learnDateOrder = (vals) => {
+    for (const v of vals) {
+      const m = String(v || '').trim().match(/^(\d{1,2})[\/.](\d{1,2})[\/.]\d{4}$/);
+      if (!m) continue;
+      if (+m[2] > 12) { monthFirst = true; return; }
+      if (+m[1] > 12) { monthFirst = false; return; }
+    }
+  };
+  const isoDate = (v) => {
+    v = String(v || '').trim(); let m;
+    if ((m = v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;
+    if ((m = v.match(/^(\d{1,2})[\/.](\d{1,2})[\/.](\d{4})$/))) {
+      const [mo, d] = monthFirst ? [m[1], m[2]] : [m[2], m[1]];
+      return `${m[3]}-${mo.padStart(2, '0')}-${d.padStart(2, '0')}`;
+    }
+    const t = Date.parse(v); return isNaN(t) ? v : new Date(t).toISOString().slice(0, 10);
+  };
   const fmtDate = (s) => new Date(s + 'T00:00:00Z').toLocaleDateString('en-IE', { day: 'numeric', month: 'short', timeZone: 'UTC' });
 
   // ── CSV ────────────────────────────────────────────────
@@ -60,7 +82,7 @@
       try {
         const out = {};
         for (const t of TABS) {
-          const rows = parseCSV(await getText(`https://docs.google.com/spreadsheets/d/${CUT165_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(t)}`));
+          const rows = parseCSV(await getText(`https://docs.google.com/spreadsheets/d/${CUT165_SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(t)}`));
           const need = t === 'checkin' ? 'cut_wk' : t === 'weighins' ? 'weight_lb' : 'exercise';
           if (!rows.length || !(need in rows[0])) throw new Error('tab ' + t + ' missing or wrong headers');
           out[t] = rows;
@@ -75,9 +97,10 @@
 
   // ── Derived figures (same formulas as the Block 1 dashboard) ──
   function derive(d) {
-    const checkin = d.checkin.map((r) => ({ ...r, cut_wk: num(r.cut_wk), target_lb: num(r.target_lb), avg_lb: num(r.avg_lb), delta_lb: num(r.delta_lb),
+    learnDateOrder([...d.weighins.map((r) => r.date), ...d.checkin.map((r) => r.week_of)]);
+    const checkin = d.checkin.map((r) => ({ ...r, week_of: isoDate(r.week_of), cut_wk: num(r.cut_wk), target_lb: num(r.target_lb), avg_lb: num(r.avg_lb), delta_lb: num(r.delta_lb),
       rate3: num(r.rate3_lb_wk), waist_cm: num(r.waist_cm), steps: num(r.avg_steps), sleep_h: num(r.sleep_h), hunger: num(r.hunger), days: num(r.days_logged) || 0 }));
-    const weighins = d.weighins.map((r) => ({ date: r.date, w: num(r.weight_lb), cut_wk: num(r.cut_wk) })).filter((r) => r.w != null && r.date);
+    const weighins = d.weighins.map((r) => ({ date: isoDate(r.date), w: num(r.weight_lb), cut_wk: num(r.cut_wk) })).filter((r) => r.w != null && r.date);
 
     const bodyfat = checkin.filter((r) => r.waist_cm != null && r.avg_lb != null).map((r) => {
       const w = r.waist_cm, lb = r.avg_lb;
