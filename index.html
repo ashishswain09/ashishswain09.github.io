@@ -4,323 +4,251 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ashish Kumar Swain</title>
-<meta name="description" content="Ashish Kumar Swain — personal site.">
+<meta name="description" content="Ashish Kumar Swain — product owner in digital banking, based in Limerick. Investing, training and travel.">
+<meta name="theme-color" content="#0b0b0b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:      #0e0e0e;
+  --bg:      #0b0b0b;
+  --tile:    #141414;
+  --tile-2:  #1a1a1a;
   --text:    #f0ede8;
-  --muted:   rgba(240,237,232,0.4);
+  --muted:   rgba(240,237,232,0.55);
+  --faint:   rgba(240,237,232,0.32);
   --accent:  #c8a96e;
+  --green:   #4caf7d;
+  --blue:    #6b9fd4;
   --border:  rgba(240,237,232,0.08);
   --font-d:  'Cormorant Garamond', Georgia, serif;
-  --font-b:  'Inter', system-ui, sans-serif;
+  --font-b:  'Inter', system-ui, -apple-system, sans-serif;
+  --ease:    cubic-bezier(.2,.7,.2,1);
 }
 
-html, body {
-  height: 100%;
-}
-
+html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-b);
   font-weight: 300;
+  -webkit-font-smoothing: antialiased;
   min-height: 100vh;
-  display: grid;
-  grid-template-rows: 1fr auto;
+  overflow-x: hidden;
 }
+a { color: inherit; text-decoration: none; }
 
-/* ── MAIN ── */
-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 4rem 2.5rem;
-  max-width: 640px;
-  margin: 0 auto;
-  width: 100%;
-}
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 2.5rem; }
 
-/* ── NAME ── */
-.name {
-  font-family: var(--font-d);
-  font-size: clamp(2.6rem, 6vw, 4rem);
-  font-weight: 300;
-  letter-spacing: -0.01em;
-  line-height: 1;
-  color: var(--text);
-  margin-bottom: 0.5rem;
-}
+/* ── Top bar ── */
+.bar { display: flex; align-items: center; justify-content: space-between; padding-block: 1.75rem; }
+.mark { font-family: var(--font-d); font-size: 1.5rem; font-weight: 400; letter-spacing: .02em; }
+.mark span { color: var(--accent); }
+.bar-links { display: flex; gap: 1.75rem; }
+.bar-links a { font-size: 12px; color: var(--muted); letter-spacing: .04em; transition: color .25s; }
+.bar-links a:hover { color: var(--text); }
 
-.name-dot {
-  color: var(--accent);
-}
-
-/* ── LOCATION LINE ── */
-.location {
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 3.5rem;
-}
-
-/* ── DIVIDER ── */
-.rule {
-  width: 32px;
-  height: 0.5px;
-  background: var(--accent);
-  margin-bottom: 3.5rem;
-  opacity: 0.6;
-}
-
-/* ── LINKS GRID ── */
-.links {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.link-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.1rem 0;
-  border-bottom: 0.5px solid var(--border);
-  text-decoration: none;
-  color: var(--text);
-  transition: color 0.2s;
-  cursor: pointer;
-}
-
-.link-item:first-child {
-  border-top: 0.5px solid var(--border);
-}
-
-.link-item:hover {
-  color: var(--accent);
-}
-
-.link-item:hover .link-arrow {
-  transform: translateX(4px);
-  color: var(--accent);
-}
-
-.link-left {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.link-title {
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-}
-
-.link-desc {
-  font-size: 12px;
-  color: var(--muted);
-  letter-spacing: 0.02em;
-}
-
-.link-arrow {
-  font-size: 16px;
-  color: var(--muted);
-  transition: transform 0.2s, color 0.2s;
-  flex-shrink: 0;
-  margin-left: 1rem;
-}
-
-/* ── ABOUT PANEL (inline expand) ── */
-.about-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.3s ease;
-}
-
-.about-panel.open {
-  max-height: 400px;
-}
-
-.about-inner {
-  padding: 1.25rem 0 1.5rem;
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.85;
-  border-bottom: 0.5px solid var(--border);
-}
-
-.about-inner p + p {
-  margin-top: 0.85rem;
-}
-
-/* rotate arrow when about is open */
-.link-item.about-open .link-arrow {
-  transform: rotate(90deg);
-  color: var(--accent);
-}
-
-/* ── FOOTER ── */
-footer {
-  padding: 1.5rem 2.5rem;
-  max-width: 640px;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-copy {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-}
-
-.footer-links {
-  display: flex;
-  gap: 1.25rem;
-}
-
-.footer-link {
-  font-size: 11px;
-  color: var(--muted);
-  text-decoration: none;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  transition: color 0.2s;
-}
-
-.footer-link:hover { color: var(--accent); }
-
-/* ── CURSOR DOT (subtle ambient detail) ── */
-.cursor {
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  position: fixed;
+/* ── Hero ── */
+.hero { padding-block: 16vh 14vh; position: relative; }
+.hero::before {                        /* soft gold light behind the headline */
+  content: ''; position: absolute; z-index: -1;
+  width: 70vw; max-width: 900px; aspect-ratio: 1; left: -18%; top: -30%;
+  background: radial-gradient(closest-side, rgba(200,169,110,.10), transparent 70%);
   pointer-events: none;
-  z-index: 999;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.3s;
 }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 500px) {
-  main { padding: 3rem 1.5rem; }
-  footer { padding: 1.5rem; flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin-bottom: 1.75rem; }
+.hero h1 {
+  font-family: var(--font-d); font-weight: 300;
+  font-size: clamp(3.2rem, 9vw, 7.5rem);
+  line-height: .95; letter-spacing: -.025em;
 }
+.hero h1 .dot { color: var(--accent); }
+.hero p.lede {
+  margin-top: 2rem; max-width: 34rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.6; color: var(--muted);
+}
+.hero p.lede em { font-family: var(--font-d); font-style: italic; font-size: 1.2em; color: var(--text); }
+.scroll-cue { margin-top: 3.5rem; display: inline-flex; align-items: center; gap: .6rem; font-size: 12px; color: var(--faint); letter-spacing: .06em; }
+.scroll-cue i { width: 28px; height: .5px; background: var(--faint); display: block; }
 
+/* ── Tiles ── */
+.section-label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin-bottom: 1.25rem; }
+.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+.tile {
+  position: relative; overflow: hidden;
+  background: var(--tile); border: .5px solid var(--border); border-radius: 22px;
+  padding: 2rem 2rem 1.75rem; min-height: 320px;
+  display: flex; flex-direction: column;
+  transition: transform .5s var(--ease), border-color .4s, background .4s;
+}
+.tile:hover { transform: translateY(-4px); border-color: rgba(200,169,110,.35); background: var(--tile-2); }
+.tile:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 3px; }
+.tile.wide { grid-column: span 4; }
+.tile.narrow { grid-column: span 2; }
+.tile.half { grid-column: span 3; }
+.tile .kicker { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.tile h2 { font-family: var(--font-d); font-weight: 300; font-size: clamp(2rem, 3.4vw, 2.8rem); line-height: 1; margin-top: .6rem; letter-spacing: -.01em; }
+.tile p { position: relative; z-index: 1; margin-top: .75rem; font-size: 14px; line-height: 1.6; color: var(--muted); max-width: 26rem; }
+.tile .go { margin-top: auto; padding-top: 1.5rem; font-size: 13px; color: var(--text); display: inline-flex; align-items: center; gap: .4rem; position: relative; z-index: 1; }
+.tile .go b { font-weight: 400; color: var(--accent); transition: transform .4s var(--ease); display: inline-block; }
+.tile:hover .go b { transform: translateX(4px); }
+.art { position: absolute; right: 0; bottom: 0; pointer-events: none; opacity: .9; transition: opacity .4s, transform .6s var(--ease); }
+.tile:hover .art { opacity: 1; transform: scale(1.03); }
+
+/* ── About ── */
+.about { padding-block: 18vh 12vh; }
+.about blockquote {
+  font-family: var(--font-d); font-weight: 300;
+  font-size: clamp(1.9rem, 4.2vw, 3.2rem); line-height: 1.2; letter-spacing: -.01em;
+  max-width: 52rem;
+}
+.about blockquote span { color: var(--faint); }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; border-top: .5px solid var(--border); padding-top: 2rem; }
+.fact .k { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+.fact .v { font-family: var(--font-d); font-size: 1.6rem; font-weight: 300; margin-top: .4rem; line-height: 1.2; }
+
+/* ── Footer ── */
+footer { border-top: .5px solid var(--border); }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 1.75rem; padding-bottom: 2.25rem; font-size: 12px; color: var(--faint); }
+footer a { color: var(--muted); transition: color .25s; }
+footer a:hover { color: var(--accent); }
+
+/* ── Entrance motion (progressive: content is visible without JS) ── */
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.js .reveal.in { opacity: 1; transform: none; }
+.js .hero .reveal:nth-child(2) { transition-delay: .08s; }
+.js .hero .reveal:nth-child(3) { transition-delay: .18s; }
+.js .hero .reveal:nth-child(4) { transition-delay: .3s; }
+
+@media (max-width: 860px) {
+  .tile.wide, .tile.narrow, .tile.half { grid-column: span 6; }
+  .tile { min-height: 260px; }
+  .art { width: 46%; height: auto; opacity: .55; }
+  .tile:hover .art { opacity: .7; }
+  .facts { grid-template-columns: 1fr; gap: 1.25rem; }
+}
+@media (max-width: 520px) {
+  .wrap { padding-inline: 1.25rem; }
+  .hero { padding-block: 10vh 9vh; }
+  .tile { padding: 1.6rem 1.5rem 1.4rem; border-radius: 18px; }
+  .bar-links { gap: 1.1rem; }
+  footer .wrap { flex-direction: column; gap: .6rem; align-items: flex-start; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .link-arrow, .about-panel { transition: none; }
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  .tile, .art, .tile .go b { transition: none; }
 }
 </style>
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
+<header class="wrap bar">
+  <a class="mark" href="/" aria-label="Home">A<span>.</span></a>
+  <nav class="bar-links" aria-label="Quick links">
+    <a href="#work">Explore</a>
+    <a href="#about">About</a>
+    <a href="https://linkedin.com/in/ashishkumarswain" target="_blank" rel="noopener">LinkedIn</a>
+  </nav>
+</header>
 
 <main>
-  <h1 class="name">Ashish Kumar Swain<span class="name-dot">.</span></h1>
-  <p class="location">Limerick, Ireland</p>
-  <div class="rule"></div>
+  <section class="wrap hero">
+    <p class="eyebrow reveal">Limerick, Ireland</p>
+    <h1 class="reveal">Ashish Kumar<br>Swain<span class="dot">.</span></h1>
+    <p class="lede reveal">Building digital banking by day. Investing, training and travelling the rest of the time, and <em>measuring all of it.</em></p>
+    <a class="scroll-cue reveal" href="#work"><i></i>Explore</a>
+  </section>
 
-  <nav class="links" aria-label="Site sections">
+  <section class="wrap" id="work" aria-label="Explore">
+    <p class="section-label reveal">Explore</p>
+    <div class="grid">
 
-    <!-- About — expands inline -->
-    <div class="link-item" id="about-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="about-panel">
-      <div class="link-left">
-        <span class="link-title">About</span>
-        <span class="link-desc">A little context</span>
-      </div>
-      <span class="link-arrow" aria-hidden="true">›</span>
+      <a class="tile wide reveal" href="/advisor.html">
+        <span class="kicker">Money</span>
+        <h2>Wealth advisor</h2>
+        <p>A tax-aware investing plan for Ireland, with an AI partner that researches portfolios, IPOs and sectors.</p>
+        <span class="go">Open <b>→</b></span>
+        <svg class="art" width="260" height="190" viewBox="0 0 260 190" aria-hidden="true">
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8a96e" stop-opacity=".28"/><stop offset="1" stop-color="#c8a96e" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0 170 C40 160 60 150 90 128 S140 120 165 92 S215 60 260 28 L260 190 L0 190Z" fill="url(#g1)"/>
+          <path d="M0 170 C40 160 60 150 90 128 S140 120 165 92 S215 60 260 28" fill="none" stroke="#c8a96e" stroke-width="1.5"/>
+          <circle cx="260" cy="28" r="4" fill="#c8a96e"/>
+        </svg>
+      </a>
+
+      <a class="tile narrow reveal" href="/training.html">
+        <span class="kicker">Training</span>
+        <h2>Cut to 165</h2>
+        <p>Weight, waist, body fat and strength against the plan. Live from the log.</p>
+        <span class="go">Open <b>→</b></span>
+        <svg class="art" width="200" height="150" viewBox="0 0 200 150" aria-hidden="true">
+          <path d="M10 30 L40 30 L40 45 L70 45 L70 60 L100 60 L100 75 L130 75 L130 92 L160 92 L160 110 L200 110" fill="none" stroke="rgba(240,237,232,.25)" stroke-width="1" stroke-dasharray="3 3"/>
+          <polyline points="10,24 30,30 50,36 70,52 90,50 110,64 130,70" fill="none" stroke="#4caf7d" stroke-width="1.5"/>
+          <circle cx="130" cy="70" r="3.5" fill="#4caf7d"/>
+        </svg>
+      </a>
+
+      <a class="tile half reveal" href="/form/">
+        <span class="kicker">Conditioning</span>
+        <h2>Form</h2>
+        <p>Set a measurable target, check in later, and see how close you came. Photos never leave your device.</p>
+        <span class="go">Open <b>→</b></span>
+        <svg class="art" width="190" height="170" viewBox="0 0 190 170" aria-hidden="true">
+          <circle cx="120" cy="110" r="70" fill="none" stroke="rgba(240,237,232,.08)" stroke-width="10"/>
+          <circle cx="120" cy="110" r="70" fill="none" stroke="#6b9fd4" stroke-width="10" stroke-linecap="round" stroke-dasharray="330 440" transform="rotate(-90 120 110)"/>
+        </svg>
+      </a>
+
+      <a class="tile half reveal" href="/travel.html">
+        <span class="kicker">Travel</span>
+        <h2>Places I've been</h2>
+        <p>A visual journal of photographs, organised by country.</p>
+        <span class="go">Open <b>→</b></span>
+        <svg class="art" width="220" height="170" viewBox="0 0 220 170" aria-hidden="true">
+          <rect x="70" y="40" width="110" height="80" rx="6" fill="#1f1f1f" stroke="rgba(240,237,232,.12)" transform="rotate(-8 125 80)"/>
+          <rect x="95" y="60" width="110" height="80" rx="6" fill="#242424" stroke="rgba(240,237,232,.16)" transform="rotate(5 150 100)"/>
+          <path d="M108 126 L135 98 L152 114 L168 100 L196 128 Z" fill="rgba(200,169,110,.45)" transform="rotate(5 150 100)"/>
+          <circle cx="178" cy="82" r="6" fill="rgba(200,169,110,.7)" transform="rotate(5 150 100)"/>
+        </svg>
+      </a>
+
     </div>
-    <div class="about-panel" id="about-panel" role="region" aria-label="About Ashish">
-      <div class="about-inner">
-        <p>Product owner and business analyst working in digital banking in Ireland. Background across fintech, capital markets, and technology delivery — currently at Permanent TSB.</p>
-        <p>Originally from India, based in Limerick since 2021. Outside of work: tracking markets, lifting weights, and photographing wherever I end up.</p>
-        <p>This site is a personal space — no agenda, no newsletter.</p>
-      </div>
+  </section>
+
+  <section class="wrap about" id="about">
+    <p class="section-label reveal">About</p>
+    <blockquote class="reveal">Product owner and business analyst in digital banking. <span>Background across fintech, capital markets and technology delivery. This site is a personal space: no agenda, no newsletter.</span></blockquote>
+    <div class="facts">
+      <div class="fact reveal"><div class="k">Now</div><div class="v">Digital banking at Permanent TSB</div></div>
+      <div class="fact reveal"><div class="k">Based</div><div class="v">Limerick, since 2021</div></div>
+      <div class="fact reveal"><div class="k">Outside work</div><div class="v">Markets, lifting, photography</div></div>
     </div>
-
-    <!-- Wealth Advisor -->
-    <a class="link-item" href="/advisor.html">
-      <div class="link-left">
-        <span class="link-title">Wealth advisor</span>
-        <span class="link-desc">Ireland-aware investing plan and AI research partner</span>
-      </div>
-      <span class="link-arrow" aria-hidden="true">›</span>
-    </a>
-
-    <!-- Travel Gallery -->
-    <a class="link-item" href="/travel.html">
-      <div class="link-left">
-        <span class="link-title">Travel</span>
-        <span class="link-desc">Photographs by country</span>
-      </div>
-      <span class="link-arrow" aria-hidden="true">›</span>
-    </a>
-
-    <!-- Training Dashboard -->
-    <a class="link-item" href="/training.html">
-      <div class="link-left">
-        <span class="link-title">Training</span>
-        <span class="link-desc">Cut to 165 — weight, body fat and strength</span>
-      </div>
-      <span class="link-arrow" aria-hidden="true">›</span>
-    </a>
-
-    <!-- FORM Conditioning Projection -->
-    <a class="link-item" href="/form/">
-      <div class="link-left">
-        <span class="link-title">FORM</span>
-        <span class="link-desc">Body conditioning projection &amp; progress check-ins</span>
-      </div>
-      <span class="link-arrow" aria-hidden="true">›</span>
-    </a>
-
-  </nav>
+  </section>
 </main>
 
 <footer>
-  <span class="footer-copy">© 2026 Ashish Kumar Swain</span>
-  <div class="footer-links">
-    <a class="footer-link" href="https://linkedin.com/in/ashishkumarswain" target="_blank" rel="noopener">LinkedIn</a>
+  <div class="wrap">
+    <span>© 2026 Ashish Kumar Swain · Originally from India</span>
+    <a href="https://linkedin.com/in/ashishkumarswain" target="_blank" rel="noopener">LinkedIn ↗</a>
   </div>
 </footer>
 
 <script>
-  // About toggle
-  const toggle = document.getElementById('about-toggle');
-  const panel  = document.getElementById('about-panel');
-
-  toggle.addEventListener('click', () => {
-    const open = panel.classList.toggle('open');
-    toggle.classList.toggle('about-open', open);
-    toggle.setAttribute('aria-expanded', open);
-  });
-
-  toggle.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); }
-  });
-
-  // Subtle cursor dot
-  const cursor = document.getElementById('cursor');
-  let visible = false;
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY + 'px';
-    if (!visible) { cursor.style.opacity = '1'; visible = true; }
-  });
-  document.addEventListener('mouseleave', () => {
-    cursor.style.opacity = '0'; visible = false;
-  });
+  // Fade sections in as they enter the viewport (skipped entirely with reduced motion).
+  (function () {
+    const els = document.querySelectorAll('.reveal');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+      els.forEach(e => e.classList.add('in')); return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(e => io.observe(e));
+  })();
 </script>
 </body>
 </html>
