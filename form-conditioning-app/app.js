@@ -37,7 +37,7 @@ function validateBaseline() {
   required.forEach((selector) => {
     const input = $(selector);
     const okay = input.type === "date" ? Boolean(input.value) : Number(input.value) > 0;
-    input.style.borderColor = okay ? "" : "#cc684b";
+    input.style.borderColor = okay ? "" : "#e05a5a";
     valid = valid && okay;
   });
   if (!valid) alert("Add the required baseline measurements to continue.");
@@ -144,7 +144,7 @@ function renderProjection() {
   const strips = 120;
   const stripH = image.height / strips;
 
-  ctx.fillStyle = "#d9dad3";
+  ctx.fillStyle = "#1e1e1e";
   ctx.fillRect(0, 0, width, height);
   ctx.filter = `contrast(${100 + Math.max(-10, -bfChange * 1.3)}%) saturate(${100 + Math.max(-8, -bfChange * .45)}%)`;
 
