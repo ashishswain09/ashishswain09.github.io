@@ -192,9 +192,20 @@ Anything on this page is public, so weight, waist and body-fat figures can be se
 
 It has three steps:
 
-1. **Baseline:** add a front-facing photo and record date, height, weight, waist, optional body fat, sleep, steps and training days.
-2. **Projection:** choose a time horizon and targets (weight, waist, body fat, strength change), plus how consistent you expect your nutrition, training and sleep to be. It warns when the weekly rate is aggressive, and draws an *illustrative* image of the projected change.
-3. **Check-in:** add a later photo and actual measurements. It compares projected and actual side by side, then gives a match score and a plain-language verdict that allows for how much time has really passed.
+1. **Baseline:** add a front-facing photo (JPG, PNG, or iPhone HEIC, which is converted in the browser) and record date, height, weight, waist, optional body fat, sleep, steps and training days. Then **tap your waist** on the photo and set the **body width** markers, so FORM knows where your body is in the picture.
+2. **Projection:** choose a time horizon and targets (weight, waist, body fat, strength change) and how consistent you expect to be. FORM flags aggressive weekly rates and reshapes **only your body** in the photo:
+   - the waist narrows or widens with the waist target
+   - overall width scales with the weight change
+   - the shoulders widen slightly with strength
+   - a body-fat drop adds a touch of definition
+
+   The background stays exactly as it was.
+3. **Check-in:** on any later date, add a new photo and your actual numbers. FORM shows **start, projection and actual** side by side. The projection is drawn for *that* date, so 6 weeks into a 12-week plan shows the halfway point. You also get:
+   - a swipe slider to compare *projected vs actual* or *start vs actual*
+   - a variance table (start, expected, actual, vs plan, since start)
+   - a match score and verdict
+
+Your photos, numbers, targets and last check-in are **saved in this browser** (localStorage), so they're still there on check-in day. **Start a new baseline** deletes them.
 
 The photo is never analysed to infer body fat or health. The image is a directional illustration, not a prediction. Not medical advice.
 
