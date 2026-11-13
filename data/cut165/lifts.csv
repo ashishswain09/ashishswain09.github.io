@@ -1,139 +1,159 @@
 block_wk,week_of,cut_wk,day,exercise,main,sets,rep_range,load_kg,set1,set2,set3,rir,e1rm,next_kg,coach,block23_kg
-1,2026-09-28,3,Day 1 Lower A,Hack Squat,Y,3,6–10,60.0,10.0,10.0,7.0,3.0,80,60,Same 60 kg next week — beat these reps.,70
-1,2026-09-28,3,Day 1 Lower A,Leg Extension,N,2,10–15,65.0,15.0,15.0,,2.0,97.5,67.5,All sets at the top of the range → 67.5 kg next week.,72.5
-1,2026-09-28,3,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,45.0,12.0,12.0,9.0,3.0,63,45,Same 45 kg next week — beat these reps.,53.25
-1,2026-09-28,3,Day 1 Lower A,Standing Calf Raise,N,2,10–15,72.0,15.0,15.0,,3.0,108,77,All sets at the top of the range → 77 kg next week.,
-1,2026-09-28,3,Day 2 Upper A,Flat DB Press,Y,3,6–10,28.0,10.0,10.0,10.0,2.0,37.3,30,All sets at the top of the range → 30 kg next week.,30
-1,2026-09-28,3,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,60.0,12.0,12.0,12.0,3.0,84,62.5,All sets at the top of the range → 62.5 kg next week.,65.25
-1,2026-09-28,3,Day 2 Upper A,Incline Machine Press,N,2,8–12,52.0,12.0,12.0,,2.0,72.8,54.5,All sets at the top of the range → 54.5 kg next week.,52
-1,2026-09-28,3,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,45.0,12.0,12.0,12.0,2.0,63,47.5,All sets at the top of the range → 47.5 kg next week.,45
-1,2026-09-28,3,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,10.0,20.0,20.0,15.0,3.0,16.7,10,Same 10 kg next week — beat these reps.,12
-1,2026-09-28,3,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,64.0,12.0,12.0,,3.0,89.6,66.5,All sets at the top of the range → 66.5 kg next week.,82
-1,2026-09-28,3,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16.0,12.0,10.0,,2.0,22.4,16,Same 16 kg next week — beat these reps.,16
-1,2026-09-28,3,Day 3 Lower B,RDL,Y,3,6–10,125.0,10.0,10.0,10.0,3.0,166.7,130,All sets at the top of the range → 130 kg next week.,125
-1,2026-09-28,3,Day 3 Lower B,Leg Press,Y,3,10–15,110.0,12.0,12.0,12.0,2.0,154,110,Same 110 kg next week — beat these reps.,110
-1,2026-09-28,3,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,52.0,15.0,15.0,,3.0,78,54.5,All sets at the top of the range → 54.5 kg next week.,66
-1,2026-09-28,3,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,60.0,20.0,20.0,,1.0,100,62.5,All sets at the top of the range → 62.5 kg next week.,65
-1,2026-09-28,3,Day 3 Lower B,Seated Calf Raise,N,2,12–20,35.0,20.0,20.0,,2.0,58.3,40,All sets at the top of the range → 40 kg next week.,
-1,2026-09-28,3,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,26.0,12.0,10.0,10.0,2.0,36.4,26,Same 26 kg next week — beat these reps.,26
-1,2026-09-28,3,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,80.0,11.0,8.0,8.0,2.0,109.3,80,Same 80 kg next week — beat these reps.,80
-1,2026-09-28,3,Day 4 Upper B,Flat Machine Press,N,2,8–12,66.0,12.0,12.0,,3.0,92.4,68.5,All sets at the top of the range → 68.5 kg next week.,66
-1,2026-09-28,3,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,28.0,12.0,10.0,,3.0,39.2,28,Same 28 kg next week — beat these reps.,28
-1,2026-09-28,3,Day 4 Upper B,Pec Dec,N,2,10–15,72.0,13.0,11.0,,2.0,103.2,72,Same 72 kg next week — beat these reps.,72
-1,2026-09-28,3,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66.0,19.0,16.0,,2.0,107.8,66,Same 66 kg next week — beat these reps.,66
-1,2026-09-28,3,Day 4 Upper B,Close Grip Smith Machine Bench,N,2,8–12,44.0,12.0,12.0,,2.0,61.6,46.5,All sets at the top of the range → 46.5 kg next week.,45
-1,2026-09-28,3,Day 4 Upper B,Straight Bar Cable Curl,N,2,10–15,45.0,15.0,15.0,,2.0,67.5,47.5,All sets at the top of the range → 47.5 kg next week.,45
-1,2026-09-28,3,Day 4 Upper B,Dumbbell Lateral Raise (B),N,2,12–20,12.0,15.0,15.0,,2.0,18,12,Same 12 kg next week — beat these reps.,12
-2,2026-10-05,4,Day 1 Lower A,Hack Squat,Y,3,6–10,60.0,10.0,10.0,10.0,2.0,80,65,All sets at the top of the range → 65 kg next week.,70
-2,2026-10-05,4,Day 1 Lower A,Leg Extension,N,2,10–15,67.5,12.0,11.0,,2.0,94.5,67.5,Same 67.5 kg next week — beat these reps.,72.5
-2,2026-10-05,4,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,45.0,12.0,12.0,12.0,2.0,63,47.5,All sets at the top of the range → 47.5 kg next week.,53.25
-2,2026-10-05,4,Day 1 Lower A,Standing Calf Raise,N,2,10–15,77.0,15.0,15.0,,2.0,115.5,82,All sets at the top of the range → 82 kg next week.,
-2,2026-10-05,4,Day 2 Upper A,Flat DB Press,Y,3,6–10,30.0,8.0,6.0,6.0,1.0,38,30,Same 30 kg next week — beat these reps.,30
-2,2026-10-05,4,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,62.5,12.0,12.0,12.0,2.0,87.5,65,All sets at the top of the range → 65 kg next week.,65.25
-2,2026-10-05,4,Day 2 Upper A,Incline Machine Press,N,2,8–12,54.5,12.0,11.0,,2.0,76.3,54.5,Same 54.5 kg next week — beat these reps.,52
-2,2026-10-05,4,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,47.5,12.0,10.0,10.0,2.0,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
-2,2026-10-05,4,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,10.0,20.0,20.0,18.0,1.0,16.7,10,Same 10 kg next week — beat these reps.,12
-2,2026-10-05,4,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,66.5,12.0,12.0,,2.0,93.1,69,All sets at the top of the range → 69 kg next week.,82
-2,2026-10-05,4,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16.0,15.0,12.0,,2.0,24,16,Same 16 kg next week — beat these reps.,16
-2,2026-10-05,4,Day 3 Lower B,RDL,Y,3,6–10,130.0,10.0,10.0,10.0,2.0,173.3,135,All sets at the top of the range → 135 kg next week.,125
-2,2026-10-05,4,Day 3 Lower B,Leg Press,Y,3,10–15,110.0,15.0,15.0,15.0,1.0,165,120,All sets at the top of the range → 120 kg next week.,110
-2,2026-10-05,4,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,54.5,15.0,15.0,,2.0,81.8,57,All sets at the top of the range → 57 kg next week.,66
-2,2026-10-05,4,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,62.5,20.0,16.0,,2.0,104.2,62.5,Same 62.5 kg next week — beat these reps.,65
-2,2026-10-05,4,Day 3 Lower B,Seated Calf Raise,N,2,12–20,40.0,20.0,18.0,,1.0,66.7,40,Same 40 kg next week — beat these reps.,
-2,2026-10-05,4,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,26.0,12.0,12.0,,2.0,36.4,28,All sets at the top of the range → 28 kg next week.,26
-2,2026-10-05,4,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,80.0,12.0,12.0,12.0,1.0,112,82.5,All sets at the top of the range → 82.5 kg next week.,80
-2,2026-10-05,4,Day 4 Upper B,Flat Machine Press,N,2,8–12,68.5,12.0,12.0,,3.0,95.9,71,All sets at the top of the range → 71 kg next week.,66
-2,2026-10-05,4,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,28.0,12.0,12.0,,2.0,39.2,30,All sets at the top of the range → 30 kg next week.,28
-2,2026-10-05,4,Day 4 Upper B,Pec Dec,N,2,10–15,72.0,15.0,11.0,,1.0,108,72,Same 72 kg next week — beat these reps.,72
-2,2026-10-05,4,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66.0,20.0,17.0,,2.0,110,66,Same 66 kg next week — beat these reps.,66
-2,2026-10-05,4,Day 4 Upper B,Close Grip Smith Machine Bench,N,2,8–12,47.5,12.0,10.0,,2.0,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
-2,2026-10-05,4,Day 4 Upper B,Straight Bar Cable Curl,N,2,10–15,47.5,15.0,12.0,,2.0,71.3,47.5,Same 47.5 kg next week — beat these reps.,45
-2,2026-10-05,4,Day 4 Upper B,Dumbbell Lateral Raise (B),N,2,12–20,12.0,12.0,12.0,,2.0,16.8,12,Same 12 kg next week — beat these reps.,12
-3,2026-10-12,5,Day 1 Lower A,Hack Squat,Y,3,6–10,65.0,10.0,10.0,10.0,2.0,86.7,70,All sets at the top of the range → 70 kg next week.,70
-3,2026-10-12,5,Day 1 Lower A,Leg Extension,N,2,10–15,67.5,15.0,15.0,,2.0,101.3,70,All sets at the top of the range → 70 kg next week.,72.5
-3,2026-10-12,5,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,47.5,12.0,12.0,12.0,2.0,66.5,50,All sets at the top of the range → 50 kg next week.,53.25
-3,2026-10-12,5,Day 1 Lower A,Standing Calf Raise,N,2,10–15,81.5,15.0,15.0,,2.0,122.3,86.5,All sets at the top of the range → 86.5 kg next week.,
-3,2026-10-12,5,Day 2 Upper A,Flat DB Press,Y,3,6–10,30.0,10.0,7.0,7.0,1.0,40,30,Same 30 kg next week — beat these reps.,30
-3,2026-10-12,5,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,65.0,12.0,12.0,12.0,2.0,91,67.5,All sets at the top of the range → 67.5 kg next week.,65.25
-3,2026-10-12,5,Day 2 Upper A,Incline Machine Press,N,2,8–12,54.5,12.0,12.0,,2.0,76.3,57,All sets at the top of the range → 57 kg next week.,52
-3,2026-10-12,5,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,47.5,12.0,12.0,10.0,2.0,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
-3,2026-10-12,5,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,10.0,20.0,20.0,20.0,2.0,16.7,11,All sets at the top of the range → 11 kg next week.,12
-3,2026-10-12,5,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,68.0,12.0,12.0,,2.0,95.2,70.5,All sets at the top of the range → 70.5 kg next week.,82
-3,2026-10-12,5,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16.0,15.0,11.0,,2.0,24,16,Same 16 kg next week — beat these reps.,16
-3,2026-10-12,5,Day 3 Lower B,RDL,Y,3,6–10,135.0,9.0,8.0,8.0,2.0,175.5,135,Same 135 kg next week — beat these reps.,125
-3,2026-10-12,5,Day 3 Lower B,Leg Press,Y,3,10–15,115.0,12.0,12.0,12.0,2.0,161,115,Same 115 kg next week — beat these reps.,110
-3,2026-10-12,5,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,57.0,15.0,15.0,,2.0,85.5,59.5,All sets at the top of the range → 59.5 kg next week.,66
-3,2026-10-12,5,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,62.5,20.0,15.0,,2.0,104.2,62.5,Same 62.5 kg next week — beat these reps.,65
-3,2026-10-12,5,Day 3 Lower B,Seated Calf Raise,N,2,12–20,40.0,20.0,19.0,,2.0,66.7,40,Same 40 kg next week — beat these reps.,
-3,2026-10-12,5,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,28.0,9.0,9.0,,1.0,36.4,28,Same 28 kg next week — beat these reps.,26
-3,2026-10-12,5,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,82.5,12.0,10.0,10.0,2.0,115.5,82.5,Same 82.5 kg next week — beat these reps.,80
-3,2026-10-12,5,Day 4 Upper B,Flat Machine Press,N,2,8–12,72.0,12.0,12.0,,2.0,100.8,74.5,All sets at the top of the range → 74.5 kg next week.,66
-3,2026-10-12,5,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,30.0,10.0,9.0,,2.0,40,30,Same 30 kg next week — beat these reps.,28
-3,2026-10-12,5,Day 4 Upper B,Pec Dec,N,2,10–15,72.0,15.0,10.0,,1.0,108,72,Same 72 kg next week — beat these reps.,72
-3,2026-10-12,5,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66.0,20.0,18.0,,2.0,110,66,Same 66 kg next week — beat these reps.,66
-3,2026-10-12,5,Day 4 Upper B,Straight Bar Cable Curl,N,2,10–15,47.5,10.0,10.0,,2.0,63.3,47.5,Same 47.5 kg next week — beat these reps.,45
-3,2026-10-12,5,Day 4 Upper B,Dumbbell Lateral Raise (B),N,2,12–20,12.0,15.0,12.0,,2.0,18,12,Same 12 kg next week — beat these reps.,12
-4,2026-10-19,6,Day 1 Lower A,Hack Squat,Y,3,6–10,70.0,10.0,10.0,10.0,2.0,93.3,75,All sets at the top of the range → 75 kg next week.,70
-4,2026-10-19,6,Day 1 Lower A,Leg Extension,N,2,10–15,70.0,14.0,12.0,,1.0,102.7,70,Same 70 kg next week — beat these reps.,72.5
-4,2026-10-19,6,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,50.0,10.0,9.0,8.0,1.0,66.7,50,Same 50 kg next week — beat these reps.,53.25
-4,2026-10-19,6,Day 1 Lower A,Standing Calf Raise,N,2,10–15,86.0,12.0,12.0,,2.0,120.4,86,Same 86 kg next week — beat these reps.,
-4,2026-10-19,6,Day 2 Upper A,Flat DB Press,Y,3,6–10,30.0,9.0,9.0,6.0,2.0,39,30,Same 30 kg next week — beat these reps.,30
-4,2026-10-19,6,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,67.5,12.0,12.0,12.0,2.0,94.5,70,All sets at the top of the range → 70 kg next week.,65.25
-4,2026-10-19,6,Day 2 Upper A,Incline Machine Press,N,2,8–12,57.0,11.0,10.0,,2.0,77.9,57,Same 57 kg next week — beat these reps.,52
-4,2026-10-19,6,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,47.5,12.0,12.0,10.0,2.0,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
-4,2026-10-19,6,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,10.0,20.0,20.0,20.0,1.0,16.7,11,All sets at the top of the range → 11 kg next week.,12
-4,2026-10-19,6,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,70.5,12.0,12.0,,2.0,98.7,73,All sets at the top of the range → 73 kg next week.,82
-4,2026-10-19,6,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16.0,13.0,12.0,,2.0,22.9,16,Same 16 kg next week — beat these reps.,16
-4,2026-10-19,6,Day 3 Lower B,RDL,Y,3,6–10,132.5,10.0,10.0,8.0,2.0,176.7,132.5,Same 132.5 kg next week — beat these reps.,125
-4,2026-10-19,6,Day 3 Lower B,Leg Press,Y,3,10–15,115.0,14.0,11.0,12.0,2.0,168.7,115,Same 115 kg next week — beat these reps.,110
-4,2026-10-19,6,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,59.0,15.0,12.0,,2.0,88.5,59,Same 59 kg next week — beat these reps.,66
-4,2026-10-19,6,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,62.5,19.0,16.0,,1.0,102.1,62.5,Same 62.5 kg next week — beat these reps.,65
-4,2026-10-19,6,Day 3 Lower B,Seated Calf Raise,N,2,12–20,40.0,20.0,19.0,,2.0,66.7,40,Same 40 kg next week — beat these reps.,
-4,2026-10-19,6,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,28.0,10.0,9.0,,2.0,37.3,28,Same 28 kg next week — beat these reps.,26
-4,2026-10-19,6,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,82.5,12.0,12.0,10.0,2.0,115.5,82.5,Same 82.5 kg next week — beat these reps.,80
-4,2026-10-19,6,Day 4 Upper B,Flat Machine Press,N,2,8–12,74.5,12.0,12.0,,2.0,104.3,77,All sets at the top of the range → 77 kg next week.,66
-4,2026-10-19,6,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,30.0,12.0,12.0,,2.0,42,32,All sets at the top of the range → 32 kg next week.,28
-4,2026-10-19,6,Day 4 Upper B,Pec Dec,N,2,10–15,72.0,14.0,11.0,,2.0,105.6,72,Same 72 kg next week — beat these reps.,72
-4,2026-10-19,6,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66.0,15.0,13.0,,2.0,99,66,Same 66 kg next week — beat these reps.,66
-4,2026-10-19,6,Day 4 Upper B,Close Grip Smith Machine Bench,N,2,8–12,47.5,10.0,8.0,,2.0,63.3,47.5,Same 47.5 kg next week — beat these reps.,45
-4,2026-10-19,6,Day 4 Upper B,Straight Bar Cable Curl,N,2,10–15,50.0,15.0,13.0,,2.0,75,50,Same 50 kg next week — beat these reps.,45
-4,2026-10-19,6,Day 4 Upper B,Dumbbell Lateral Raise (B),N,2,12–20,12.0,15.0,13.0,,1.0,18,12,Same 12 kg next week — beat these reps.,12
-5,2026-10-26,7,Day 1 Lower A,Hack Squat,Y,3,6–10,75.0,8.0,7.0,7.0,1.0,95,75,Same 75 kg next week — beat these reps.,70
-5,2026-10-26,7,Day 1 Lower A,Leg Extension,N,2,10–15,70.0,15.0,15.0,,1.0,105,72.5,All sets at the top of the range → 72.5 kg next week.,72.5
-5,2026-10-26,7,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,50.0,12.0,11.0,10.0,1.0,70,50,Same 50 kg next week — beat these reps.,53.25
-5,2026-10-26,7,Day 1 Lower A,Standing Calf Raise,N,2,10–15,86.0,15.0,15.0,,1.0,129,91,All sets at the top of the range → 91 kg next week.,
-5,2026-10-26,7,Day 2 Upper A,Flat DB Press,Y,3,6–10,30.0,8.0,8.0,9.0,1.0,39,30,Same 30 kg next week — beat these reps.,30
-5,2026-10-26,7,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,70.0,12.0,12.0,11.0,1.0,98,70,Same 70 kg next week — beat these reps.,65.25
-5,2026-10-26,7,Day 2 Upper A,Incline Machine Press,N,2,8–12,57.0,11.0,10.0,,1.0,77.9,57,Same 57 kg next week — beat these reps.,52
-5,2026-10-26,7,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,47.5,12.0,12.0,12.0,1.0,66.5,50,All sets at the top of the range → 50 kg next week.,45
-5,2026-10-26,7,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,12.0,20.0,15.0,15.0,1.0,20,12,Same 12 kg next week — beat these reps.,12
-5,2026-10-26,7,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,73.0,12.0,12.0,,1.0,102.2,75.5,All sets at the top of the range → 75.5 kg next week.,82
-5,2026-10-26,7,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16.0,15.0,13.0,,1.0,24,16,Same 16 kg next week — beat these reps.,16
-5,2026-10-26,7,Day 3 Lower B,RDL,Y,3,6–10,132.5,10.0,10.0,10.0,1.0,176.7,137.5,All sets at the top of the range → 137.5 kg next week.,125
-5,2026-10-26,7,Day 3 Lower B,Leg Press,Y,3,10–15,115.0,15.0,15.0,13.0,1.0,172.5,115,Same 115 kg next week — beat these reps.,110
-5,2026-10-26,7,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,59.0,15.0,15.0,,1.0,88.5,61.5,All sets at the top of the range → 61.5 kg next week.,66
-5,2026-10-26,7,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,62.5,20.0,20.0,,1.0,104.2,65,All sets at the top of the range → 65 kg next week.,65
-5,2026-10-26,7,Day 3 Lower B,Seated Calf Raise,N,2,12–20,40.0,20.0,19.0,,1.0,66.7,40,Same 40 kg next week — beat these reps.,
-5,2026-10-26,7,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,28.0,12.0,10.0,,1.0,39.2,28,Same 28 kg next week — beat these reps.,26
-5,2026-10-26,7,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,82.5,12.0,12.0,11.0,1.0,115.5,82.5,Same 82.5 kg next week — beat these reps.,80
-5,2026-10-26,7,Day 4 Upper B,Flat Machine Press,N,2,8–12,77.0,12.0,10.0,,1.0,107.8,77,Same 77 kg next week — beat these reps.,66
-5,2026-10-26,7,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,32.0,12.0,10.0,,1.0,44.8,32,Same 32 kg next week — beat these reps.,28
-5,2026-10-26,7,Day 4 Upper B,Pec Dec,N,2,10–15,72.0,15.0,13.0,,1.0,108,72,Same 72 kg next week — beat these reps.,72
-5,2026-10-26,7,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66.0,20.0,19.0,,1.0,110,66,Same 66 kg next week — beat these reps.,66
-5,2026-10-26,7,Day 4 Upper B,Close Grip Smith Machine Bench,N,2,8–12,47.5,12.0,9.0,,1.0,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
-5,2026-10-26,7,Day 4 Upper B,Straight Bar Cable Curl,N,2,10–15,50.0,15.0,15.0,,1.0,75,52.5,All sets at the top of the range → 52.5 kg next week.,45
-5,2026-10-26,7,Day 4 Upper B,Dumbbell Lateral Raise (B),N,2,12–20,12.0,17.0,13.0,,1.0,18.8,12,Same 12 kg next week — beat these reps.,12
-6,2026-11-02,8,Day 1 Lower A,Hack Squat,Y,3,6–10,75.0,10.0,8.0,8.0,1.0,100,75,Same 75 kg next week — beat these reps.,70
-6,2026-11-02,8,Day 1 Lower A,Leg Extension,N,2,10–15,72.5,14.0,13.0,,1.0,106.3,72.5,Same 72.5 kg next week — beat these reps.,72.5
-6,2026-11-02,8,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,50.0,12.0,12.0,10.0,1.0,70,50,Same 50 kg next week — beat these reps.,53.25
-6,2026-11-02,8,Day 1 Lower A,Standing Calf Raise,N,2,10–15,93.0,14.0,12.0,,1.0,136.4,93,Same 93 kg next week — beat these reps.,
-6,2026-11-02,8,Day 2 Upper A,Flat DB Press,Y,3,6–10,30.0,9.0,8.0,8.0,1.0,39,30,Same 30 kg next week — beat these reps.,30
-6,2026-11-02,8,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,70.0,12.0,12.0,12.0,1.0,98,72.5,All sets at the top of the range → 72.5 kg next week.,65.25
-6,2026-11-02,8,Day 2 Upper A,Incline Machine Press,N,2,8–12,57.0,12.0,11.0,,1.0,79.8,57,Same 57 kg next week — beat these reps.,52
-6,2026-11-02,8,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,50.0,10.0,10.0,8.0,1.0,66.7,50,Same 50 kg next week — beat these reps.,45
-6,2026-11-02,8,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,12.0,20.0,15.0,15.0,1.0,20,12,Same 12 kg next week — beat these reps.,12
-6,2026-11-02,8,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,75.5,12.0,11.0,,1.0,105.7,75.5,Same 75.5 kg next week — beat these reps.,82
-6,2026-11-02,8,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16.0,15.0,15.0,,1.0,24,17,All sets at the top of the range → 17 kg next week.,16
-6,2026-11-02,8,Day 3 Lower B,RDL,Y,3,6–10,135.0,9.0,8.0,8.0,1.0,175.5,135,Same 135 kg next week — beat these reps.,125
-6,2026-11-02,8,Day 3 Lower B,Leg Press,Y,3,10–15,115.0,15.0,13.0,13.0,,172.5,115,Same 115 kg next week — beat these reps.,110
-6,2026-11-02,8,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,61.5,15.0,12.0,,1.0,92.3,61.5,Same 61.5 kg next week — beat these reps.,66
+1,2026-09-28,3,Day 1 Lower A,Hack Squat,Y,3,6–10,60,10,10,7,3,80.0,60,Same 60 kg next week — beat these reps.,70
+1,2026-09-28,3,Day 1 Lower A,Leg Extension,N,2,10–15,65,15,15,,2,97.5,67.5,All sets at the top of the range → 67.5 kg next week.,72.5
+1,2026-09-28,3,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,45,12,12,9,3,63.0,45,Same 45 kg next week — beat these reps.,53.25
+1,2026-09-28,3,Day 1 Lower A,Standing Calf Raise,N,2,10–15,72,15,15,,3,108.0,77,All sets at the top of the range → 77 kg next week.,
+1,2026-09-28,3,Day 2 Upper A,Flat DB Press,Y,3,6–10,28,10,10,10,2,37.3,30,All sets at the top of the range → 30 kg next week.,30
+1,2026-09-28,3,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,60,12,12,12,3,84.0,62.5,All sets at the top of the range → 62.5 kg next week.,65.25
+1,2026-09-28,3,Day 2 Upper A,Incline Machine Press,N,2,8–12,52,12,12,,2,72.8,54.5,All sets at the top of the range → 54.5 kg next week.,52
+1,2026-09-28,3,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,45,12,12,12,2,63.0,47.5,All sets at the top of the range → 47.5 kg next week.,45
+1,2026-09-28,3,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,10,20,20,15,3,16.7,10,Same 10 kg next week — beat these reps.,12
+1,2026-09-28,3,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,64,12,12,,3,89.6,66.5,All sets at the top of the range → 66.5 kg next week.,82
+1,2026-09-28,3,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16,12,10,,2,22.4,16,Same 16 kg next week — beat these reps.,16
+1,2026-09-28,3,Day 3 Lower B,RDL,Y,3,6–10,125,10,10,10,3,166.7,130,All sets at the top of the range → 130 kg next week.,125
+1,2026-09-28,3,Day 3 Lower B,Leg Press,Y,3,10–15,110,12,12,12,2,154.0,110,Same 110 kg next week — beat these reps.,110
+1,2026-09-28,3,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,52,15,15,,3,78.0,54.5,All sets at the top of the range → 54.5 kg next week.,66
+1,2026-09-28,3,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,60,20,20,,1,100.0,62.5,All sets at the top of the range → 62.5 kg next week.,65
+1,2026-09-28,3,Day 3 Lower B,Seated Calf Raise,N,2,12–20,35,20,20,,2,58.3,40,All sets at the top of the range → 40 kg next week.,
+1,2026-09-28,3,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,26,12,10,10,2,36.4,26,Same 26 kg next week — beat these reps.,26
+1,2026-09-28,3,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,80,11,8,8,2,109.3,80,Same 80 kg next week — beat these reps.,80
+1,2026-09-28,3,Day 4 Upper B,Flat Machine Press,N,2,8–12,66,12,12,,3,92.4,68.5,All sets at the top of the range → 68.5 kg next week.,66
+1,2026-09-28,3,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,28,12,10,,3,39.2,28,Same 28 kg next week — beat these reps.,28
+1,2026-09-28,3,Day 4 Upper B,Pec Dec,N,2,10–15,72,13,11,,2,103.2,72,Same 72 kg next week — beat these reps.,72
+1,2026-09-28,3,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66,19,16,,2,107.8,66,Same 66 kg next week — beat these reps.,66
+1,2026-09-28,3,Day 4 Upper B,Close Grip Smith Machine Bench,N,2,8–12,44,12,12,,2,61.6,46.5,All sets at the top of the range → 46.5 kg next week.,45
+1,2026-09-28,3,Day 4 Upper B,Straight Bar Cable Curl,N,2,10–15,45,15,15,,2,67.5,47.5,All sets at the top of the range → 47.5 kg next week.,45
+1,2026-09-28,3,Day 4 Upper B,Dumbbell Lateral Raise (B),N,2,12–20,12,15,15,,2,18.0,12,Same 12 kg next week — beat these reps.,12
+2,2026-10-05,4,Day 1 Lower A,Hack Squat,Y,3,6–10,60,10,10,10,2,80.0,65,All sets at the top of the range → 65 kg next week.,70
+2,2026-10-05,4,Day 1 Lower A,Leg Extension,N,2,10–15,67.5,12,11,,2,94.5,67.5,Same 67.5 kg next week — beat these reps.,72.5
+2,2026-10-05,4,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,45,12,12,12,2,63.0,47.5,All sets at the top of the range → 47.5 kg next week.,53.25
+2,2026-10-05,4,Day 1 Lower A,Standing Calf Raise,N,2,10–15,77,15,15,,2,115.5,82,All sets at the top of the range → 82 kg next week.,
+2,2026-10-05,4,Day 2 Upper A,Flat DB Press,Y,3,6–10,30,8,6,6,1,38.0,30,Same 30 kg next week — beat these reps.,30
+2,2026-10-05,4,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,62.5,12,12,12,2,87.5,65,All sets at the top of the range → 65 kg next week.,65.25
+2,2026-10-05,4,Day 2 Upper A,Incline Machine Press,N,2,8–12,54.5,12,11,,2,76.3,54.5,Same 54.5 kg next week — beat these reps.,52
+2,2026-10-05,4,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,47.5,12,10,10,2,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
+2,2026-10-05,4,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,10,20,20,18,1,16.7,10,Same 10 kg next week — beat these reps.,12
+2,2026-10-05,4,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,66.5,12,12,,2,93.1,69,All sets at the top of the range → 69 kg next week.,82
+2,2026-10-05,4,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16,15,12,,2,24.0,16,Same 16 kg next week — beat these reps.,16
+2,2026-10-05,4,Day 3 Lower B,RDL,Y,3,6–10,130,10,10,10,2,173.3,135,All sets at the top of the range → 135 kg next week.,125
+2,2026-10-05,4,Day 3 Lower B,Leg Press,Y,3,10–15,110,15,15,15,1,165.0,120,All sets at the top of the range → 120 kg next week.,110
+2,2026-10-05,4,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,54.5,15,15,,2,81.8,57,All sets at the top of the range → 57 kg next week.,66
+2,2026-10-05,4,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,62.5,20,16,,2,104.2,62.5,Same 62.5 kg next week — beat these reps.,65
+2,2026-10-05,4,Day 3 Lower B,Seated Calf Raise,N,2,12–20,40,20,18,,1,66.7,40,Same 40 kg next week — beat these reps.,
+2,2026-10-05,4,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,26,12,12,,2,36.4,28,All sets at the top of the range → 28 kg next week.,26
+2,2026-10-05,4,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,80,12,12,12,1,112.0,82.5,All sets at the top of the range → 82.5 kg next week.,80
+2,2026-10-05,4,Day 4 Upper B,Flat Machine Press,N,2,8–12,68.5,12,12,,3,95.9,71,All sets at the top of the range → 71 kg next week.,66
+2,2026-10-05,4,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,28,12,12,,2,39.2,30,All sets at the top of the range → 30 kg next week.,28
+2,2026-10-05,4,Day 4 Upper B,Pec Dec,N,2,10–15,72,15,11,,1,108.0,72,Same 72 kg next week — beat these reps.,72
+2,2026-10-05,4,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66,20,17,,2,110.0,66,Same 66 kg next week — beat these reps.,66
+2,2026-10-05,4,Day 4 Upper B,Close Grip Smith Machine Bench,N,2,8–12,47.5,12,10,,2,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
+2,2026-10-05,4,Day 4 Upper B,Straight Bar Cable Curl,N,2,10–15,47.5,15,12,,2,71.3,47.5,Same 47.5 kg next week — beat these reps.,45
+2,2026-10-05,4,Day 4 Upper B,Dumbbell Lateral Raise (B),N,2,12–20,12,12,12,,2,16.8,12,Same 12 kg next week — beat these reps.,12
+3,2026-10-12,5,Day 1 Lower A,Hack Squat,Y,3,6–10,65,10,10,10,2,86.7,70,All sets at the top of the range → 70 kg next week.,70
+3,2026-10-12,5,Day 1 Lower A,Leg Extension,N,2,10–15,67.5,15,15,,2,101.3,70,All sets at the top of the range → 70 kg next week.,72.5
+3,2026-10-12,5,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,47.5,12,12,12,2,66.5,50,All sets at the top of the range → 50 kg next week.,53.25
+3,2026-10-12,5,Day 1 Lower A,Standing Calf Raise,N,2,10–15,81.5,15,15,,2,122.3,86.5,All sets at the top of the range → 86.5 kg next week.,
+3,2026-10-12,5,Day 2 Upper A,Flat DB Press,Y,3,6–10,30,10,7,7,1,40.0,30,Same 30 kg next week — beat these reps.,30
+3,2026-10-12,5,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,65,12,12,12,2,91.0,67.5,All sets at the top of the range → 67.5 kg next week.,65.25
+3,2026-10-12,5,Day 2 Upper A,Incline Machine Press,N,2,8–12,54.5,12,12,,2,76.3,57,All sets at the top of the range → 57 kg next week.,52
+3,2026-10-12,5,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,47.5,12,12,10,2,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
+3,2026-10-12,5,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,10,20,20,20,2,16.7,11,All sets at the top of the range → 11 kg next week.,12
+3,2026-10-12,5,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,68,12,12,,2,95.2,70.5,All sets at the top of the range → 70.5 kg next week.,82
+3,2026-10-12,5,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16,15,11,,2,24.0,16,Same 16 kg next week — beat these reps.,16
+3,2026-10-12,5,Day 3 Lower B,RDL,Y,3,6–10,135,9,8,8,2,175.5,135,Same 135 kg next week — beat these reps.,125
+3,2026-10-12,5,Day 3 Lower B,Leg Press,Y,3,10–15,115,12,12,12,2,161.0,115,Same 115 kg next week — beat these reps.,110
+3,2026-10-12,5,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,57,15,15,,2,85.5,59.5,All sets at the top of the range → 59.5 kg next week.,66
+3,2026-10-12,5,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,62.5,20,15,,2,104.2,62.5,Same 62.5 kg next week — beat these reps.,65
+3,2026-10-12,5,Day 3 Lower B,Seated Calf Raise,N,2,12–20,40,20,19,,2,66.7,40,Same 40 kg next week — beat these reps.,
+3,2026-10-12,5,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,28,9,9,,1,36.4,28,Same 28 kg next week — beat these reps.,26
+3,2026-10-12,5,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,82.5,12,10,10,2,115.5,82.5,Same 82.5 kg next week — beat these reps.,80
+3,2026-10-12,5,Day 4 Upper B,Flat Machine Press,N,2,8–12,72,12,12,,2,100.8,74.5,All sets at the top of the range → 74.5 kg next week.,66
+3,2026-10-12,5,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,30,10,9,,2,40.0,30,Same 30 kg next week — beat these reps.,28
+3,2026-10-12,5,Day 4 Upper B,Pec Dec,N,2,10–15,72,15,10,,1,108.0,72,Same 72 kg next week — beat these reps.,72
+3,2026-10-12,5,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66,20,18,,2,110.0,66,Same 66 kg next week — beat these reps.,66
+3,2026-10-12,5,Day 4 Upper B,Straight Bar Cable Curl,N,2,10–15,47.5,10,10,,2,63.3,47.5,Same 47.5 kg next week — beat these reps.,45
+3,2026-10-12,5,Day 4 Upper B,Dumbbell Lateral Raise (B),N,2,12–20,12,15,12,,2,18.0,12,Same 12 kg next week — beat these reps.,12
+4,2026-10-19,6,Day 1 Lower A,Hack Squat,Y,3,6–10,70,10,10,10,2,93.3,75,All sets at the top of the range → 75 kg next week.,70
+4,2026-10-19,6,Day 1 Lower A,Leg Extension,N,2,10–15,70,14,12,,1,102.7,70,Same 70 kg next week — beat these reps.,72.5
+4,2026-10-19,6,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,50,10,9,8,1,66.7,50,Same 50 kg next week — beat these reps.,53.25
+4,2026-10-19,6,Day 1 Lower A,Standing Calf Raise,N,2,10–15,86,12,12,,2,120.4,86,Same 86 kg next week — beat these reps.,
+4,2026-10-19,6,Day 2 Upper A,Flat DB Press,Y,3,6–10,30,9,9,6,2,39.0,30,Same 30 kg next week — beat these reps.,30
+4,2026-10-19,6,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,67.5,12,12,12,2,94.5,70,All sets at the top of the range → 70 kg next week.,65.25
+4,2026-10-19,6,Day 2 Upper A,Incline Machine Press,N,2,8–12,57,11,10,,2,77.9,57,Same 57 kg next week — beat these reps.,52
+4,2026-10-19,6,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,47.5,12,12,10,2,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
+4,2026-10-19,6,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,10,20,20,20,1,16.7,11,All sets at the top of the range → 11 kg next week.,12
+4,2026-10-19,6,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,70.5,12,12,,2,98.7,73,All sets at the top of the range → 73 kg next week.,82
+4,2026-10-19,6,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16,13,12,,2,22.9,16,Same 16 kg next week — beat these reps.,16
+4,2026-10-19,6,Day 3 Lower B,RDL,Y,3,6–10,132.5,10,10,8,2,176.7,132.5,Same 132.5 kg next week — beat these reps.,125
+4,2026-10-19,6,Day 3 Lower B,Leg Press,Y,3,10–15,115,14,11,12,2,168.7,115,Same 115 kg next week — beat these reps.,110
+4,2026-10-19,6,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,59,15,12,,2,88.5,59,Same 59 kg next week — beat these reps.,66
+4,2026-10-19,6,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,62.5,19,16,,1,102.1,62.5,Same 62.5 kg next week — beat these reps.,65
+4,2026-10-19,6,Day 3 Lower B,Seated Calf Raise,N,2,12–20,40,20,19,,2,66.7,40,Same 40 kg next week — beat these reps.,
+4,2026-10-19,6,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,28,10,9,,2,37.3,28,Same 28 kg next week — beat these reps.,26
+4,2026-10-19,6,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,82.5,12,12,10,2,115.5,82.5,Same 82.5 kg next week — beat these reps.,80
+4,2026-10-19,6,Day 4 Upper B,Flat Machine Press,N,2,8–12,74.5,12,12,,2,104.3,77,All sets at the top of the range → 77 kg next week.,66
+4,2026-10-19,6,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,30,12,12,,2,42.0,32,All sets at the top of the range → 32 kg next week.,28
+4,2026-10-19,6,Day 4 Upper B,Pec Dec,N,2,10–15,72,14,11,,2,105.6,72,Same 72 kg next week — beat these reps.,72
+4,2026-10-19,6,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66,15,13,,2,99.0,66,Same 66 kg next week — beat these reps.,66
+4,2026-10-19,6,Day 4 Upper B,Close Grip Smith Machine Bench,N,2,8–12,47.5,10,8,,2,63.3,47.5,Same 47.5 kg next week — beat these reps.,45
+4,2026-10-19,6,Day 4 Upper B,Straight Bar Cable Curl,N,2,10–15,50,15,13,,2,75.0,50,Same 50 kg next week — beat these reps.,45
+4,2026-10-19,6,Day 4 Upper B,Dumbbell Lateral Raise (B),N,2,12–20,12,15,13,,1,18.0,12,Same 12 kg next week — beat these reps.,12
+5,2026-10-26,7,Day 1 Lower A,Hack Squat,Y,3,6–10,75,8,7,7,1,95.0,75,Same 75 kg next week — beat these reps.,70
+5,2026-10-26,7,Day 1 Lower A,Leg Extension,N,2,10–15,70,15,15,,1,105.0,72.5,All sets at the top of the range → 72.5 kg next week.,72.5
+5,2026-10-26,7,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,50,12,11,10,1,70.0,50,Same 50 kg next week — beat these reps.,53.25
+5,2026-10-26,7,Day 1 Lower A,Standing Calf Raise,N,2,10–15,86,15,15,,1,129.0,91,All sets at the top of the range → 91 kg next week.,
+5,2026-10-26,7,Day 2 Upper A,Flat DB Press,Y,3,6–10,30,8,8,9,1,39.0,30,Same 30 kg next week — beat these reps.,30
+5,2026-10-26,7,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,70,12,12,11,1,98.0,70,Same 70 kg next week — beat these reps.,65.25
+5,2026-10-26,7,Day 2 Upper A,Incline Machine Press,N,2,8–12,57,11,10,,1,77.9,57,Same 57 kg next week — beat these reps.,52
+5,2026-10-26,7,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,47.5,12,12,12,1,66.5,50,All sets at the top of the range → 50 kg next week.,45
+5,2026-10-26,7,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,12,20,15,15,1,20.0,12,Same 12 kg next week — beat these reps.,12
+5,2026-10-26,7,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,73,12,12,,1,102.2,75.5,All sets at the top of the range → 75.5 kg next week.,82
+5,2026-10-26,7,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16,15,13,,1,24.0,16,Same 16 kg next week — beat these reps.,16
+5,2026-10-26,7,Day 3 Lower B,RDL,Y,3,6–10,132.5,10,10,10,1,176.7,137.5,All sets at the top of the range → 137.5 kg next week.,125
+5,2026-10-26,7,Day 3 Lower B,Leg Press,Y,3,10–15,115,15,15,13,1,172.5,115,Same 115 kg next week — beat these reps.,110
+5,2026-10-26,7,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,59,15,15,,1,88.5,61.5,All sets at the top of the range → 61.5 kg next week.,66
+5,2026-10-26,7,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,62.5,20,20,,1,104.2,65,All sets at the top of the range → 65 kg next week.,65
+5,2026-10-26,7,Day 3 Lower B,Seated Calf Raise,N,2,12–20,40,20,19,,1,66.7,40,Same 40 kg next week — beat these reps.,
+5,2026-10-26,7,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,28,12,10,,1,39.2,28,Same 28 kg next week — beat these reps.,26
+5,2026-10-26,7,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,82.5,12,12,11,1,115.5,82.5,Same 82.5 kg next week — beat these reps.,80
+5,2026-10-26,7,Day 4 Upper B,Flat Machine Press,N,2,8–12,77,12,10,,1,107.8,77,Same 77 kg next week — beat these reps.,66
+5,2026-10-26,7,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,32,12,10,,1,44.8,32,Same 32 kg next week — beat these reps.,28
+5,2026-10-26,7,Day 4 Upper B,Pec Dec,N,2,10–15,72,15,13,,1,108.0,72,Same 72 kg next week — beat these reps.,72
+5,2026-10-26,7,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66,20,19,,1,110.0,66,Same 66 kg next week — beat these reps.,66
+5,2026-10-26,7,Day 4 Upper B,Close Grip Smith Machine Bench,N,2,8–12,47.5,12,9,,1,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
+5,2026-10-26,7,Day 4 Upper B,Straight Bar Cable Curl,N,2,10–15,50,15,15,,1,75.0,52.5,All sets at the top of the range → 52.5 kg next week.,45
+5,2026-10-26,7,Day 4 Upper B,Dumbbell Lateral Raise (B),N,2,12–20,12,17,13,,1,18.8,12,Same 12 kg next week — beat these reps.,12
+6,2026-11-02,8,Day 1 Lower A,Hack Squat,Y,3,6–10,75,10,8,8,1,100.0,75,Same 75 kg next week — beat these reps.,70
+6,2026-11-02,8,Day 1 Lower A,Leg Extension,N,2,10–15,72.5,14,13,,1,106.3,72.5,Same 72.5 kg next week — beat these reps.,72.5
+6,2026-11-02,8,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,50,12,12,10,1,70.0,50,Same 50 kg next week — beat these reps.,53.25
+6,2026-11-02,8,Day 1 Lower A,Standing Calf Raise,N,2,10–15,93,14,12,,1,136.4,93,Same 93 kg next week — beat these reps.,
+6,2026-11-02,8,Day 2 Upper A,Flat DB Press,Y,3,6–10,30,9,8,8,1,39.0,30,Same 30 kg next week — beat these reps.,30
+6,2026-11-02,8,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,70,12,12,12,1,98.0,72.5,All sets at the top of the range → 72.5 kg next week.,65.25
+6,2026-11-02,8,Day 2 Upper A,Incline Machine Press,N,2,8–12,57,12,11,,1,79.8,57,Same 57 kg next week — beat these reps.,52
+6,2026-11-02,8,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,50,10,10,8,1,66.7,50,Same 50 kg next week — beat these reps.,45
+6,2026-11-02,8,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,12,20,15,15,1,20.0,12,Same 12 kg next week — beat these reps.,12
+6,2026-11-02,8,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,75.5,12,11,,1,105.7,75.5,Same 75.5 kg next week — beat these reps.,82
+6,2026-11-02,8,Day 2 Upper A,Alternating DB Curl,N,2,10–15,16,15,15,,1,24.0,17,All sets at the top of the range → 17 kg next week.,16
+6,2026-11-02,8,Day 3 Lower B,RDL,Y,3,6–10,135,9,8,8,1,175.5,135,Same 135 kg next week — beat these reps.,125
+6,2026-11-02,8,Day 3 Lower B,Leg Press,Y,3,10–15,115,15,13,13,1,172.5,115,Same 115 kg next week — beat these reps.,110
+6,2026-11-02,8,Day 3 Lower B,Seated Hamstring Curls,N,2,10–15,61.5,15,12,,1,92.3,61.5,Same 61.5 kg next week — beat these reps.,66
+6,2026-11-02,8,Day 3 Lower B,Leg Extension (high rep),N,2,12–20,65,18,15,,1,104.0,65,Same 65 kg next week — beat these reps.,65
+6,2026-11-02,8,Day 3 Lower B,Seated Calf Raise,N,2,12–20,40,20,20,,1,66.7,45,All sets at the top of the range → 45 kg next week.,
+6,2026-11-02,8,Day 4 Upper B,Dumbbell Shoulder Press,Y,2,8–12,28,11,12,,1,39.2,28,Same 28 kg next week — beat these reps.,26
+6,2026-11-02,8,Day 4 Upper B,Wide Grip Lat Pulldown,Y,3,8–12,82.5,12,12,11,1,115.5,82.5,Same 82.5 kg next week — beat these reps.,80
+6,2026-11-02,8,Day 4 Upper B,Flat Machine Press,N,2,8–12,77,12,12,,1,107.8,79.5,All sets at the top of the range → 79.5 kg next week.,66
+6,2026-11-02,8,Day 4 Upper B,Chest Supported DB Row,N,2,8–12,32.5,12,10,,1,45.5,32.5,Same 32.5 kg next week — beat these reps.,28
+6,2026-11-02,8,Day 4 Upper B,Pec Dec,N,2,10–15,72,13,12,,1,103.2,72,Same 72 kg next week — beat these reps.,72
+6,2026-11-02,8,Day 4 Upper B,Reverse Pec Dec,N,2,12–20,66,20,20,,1,110.0,68.5,All sets at the top of the range → 68.5 kg next week.,66
+6,2026-11-02,8,Day 4 Upper B,Close Grip Smith Machine Bench,N,2,8–12,47.5,12,11,,1,66.5,47.5,Same 47.5 kg next week — beat these reps.,45
+7,2026-11-09,9,Day 1 Lower A,Hack Squat,Y,3,6–10,75,10,8,7,1,100.0,75,Same 75 kg next week — beat these reps.,70
+7,2026-11-09,9,Day 1 Lower A,Leg Extension,N,2,10–15,72.5,15,15,,1,108.8,75,All sets at the top of the range → 75 kg next week.,72.5
+7,2026-11-09,9,Day 1 Lower A,Lying Hamstring Curl,N,3,8–12,50,12,12,9,1,70.0,50,Same 50 kg next week — beat these reps.,53.25
+7,2026-11-09,9,Day 1 Lower A,Standing Calf Raise,N,2,10–15,93,15,15,,1,139.5,98,All sets at the top of the range → 98 kg next week.,
+7,2026-11-09,9,Day 2 Upper A,Flat DB Press,Y,3,6–10,30,10,10,8,2,40.0,30,Same 30 kg next week — beat these reps.,30
+7,2026-11-09,9,Day 2 Upper A,Single Arm Lat Pulldown,Y,3,8–12,72.5,12,12,12,2,101.5,75,All sets at the top of the range → 75 kg next week.,65.25
+7,2026-11-09,9,Day 2 Upper A,Incline Machine Press,N,2,8–12,57,12,12,,1,79.8,59.5,All sets at the top of the range → 59.5 kg next week.,52
+7,2026-11-09,9,Day 2 Upper A,1 Arm Dumbbell Row,N,3,8–12,50,12,12,10,1,70.0,50,Same 50 kg next week — beat these reps.,45
+7,2026-11-09,9,Day 2 Upper A,Dumbbell Lateral Raise,N,3,12–20,12,20,15,15,1,20.0,12,Same 12 kg next week — beat these reps.,12
+7,2026-11-09,9,Day 2 Upper A,V Bar Tricep Pressdown,N,2,8–12,75.5,12,10,,1,105.7,75.5,Same 75.5 kg next week — beat these reps.,82
+7,2026-11-09,9,Day 2 Upper A,Alternating DB Curl,N,2,10–15,17.5,11,10,,1,23.9,17.5,Same 17.5 kg next week — beat these reps.,16
