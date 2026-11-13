@@ -157,6 +157,16 @@ option { background: var(--bg2); }
 /* &#9472;&#9472; CURSOR &#9472;&#9472; */
 .cursor { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 999; opacity: 0; transform: translate(-50%,-50%); transition: opacity .3s; }
 
+/* &#9472;&#9472; CUT TO 165 &#9472;&#9472; */
+.cut-headline { font-family: var(--font-d); font-size: 1.35rem; font-weight: 300; line-height: 1.45; margin: 0 0 1.25rem; color: var(--muted); }
+.cut-headline b { color: var(--text); font-weight: 400; }
+.cut-hint { font-size: 11px; color: var(--muted); line-height: 1.65; margin: -.25rem 0 1rem; }
+.cut-ch-xl { height: 260px; }
+.cut-scroll { overflow-x: auto; }
+.cut-scroll .wtbl td, .cut-scroll .wtbl th { white-space: nowrap; }
+.card-sub .up, .cut-headline .up { color: var(--green); }
+.card-sub .dn, .cut-headline .dn { color: var(--red); }
+
 /* &#9472;&#9472; RESPONSIVE &#9472;&#9472; */
 @media (max-width: 600px) {
   .site-header, .page-title-wrap, .dash-nav, .dash-content { padding-left: 1.25rem; padding-right: 1.25rem; }
@@ -176,11 +186,12 @@ option { background: var(--bg2); }
 
 <div class="page-title-wrap">
   <h1 class="page-title">Training<span>.</span></h1>
-  <p class="page-sub" id="page-sub">Pete Coaching &#8212; Jakked LLC</p>
+  <p class="page-sub" id="page-sub">Cut to 165 &#183; Pete Coaching history</p>
 </div>
 
 <nav class="dash-nav" aria-label="Dashboard sections">
-  <button class="tab-btn active" onclick="showTab('overview',this)">Overview</button>
+  <button class="tab-btn active" onclick="showTab('cut165',this)">Cut to 165</button>
+  <button class="tab-btn" onclick="showTab('overview',this)">Overview</button>
   <button class="tab-btn" onclick="showTab('bodyweight',this)">Body Weight</button>
   <button class="tab-btn" onclick="showTab('nutrition',this)">Nutrition</button>
   <button class="tab-btn" onclick="showTab('training',this)">Training</button>
@@ -191,8 +202,61 @@ option { background: var(--bg2); }
 
 <div class="dash-content">
 
+<!-- CUT TO 165 — Block 1 (code in training-cut165.js, data in data/cut165/) -->
+<div id="tab-cut165" class="tab-panel active">
+  <div id="cut-load" class="loading"><div class="spinner"></div>Loading the cut&#8230;</div>
+  <div id="cut-body" style="display:none">
+    <p class="cut-headline" id="cut-headline"></p>
+    <div class="cards" id="cut-cards"></div>
+    <div id="cut-decision" class="sug"></div>
+    <p class="load-note" id="cut-partial" style="display:none"></p>
+
+    <div class="sec" style="margin-top:1.75rem">
+      <div class="sec-title">Weight vs plan <span>lb · goal 165 by <span id="cut-goal-date"></span></span></div>
+      <p class="cut-hint">Dots are daily weigh-ins, the gold line is each full week's 7-day average, and the dashed line is the plan's weekly target.</p>
+      <div class="ch cut-ch-xl"><canvas id="cut-ch-weight"></canvas></div>
+    </div>
+
+    <div class="grid2">
+      <div class="sec">
+        <div class="sec-title">Waist <span>cm at navel · Sundays</span></div>
+        <div class="ch ch-lg"><canvas id="cut-ch-waist"></canvas></div>
+      </div>
+      <div class="sec">
+        <div class="sec-title">Weekly loss vs 1 lb trigger <span>lb</span></div>
+        <div class="ch ch-lg"><canvas id="cut-ch-loss"></canvas></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title">Body fat &#8212; tape-measure estimates <span>height 170 cm · neck 38 cm</span></div>
+      <p class="cut-hint">Three published formulas from your weekly waist and weight. US Navy is the most reliable tape method for men (about &#177;3&#8211;4% of DEXA); YMCA runs lower and RFM runs high for muscular builds. Trust the trend, not one week's number. Lean mass holding while fat falls means the cut is taking fat, not muscle.</p>
+      <div class="grid2">
+        <div class="ch ch-xl"><canvas id="cut-ch-bf"></canvas></div>
+        <div class="ch ch-xl"><canvas id="cut-ch-mass"></canvas></div>
+      </div>
+      <div class="cut-scroll" style="margin-top:1rem"><table class="wtbl" id="cut-bf-table"></table></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title">Strength &#8212; main lifts <span>e1RM change vs Block 1 week 1</span></div>
+      <div class="ch cut-ch-xl"><canvas id="cut-ch-strength"></canvas></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title">Every exercise <span>tap a header to sort · hover for the coach note</span></div>
+      <div class="cut-scroll"><table class="wtbl" id="cut-ex-table"></table></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title">Weekly check-ins <span id="cut-source"></span></div>
+      <div class="cut-scroll"><table class="wtbl" id="cut-ci-table"></table></div>
+    </div>
+  </div>
+</div>
+
 <!-- OVERVIEW -->
-<div id="tab-overview" class="tab-panel active">
+<div id="tab-overview" class="tab-panel">
   <div id="ov-load" class="loading"><div class="spinner"></div>Fetching latest check-in data&#8230;</div>
   <p class="load-note" id="ov-note" style="display:none">&#9888;&#65039; Live fetch failed &#8212; showing last known data. Make sure the Google Sheet is set to <strong>Anyone with the link &#8594; Viewer</strong>.</p>
   <div id="ov-body" style="display:none">
@@ -548,7 +612,7 @@ function renderOverview() {
   const onTrack = DIET_SCORES.filter(s=>s>=3.5).length;
   const cp = phaseFor(W.length-1);
 
-  document.getElementById('page-sub').textContent = 'Pete Coaching \u2014 Jakked LLC'
+  // page-sub stays 'Cut to 165 · Pete Coaching history' (set in the HTML)
   document.getElementById('ov-span').textContent = `CI #1 \u2192 #${W.length}`;
 
   document.getElementById('ov-cards').innerHTML = `
@@ -873,5 +937,6 @@ document.addEventListener('mouseleave',()=>{cur.style.opacity='0';cv=false;});
 
 document.addEventListener('DOMContentLoaded', init);
 </script>
+<script src="training-cut165.js"></script>
 </body>
 </html>

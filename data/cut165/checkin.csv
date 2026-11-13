@@ -1,0 +1,22 @@
+cut_wk,week_of,block_wk,phase,target_lb,avg_lb,delta_lb,rate3_lb_wk,waist_cm,avg_steps,protein_days,sessions,sleep_h,hunger,scale_reading,decision,days_logged
+1,2026-09-14,,Calibrate,183.3,183.06,-1.44,1.44,98.5,14168.0,7.0,4.0,7.0,5.0,Losing → normal,Calibrating — change nothing.,7
+2,2026-09-21,,Calibrate,182.0,182.2,-0.86,1.15,99.5,13626.0,7.0,4.0,7.0,4.0,Losing → normal,Calibrating — change nothing.,7
+3,2026-09-28,1,Calibrate,180.8,181.03,-1.17,1.16,98.0,13178.0,7.0,4.0,7.0,4.0,Losing → normal,CHECKPOINT: your maintenance ≈ 2533 kcal. Stay at the current step.,7
+4,2026-10-05,2,Deficit,179.5,179.8,-1.23,1.09,97.0,12581.0,7.0,4.0,7.0,5.0,Losing → normal,On track — change nothing.,7
+5,2026-10-12,3,Deficit,178.3,178.86,-0.94,1.11,97.0,13654.0,7.0,4.0,7.0,4.0,Losing → normal,On track — change nothing.,7
+6,2026-10-19,4,Deficit,177.0,178.63,-0.23,0.8,95.5,13189.0,7.0,4.0,6.0,5.0,Weight flat + waist ↓ = recomposition → good week,Slow scale but waist ↓ → recomposition. Change nothing.,7
+7,2026-10-26,5,Refeed,177.0,179.94,1.31,-0.05,95.0,12683.0,7.0,4.0,6.0,4.0,"Weight ↑, waist flat = water/glycogen → ignore",Refeed week done — back to the deficit at your current step.,7
+8,2026-11-02,6,Deficit,175.8,178.8,-1.14,0.02,95.0,,,,,,Losing → normal,3-week loss under 1 lb/wk → drop ONE ladder step.,7
+9,2026-11-09,7,Deficit,174.5,,,,,,,,,,,,0
+10,2026-11-16,8,Deficit,173.3,,,,,,,,,,,,0
+11,2026-11-23,9,Deficit,172.0,,,,,,,,,,,,0
+12,2026-11-30,10,Deficit,170.8,,,,,,,,,,,,0
+13,2026-12-07,India,India,171.0,,,,,,,,,,,,0
+14,2026-12-14,India,India,171.0,,,,,,,,,,,,0
+15,2026-12-21,India,India,171.0,,,,,,,,,,,,0
+16,2026-12-28,Blk 2,Final,170.0,,,,,,,,,,,,0
+17,2027-01-04,Blk 2,Final,169.0,,,,,,,,,,,,0
+18,2027-01-11,Blk 2,Final,168.0,,,,,,,,,,,,0
+19,2027-01-18,Blk 2,Final,167.0,,,,,,,,,,,,0
+20,2027-01-25,Blk 2,Final,166.0,,,,,,,,,,,,0
+21,2027-02-01,Blk 2,Final,165.0,,,,,,,,,,,,0
