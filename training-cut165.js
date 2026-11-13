@@ -1,22 +1,25 @@
 // ══════════════════════════════════════════════════════════
 // Cut to 165 — Block 1 progress (the whole of training.html)
 //
-// DATA: three tables with these exact column headers:
-//   checkin  — cut_wk, week_of, block_wk, phase, target_lb, avg_lb, delta_lb,
-//              rate3_lb_wk, waist_cm, avg_steps, protein_days, sessions,
-//              sleep_h, hunger, scale_reading, decision, days_logged
-//   weighins — date, weight_lb, cut_wk
-//   lifts    — block_wk, week_of, cut_wk, day, exercise, main, sets, rep_range,
-//              load_kg, set1, set2, set3, rir, e1rm, next_kg, coach, block23_kg
-//
-// LIVE: put the Google Sheet's ID in CUT165_SHEET_ID. The sheet must be shared
-// "Anyone with the link → Viewer" and have three tabs named exactly
-// checkin, weighins and lifts with the headers above. Until then (or if the
-// fetch fails) the page uses the snapshot CSVs in data/cut165/.
+// LIVE DATA: the Block 1 workbook as a Google Sheet (CUT165_SHEET_ID), shared
+// "Anyone with the link → Viewer". The page reads two of its tabs by position:
+//   Check-in — one row per cut week. A cut wk, B week of ("14-Sep"), C block wk,
+//              D phase, E target lb, F–L Mon–Sun weigh-ins, M 7-day avg,
+//              N Δ lb, O 3-wk rate, Q waist cm, T steps, U protein days,
+//              V sessions, W sleep h, X hunger, AA scale reading, AD decision.
+//   Log      — one row per exercise per block week. A block wk, B week of,
+//              C cut wk, E day, F exercise, G main (Y), H sets, I rep range,
+//              L load kg, M–O reps per set, P RIR, R next kg, S coach note,
+//              T e1RM, Y Block 23 kg. Warm-up rows and unlogged sets are skipped.
+// If a column moves in the workbook, update the indexes in fromWorkbook().
+// If the sheet can't be read, the page falls back to the snapshot CSVs in
+// data/cut165/ (checkin, weighins, lifts), which use the same field names.
 // ══════════════════════════════════════════════════════════
 (function () {
-  const CUT165_SHEET_ID = '';
-  const SNAPSHOT_DATE = '8 Nov 2026';
+  const CUT165_SHEET_ID = '17Amy186HUe0ONz0Tx_sa3EYGwo3G1Pzwxvp6c1g8ym8';
+  const SHEET_TABS = { checkin: 'Check-in', log: 'Log' };
+  const CUT_START_YEAR = 2026;   // week-of dates in the sheet carry no year
+  const SNAPSHOT_DATE = '13 Nov 2026';
   const START_LB = 184.5, GOAL_LB = 165, RATE_TRIGGER = 1.0;
   const HEIGHT_CM = 170.18, NECK_CM = 38;
   const TABS = ['checkin', 'weighins', 'lifts'];
@@ -58,7 +61,7 @@
   const fmtDate = (s) => new Date(s + 'T00:00:00Z').toLocaleDateString('en-IE', { day: 'numeric', month: 'short', timeZone: 'UTC' });
 
   // ── CSV ────────────────────────────────────────────────
-  function parseCSV(text) {
+  function parseRows(text) {
     const rows = []; let row = [], cell = '', q = false;
     for (let i = 0; i < text.length; i++) {
       const c = text[i];
@@ -69,6 +72,10 @@
       else cell += c;
     }
     if (cell !== '' || row.length) { row.push(cell); rows.push(row); }
+    return rows.map((r) => r.map((c) => c.trim()));
+  }
+  function parseCSV(text) {
+    const rows = parseRows(text);
     const head = (rows.shift() || []).map((h) => h.trim().toLowerCase());
     return rows.filter((r) => r.some((c) => c.trim() !== '')).map((r) => Object.fromEntries(head.map((h, i) => [h, (r[i] ?? '').trim()])));
   }
@@ -77,18 +84,58 @@
     if (!res.ok) throw new Error(res.status + ' ' + url);
     return res.text();
   }
+  // Turn the workbook's Check-in and Log tabs into the checkin / weighins / lifts
+  // tables the rest of the page uses (same field names as the snapshot CSVs).
+  function fromWorkbook(ci, log) {
+    const isNum = (v) => v !== '' && v != null && !isNaN(Number(v));
+    const clean = (v) => (v == null ? '' : String(v).replace(/^\+/, '').replace(/^[—–-]$/, ''));
+    const MON = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+    const dater = () => {           // "14-Sep" → 2026-09-14; the year rolls over when the month goes backwards
+      let year = CUT_START_YEAR, prev = 0;
+      return (v) => {
+        const m = String(v || '').match(/^(\d{1,2})[-\s]([A-Za-z]{3})/);
+        if (!m) return isoDate(v);
+        const mo = MON[m[2].toLowerCase()]; if (!mo) return isoDate(v);
+        if (mo < prev) year++; prev = mo;
+        return `${year}-${String(mo).padStart(2, '0')}-${m[1].padStart(2, '0')}`;
+      };
+    };
+    const ciDate = dater(), checkin = [], weighins = [];
+    for (const r of ci) {
+      if (!isNum(r[0]) || !isNum(r[4])) continue;
+      const week = ciDate(r[1]), t0 = Date.parse(week + 'T00:00:00Z');
+      let days = 0;
+      for (let i = 0; i < 7; i++) {
+        const w = r[5 + i];
+        if (isNum(w)) { days++; weighins.push({ date: new Date(t0 + i * 864e5).toISOString().slice(0, 10), weight_lb: w, cut_wk: r[0] }); }
+      }
+      checkin.push({ cut_wk: r[0], week_of: week, block_wk: r[2], phase: r[3], target_lb: r[4],
+        avg_lb: days ? clean(r[12]) : '', delta_lb: days ? clean(r[13]) : '', rate3_lb_wk: days ? clean(r[14]) : '',
+        waist_cm: clean(r[16]), avg_steps: clean(r[19]), protein_days: clean(r[20]), sessions: clean(r[21]),
+        sleep_h: clean(r[22]), hunger: clean(r[23]), scale_reading: r[26] || '', decision: r[29] || '', days_logged: String(days) });
+    }
+    const logDate = dater(), lifts = [];
+    for (const r of log) {
+      if (!isNum(r[0]) || !r[5]) continue;
+      const week = logDate(r[1]);
+      if (/warm-?up/i.test(r[5]) || !isNum(r[12]) || !isNum(r[11])) continue;
+      lifts.push({ block_wk: r[0], week_of: week, cut_wk: r[2], day: r[4], exercise: r[5], main: r[6] === 'Y' ? 'Y' : 'N',
+        sets: r[7], rep_range: r[8], load_kg: r[11], set1: r[12], set2: r[13], set3: r[14], rir: r[15], e1rm: clean(r[19]),
+        next_kg: clean(r[17]), coach: r[18] || '', block23_kg: clean(r[24]) });
+    }
+    const sane = checkin.length >= 4 && checkin.every((c) => +c.target_lb > 120 && +c.target_lb < 260)
+      && weighins.every((w) => +w.weight_lb > 120 && +w.weight_lb < 260) && lifts.length > 0;
+    if (!sane) throw new Error('workbook layout not recognised (columns moved?)');
+    return { checkin, weighins, lifts };
+  }
+
   async function loadData() {
     if (CUT165_SHEET_ID) {
       try {
-        const out = {};
-        for (const t of TABS) {
-          const rows = parseCSV(await getText(`https://docs.google.com/spreadsheets/d/${CUT165_SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(t)}`));
-          const need = t === 'checkin' ? 'cut_wk' : t === 'weighins' ? 'weight_lb' : 'exercise';
-          if (!rows.length || !(need in rows[0])) throw new Error('tab ' + t + ' missing or wrong headers');
-          out[t] = rows;
-        }
-        return { ...out, live: true };
-      } catch (e) { console.warn('Cut 165 live fetch failed, using snapshot:', e); }
+        const tab = async (name) => parseRows(await getText(`https://docs.google.com/spreadsheets/d/${CUT165_SHEET_ID}/gviz/tq?tqx=out:csv&headers=0&sheet=${encodeURIComponent(name)}`));
+        const [ci, log] = await Promise.all([tab(SHEET_TABS.checkin), tab(SHEET_TABS.log)]);
+        return { ...fromWorkbook(ci, log), live: true };
+      } catch (e) { console.warn('Cut 165 live sheet unavailable, using snapshot:', e); }
     }
     const out = {};
     for (const t of TABS) out[t] = parseCSV(await getText(`data/cut165/${t}.csv`));
