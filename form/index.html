@@ -23,7 +23,7 @@
           <p class="eyebrow">Conditioning, made visible</p>
           <h1>Form<em>.</em></h1>
         </div>
-        <p class="hero-copy">See the plan, then meet it. Build a measurable projection from your current condition. Check in later, compare the evidence, and get a clear verdict.</p>
+        <p class="hero-copy">See the plan, then meet it. Start with a photo and your numbers, shape a realistic projection, and on check-in day compare your start, the projection and the real you, side by side.</p>
       </section>
 
       <nav class="stepper" aria-label="App steps">
@@ -41,16 +41,25 @@
         </div>
 
         <div class="baseline-grid">
-          <label class="photo-drop" id="baseline-drop">
-            <input id="baseline-photo" type="file" accept="image/*" />
-            <img id="baseline-preview" alt="Current conditioning preview" />
-            <div class="drop-copy">
-              <div class="camera-icon">＋</div>
-              <strong>Add current photo</strong>
-              <span>JPG, PNG or HEIC</span>
+          <div class="photo-col">
+            <div class="photo-drop" id="baseline-drop">
+              <input id="baseline-photo" type="file" accept="image/*,.heic,.heif" />
+              <img id="baseline-preview" alt="Your starting photo" />
+              <div class="waist-guide" id="waist-guide" hidden><i class="wg-line"></i><i class="wg-l"></i><i class="wg-r"></i><b></b></div>
+              <button class="drop-copy" type="button" data-pick="baseline-photo">
+                <span class="camera-icon">＋</span>
+                <strong>Add current photo</strong>
+                <span>Front-facing, full torso, even light · JPG, PNG or iPhone HEIC</span>
+              </button>
+              <button class="replace-photo" type="button" data-pick="baseline-photo">Replace photo</button>
             </div>
-            <button class="replace-photo" type="button">Replace photo</button>
-          </label>
+            <p class="photo-msg" id="baseline-msg" role="status"></p>
+            <div class="guide-controls" id="guide-controls" hidden>
+              <p class="guide-hint"><b>Tap your waist</b> (at the navel) on the photo, then match the gold markers to the sides of your body.</p>
+              <label class="slider-row"><span>Body width in photo</span><output id="body-width-output">40%</output></label>
+              <input class="range" id="body-width" type="range" min="15" max="80" value="40" />
+            </div>
+          </div>
 
           <div class="form-card">
             <div class="form-card-title"><span>Your parameters</span><span class="required-note">* required</span></div>
@@ -130,26 +139,56 @@
           <p>Add your actual photo and measurements. FORM compares numbers, timing, and habits—not lighting or subjective appearance.</p>
         </div>
 
-        <div class="comparison-grid">
+        <div class="compare3">
           <article class="compare-card">
-            <div class="compare-label"><span>PROJECTED</span><time id="compare-projected-date">—</time></div>
-            <div class="compare-image projected-image"><canvas id="compare-canvas"></canvas><div class="canvas-placeholder">Projection appears here</div></div>
+            <div class="compare-label"><span>Start</span><time id="cmp-start-date">—</time></div>
+            <div class="compare-image"><canvas id="cmp-start"></canvas><div class="canvas-placeholder">Add a start photo in step 1</div></div>
+            <div class="compare-stats"><span><small>Weight</small><b id="cmp-start-weight">—</b></span><span><small>Waist</small><b id="cmp-start-waist">—</b></span><span><small>Body fat</small><b id="cmp-start-bf">—</b></span></div>
+          </article>
+
+          <article class="compare-card">
+            <div class="compare-label"><span>Projected</span><time id="compare-projected-date">—</time></div>
+            <div class="compare-image"><canvas id="compare-canvas"></canvas><div class="canvas-placeholder">Projection appears here</div></div>
             <div class="compare-stats"><span><small>Weight</small><b id="compare-target-weight">—</b></span><span><small>Waist</small><b id="compare-target-waist">—</b></span><span><small>Body fat</small><b id="compare-target-bf">—</b></span></div>
           </article>
 
           <article class="compare-card actual-card">
-            <div class="compare-label"><span>ACTUAL</span><input id="checkin-date" type="date" /></div>
-            <label class="compare-image actual-upload">
-              <input id="actual-photo" type="file" accept="image/*" />
-              <img id="actual-preview" alt="Actual check-in preview" />
-              <div class="actual-drop-copy"><span>＋</span><strong>Add check-in photo</strong></div>
-            </label>
+            <div class="compare-label"><span>Actual</span><input id="checkin-date" type="date" aria-label="Check-in date" /></div>
+            <div class="compare-image actual-upload" id="actual-drop">
+              <input id="actual-photo" type="file" accept="image/*,.heic,.heif" />
+              <img id="actual-preview" alt="Your check-in photo" />
+              <button class="actual-drop-copy" type="button" data-pick="actual-photo"><span>＋</span><strong>Add check-in photo</strong><small>Same pose, distance and light as the start</small></button>
+              <button class="replace-photo" type="button" data-pick="actual-photo">Replace photo</button>
+            </div>
             <div class="actual-inputs">
-              <label><small>Weight kg</small><input id="actual-weight" type="number" step="0.1" /></label>
-              <label><small>Waist cm</small><input id="actual-waist" type="number" step="0.1" /></label>
-              <label><small>Body fat %</small><input id="actual-bf" type="number" step="0.1" /></label>
+              <label><small>Weight kg</small><input id="actual-weight" type="number" step="0.1" inputmode="decimal" /></label>
+              <label><small>Waist cm</small><input id="actual-waist" type="number" step="0.1" inputmode="decimal" /></label>
+              <label><small>Body fat %</small><input id="actual-bf" type="number" step="0.1" inputmode="decimal" /></label>
             </div>
           </article>
+        </div>
+        <p class="photo-msg" id="actual-msg" role="status"></p>
+        <p class="compare-note" id="compare-note"></p>
+
+        <section class="swipe-card" id="swipe-card">
+          <div class="swipe-head">
+            <span class="kicker">Side by side</span>
+            <div class="swipe-modes" role="tablist">
+              <button class="swipe-mode active" data-mode="proj">Projected vs actual</button>
+              <button class="swipe-mode" data-mode="start">Start vs actual</button>
+            </div>
+          </div>
+          <div class="swipe-stage">
+            <canvas id="swipe-canvas" width="900" height="900"></canvas>
+            <div class="swipe-empty" id="swipe-empty">Add a check-in photo to compare</div>
+            <span class="swipe-tag left" id="swipe-left">Projected</span><span class="swipe-tag right">Actual</span>
+          </div>
+          <input class="range" id="swipe" type="range" min="0" max="100" value="50" aria-label="Drag to compare" />
+        </section>
+
+        <div class="variance">
+          <div class="form-card-title"><span>Variance on the check-in date</span><span class="required-note" id="variance-progress">—</span></div>
+          <div class="variance-scroll"><table id="variance-table"><thead><tr><th></th><th>Start</th><th>Expected</th><th>Actual</th><th>vs plan</th><th>Since start</th></tr></thead><tbody></tbody></table></div>
         </div>
 
         <section class="verdict-card" id="verdict-card">
@@ -161,7 +200,7 @@
       </section>
     </main>
 
-    <footer><span>FORM / PRIVATE PROGRESS TRACKING</span><span>Not medical advice · v0.1 MVP</span></footer>
+    <footer><span>FORM / Saved only on this device</span><span>Not medical advice · v0.2</span></footer>
     <script src="app.js"></script>
   </body>
 </html>
