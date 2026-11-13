@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#131b18" />
+    <title>Form — Conditioning Projection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#">
+        <span class="brand-mark">F</span>
+        <span>FORM</span>
+      </a>
+      <div class="privacy-pill"><span></span> Photos stay on this device</div>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">CONDITIONING, MADE VISIBLE</p>
+          <h1>See the plan.<br /><em>Then meet it.</em></h1>
+        </div>
+        <p class="hero-copy">Build a measurable projection from your current condition. Check in later, compare the evidence, and get a clear verdict.</p>
+      </section>
+
+      <nav class="stepper" aria-label="App steps">
+        <button class="step active" data-step="1"><span>01</span> Baseline</button>
+        <div class="step-line"></div>
+        <button class="step" data-step="2"><span>02</span> Projection</button>
+        <div class="step-line"></div>
+        <button class="step" data-step="3"><span>03</span> Check-in</button>
+      </nav>
+
+      <section class="panel active" id="step-1">
+        <div class="section-heading">
+          <div><p class="kicker">STARTING POINT</p><h2>Capture today, honestly.</h2></div>
+          <p>A relaxed, front-facing photo in even light gives the most consistent visual comparison.</p>
+        </div>
+
+        <div class="baseline-grid">
+          <label class="photo-drop" id="baseline-drop">
+            <input id="baseline-photo" type="file" accept="image/*" />
+            <img id="baseline-preview" alt="Current conditioning preview" />
+            <div class="drop-copy">
+              <div class="camera-icon">＋</div>
+              <strong>Add current photo</strong>
+              <span>JPG, PNG or HEIC</span>
+            </div>
+            <button class="replace-photo" type="button">Replace photo</button>
+          </label>
+
+          <div class="form-card">
+            <div class="form-card-title"><span>Your parameters</span><span class="required-note">* required</span></div>
+            <div class="fields two-col">
+              <label><span>Date *</span><input id="baseline-date" type="date" /></label>
+              <label><span>Height (cm) *</span><input id="height" type="number" min="120" max="230" value="175" /></label>
+              <label><span>Weight (kg) *</span><input id="weight" type="number" min="35" max="250" step="0.1" value="78" /></label>
+              <label><span>Waist (cm) *</span><input id="waist" type="number" min="45" max="180" step="0.1" value="88" /></label>
+              <label><span>Body fat % <i>optional</i></span><input id="bodyfat" type="number" min="3" max="60" step="0.1" placeholder="e.g. 22" /></label>
+              <label><span>Avg sleep (hours)</span><input id="sleep" type="number" min="3" max="12" step="0.1" value="7" /></label>
+              <label><span>Daily steps</span><input id="steps" type="number" min="0" max="50000" step="500" value="7000" /></label>
+              <label><span>Training / week</span><input id="training" type="number" min="0" max="14" value="3" /></label>
+            </div>
+            <div class="note"><span>i</span><p>A photo alone cannot reliably measure body fat or health. Use the same measurement method at every check-in.</p></div>
+            <button class="primary next" data-next="2">Build my projection <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="step-2">
+        <div class="section-heading">
+          <div><p class="kicker">YOUR HYPOTHESIS</p><h2>Shape a realistic outcome.</h2></div>
+          <p>Adjust what you believe you can achieve. The guardrails flag aggressive rates, but the choices remain yours.</p>
+        </div>
+
+        <div class="projection-layout">
+          <div class="projection-controls form-card">
+            <div class="control-row">
+              <div><label for="weeks">Time horizon</label><small id="target-date-label">—</small></div>
+              <output id="weeks-output">12 weeks</output>
+            </div>
+            <input class="range" id="weeks" type="range" min="4" max="52" value="12" />
+
+            <div class="fields two-col target-fields">
+              <label><span>Target weight (kg)</span><input id="target-weight" type="number" step="0.1" /></label>
+              <label><span>Target waist (cm)</span><input id="target-waist" type="number" step="0.1" /></label>
+              <label><span>Target body fat %</span><input id="target-bodyfat" type="number" min="3" max="60" step="0.1" placeholder="Optional" /></label>
+              <label><span>Strength change %</span><input id="strength-change" type="number" min="-30" max="100" value="10" /></label>
+            </div>
+
+            <div class="divider"></div>
+            <p class="subhead">The behaviours behind it</p>
+            <div class="slider-group">
+              <label><span>Nutrition consistency</span><output id="nutrition-output">80%</output></label>
+              <input class="range" id="nutrition" type="range" min="20" max="100" value="80" />
+              <label><span>Training consistency</span><output id="adherence-output">85%</output></label>
+              <input class="range" id="adherence" type="range" min="20" max="100" value="85" />
+              <label><span>Average sleep</span><output id="target-sleep-output">7.5h</output></label>
+              <input class="range" id="target-sleep" type="range" min="4" max="10" step="0.5" value="7.5" />
+            </div>
+            <div class="rate-card" id="rate-card">
+              <span class="rate-icon">✓</span>
+              <div><strong id="rate-title">Sustainable pace</strong><p id="rate-copy">Your planned weekly rate sits within a commonly manageable range.</p></div>
+            </div>
+          </div>
+
+          <div class="visual-card">
+            <div class="visual-card-head"><div><span>ILLUSTRATIVE PREVIEW</span><strong id="projection-date">—</strong></div><span class="estimate-badge">ESTIMATE</span></div>
+            <div class="photo-stage">
+              <canvas id="projection-canvas"></canvas>
+              <div class="empty-projection" id="empty-projection"><span>◇</span><p>Add a baseline photo to create a visual projection</p></div>
+            </div>
+            <div class="metric-strip">
+              <div><span>WEIGHT</span><strong id="projected-weight-display">—</strong><small id="projected-weight-delta">—</small></div>
+              <div><span>WAIST</span><strong id="projected-waist-display">—</strong><small id="projected-waist-delta">—</small></div>
+              <div><span>BODY FAT</span><strong id="projected-bf-display">—</strong><small id="projected-bf-delta">—</small></div>
+            </div>
+            <p class="visual-disclaimer">This visualization is a directional illustration, not a prediction or guarantee. Genetics, pose, lighting, and many other factors affect appearance.</p>
+            <button class="primary next" data-next="3">Save projection &amp; check in <span>→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="step-3">
+        <div class="section-heading">
+          <div><p class="kicker">REALITY CHECK</p><h2>Compare the plan to the day.</h2></div>
+          <p>Add your actual photo and measurements. FORM compares numbers, timing, and habits—not lighting or subjective appearance.</p>
+        </div>
+
+        <div class="comparison-grid">
+          <article class="compare-card">
+            <div class="compare-label"><span>PROJECTED</span><time id="compare-projected-date">—</time></div>
+            <div class="compare-image projected-image"><canvas id="compare-canvas"></canvas><div class="canvas-placeholder">Projection appears here</div></div>
+            <div class="compare-stats"><span><small>Weight</small><b id="compare-target-weight">—</b></span><span><small>Waist</small><b id="compare-target-waist">—</b></span><span><small>Body fat</small><b id="compare-target-bf">—</b></span></div>
+          </article>
+
+          <article class="compare-card actual-card">
+            <div class="compare-label"><span>ACTUAL</span><input id="checkin-date" type="date" /></div>
+            <label class="compare-image actual-upload">
+              <input id="actual-photo" type="file" accept="image/*" />
+              <img id="actual-preview" alt="Actual check-in preview" />
+              <div class="actual-drop-copy"><span>＋</span><strong>Add check-in photo</strong></div>
+            </label>
+            <div class="actual-inputs">
+              <label><small>Weight kg</small><input id="actual-weight" type="number" step="0.1" /></label>
+              <label><small>Waist cm</small><input id="actual-waist" type="number" step="0.1" /></label>
+              <label><small>Body fat %</small><input id="actual-bf" type="number" step="0.1" /></label>
+            </div>
+          </article>
+        </div>
+
+        <section class="verdict-card" id="verdict-card">
+          <div class="verdict-score"><span id="verdict-score">—</span><small>MATCH<br />SCORE</small></div>
+          <div class="verdict-copy"><p>FORM VERDICT</p><h3 id="verdict-title">Add your actual measurements</h3><span id="verdict-text">Your comparison will account for how much time has actually passed.</span></div>
+          <div class="verdict-deltas" id="verdict-deltas"></div>
+        </section>
+        <div class="actions-row"><button class="secondary" id="reset-app">Start a new baseline</button><button class="primary" id="calculate-verdict">Calculate verdict <span>→</span></button></div>
+      </section>
+    </main>
+
+    <footer><span>FORM / PRIVATE PROGRESS TRACKING</span><span>Not medical advice · v0.1 MVP</span></footer>
+    <script src="app.js"></script>
+  </body>
+</html>
