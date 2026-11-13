@@ -8,7 +8,7 @@ It's a small collection of personal tools: money, fitness and travel. Every page
 
 | Page | Path | In one line |
 |---|---|---|
-| Home | [`/`](https://ashishkumarswain.com/) | Landing page linking to everything below |
+| Home | [`/`](https://ashishkumarswain.com/) | Landing page: a statement headline, a tile for each page, and About |
 | Wealth advisor | [`/advisor.html`](https://ashishkumarswain.com/advisor.html) | Ireland-aware investing plan and AI research partner |
 | Training | [`/training.html`](https://ashishkumarswain.com/training.html) | Cut to 165: weight, waist, body fat and strength against the plan |
 | FORM | [`/form/`](https://ashishkumarswain.com/form/) | Body-conditioning projection and photo check-ins, all in the browser |
@@ -17,6 +17,30 @@ It's a small collection of personal tools: money, fitness and travel. Every page
 ## Pages in detail
 
 Click a page to expand it.
+
+<details>
+<summary><b>🏠 Home</b>: the landing page</summary>
+
+<br>
+
+`index.html` is a minimal, Apple-inspired landing page: lots of space, large type and one clear path to each page.
+
+| Part | What it shows |
+|---|---|
+| Top bar | An "A." monogram, with links to Explore, About and LinkedIn |
+| Hero | "Limerick, Ireland", the name in large Cormorant Garamond with the gold full stop over a soft gold glow, and one line: *Building digital banking by day. Investing, training and travelling the rest of the time, and measuring all of it.* |
+| Explore | Four rounded tiles, one per page, each with a kicker, title, one-line description and a small SVG drawing: a growth curve for the **Wealth advisor**, a weight line stepping down towards the plan for **Cut to 165**, a progress ring for **Form** and stacked photos for **Travel**. On hover a tile lifts and its border turns gold. |
+| About | The intro as a large quote, then three facts: Now (digital banking at Permanent TSB), Based (Limerick, since 2021), Outside work (markets, lifting, photography) |
+| Footer | Copyright, "Originally from India" and LinkedIn |
+
+How it behaves:
+
+- **Layout:** tiles sit 4 + 2 and 3 + 3 on desktop and in one column on phones, where each drawing shrinks below its text. Every section shares the same edges.
+- **Motion:** sections fade up as they scroll into view. Nothing animates if the device asks for reduced motion, and all content shows without JavaScript.
+- **Code:** one self-contained HTML file with inline CSS, SVG and a few lines of JavaScript. There's no tracking.
+- **Adding a page:** copy one of the `<a class="tile">` blocks and pick `wide`, `narrow` or `half` so each row adds up to 6 columns.
+
+</details>
 
 <details>
 <summary><b>💰 Wealth advisor</b>: investing plan and AI research for an Irish resident</summary>
