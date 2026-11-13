@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wealth Advisor</title>
+<meta name="description" content="Personal, Ireland-aware investing partner: plan builder plus AI research on portfolios, IPOs and sector moves.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/lib/marked.umd.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js" defer></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a; --bg-2: #111; --bg-3: #1a1a1a; --bg-4: #222;
+    --border: rgba(255,255,255,0.07); --border-hover: rgba(255,255,255,0.14);
+    --text-1: #f0f0f0; --text-2: #8a8a8a; --text-3: #5a5a5a;
+    --accent: #00e5a0; --accent-dim: rgba(0,229,160,0.1); --accent-border: rgba(0,229,160,0.25);
+    --red: #ff5c5c; --amber: #f5a623; --blue: #5aa9ff; --violet: #b18cff;
+    --font-body: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+    --radius: 10px; --radius-lg: 16px;
+  }
+  body { background: var(--bg); color: var(--text-1); font-family: var(--font-body); font-size: 14px; line-height: 1.6; min-height: 100vh; }
+  a { color: var(--accent); }
+  .shell { max-width: 960px; margin: 0 auto; padding: 40px 16px 80px; }
+  .back { font-family: var(--font-mono); font-size: 11px; color: var(--text-3); text-decoration: none; letter-spacing: .08em; }
+  .back:hover { color: var(--accent); }
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); margin: 24px 0 6px; }
+  h1 { font-size: 24px; font-weight: 500; letter-spacing: -.3px; }
+  .sub { color: var(--text-2); margin-top: 6px; max-width: 640px; }
+
+  .tabs { display: flex; gap: 4px; margin: 28px 0 24px; border-bottom: 1px solid var(--border); overflow-x: auto; }
+  .tab { background: none; border: none; color: var(--text-2); font: inherit; padding: 10px 14px; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .tab:hover { color: var(--text-1); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .panel { display: none; } .panel.active { display: block; }
+
+  .card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; }
+  .card h2 { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .card .hint { color: var(--text-2); font-size: 12.5px; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--text-2); }
+  input, select, textarea { background: var(--bg-3); border: 1px solid var(--border); color: var(--text-1); border-radius: 8px; padding: 9px 11px; font: inherit; font-size: 14px; width: 100%; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent-border); }
+  textarea { resize: vertical; min-height: 64px; }
+  .btn { background: var(--accent); color: #002b1e; border: none; border-radius: 8px; padding: 10px 16px; font: inherit; font-weight: 600; cursor: pointer; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn.ghost { background: var(--bg-3); color: var(--text-1); border: 1px solid var(--border); font-weight: 400; }
+  .btn.ghost:hover { border-color: var(--border-hover); }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .muted { color: var(--text-2); } .small { font-size: 12px; }
+  .mono { font-family: var(--font-mono); }
+
+  .risk-scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .risk-scale button { background: var(--bg-3); border: 1px solid var(--border); color: var(--text-2); border-radius: 8px; padding: 10px 4px; font: inherit; font-size: 12px; cursor: pointer; }
+  .risk-scale button.on { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .kpi { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+  .kpi .k { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: .08em; font-family: var(--font-mono); }
+  .kpi .v { font-size: 20px; font-weight: 500; margin-top: 4px; font-family: var(--font-mono); }
+  .kpi .d { font-size: 12px; color: var(--text-2); }
+
+  .ladder { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .ladder li { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: start; padding: 14px; background: var(--bg-3); border-radius: var(--radius); border: 1px solid var(--border); }
+  .ladder .n { width: 24px; height: 24px; border-radius: 50%; background: var(--accent-dim); color: var(--accent); display: grid; place-items: center; font-size: 12px; font-family: var(--font-mono); }
+  .ladder li.done .n { background: var(--bg-4); color: var(--text-3); }
+  .ladder .t { font-weight: 500; }
+  .ladder .why { color: var(--text-2); font-size: 12.5px; margin-top: 3px; }
+  .ladder .amt { font-family: var(--font-mono); font-size: 14px; text-align: right; white-space: nowrap; }
+  .ladder .amt small { display: block; font-size: 11px; color: var(--text-3); }
+
+  .alloc { display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: center; }
+  .alloc-list { display: flex; flex-direction: column; gap: 10px; }
+  .alloc-item { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; align-items: start; }
+  .sw { width: 10px; height: 10px; border-radius: 3px; margin-top: 5px; }
+  .alloc-item .nm { font-weight: 500; }
+  .alloc-item .ex { color: var(--text-2); font-size: 12px; }
+  .alloc-item .pc { font-family: var(--font-mono); text-align: right; }
+  .alloc-item .pc small { display: block; color: var(--text-3); font-size: 11px; }
+  @media (max-width: 620px) { .alloc { grid-template-columns: 1fr; } .alloc svg { max-width: 180px; margin: 0 auto; } }
+
+  .chart-wrap { position: relative; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--text-2); margin-top: 8px; }
+  .legend span::before { content: ''; display: inline-block; width: 10px; height: 2px; vertical-align: middle; margin-right: 6px; background: var(--c); }
+
+  .notice { border: 1px solid rgba(245,166,35,.25); background: rgba(245,166,35,.06); border-radius: var(--radius); padding: 12px 14px; color: #e8c58a; font-size: 12.5px; margin-bottom: 16px; }
+  .tax-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .tax-table td, .tax-table th { padding: 9px 8px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+  .tax-table th { color: var(--text-3); font-weight: 400; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+  .tax-table input { width: 90px; padding: 5px 8px; }
+
+  /* chat */
+  .chat { display: flex; flex-direction: column; gap: 14px; min-height: 320px; }
+  .msg { padding: 14px 16px; border-radius: var(--radius-lg); max-width: 100%; overflow-wrap: anywhere; }
+  .msg.user { background: var(--bg-3); align-self: flex-end; max-width: 85%; white-space: pre-wrap; }
+  .msg.ai { background: var(--bg-2); border: 1px solid var(--border); }
+  .msg.ai h1, .msg.ai h2, .msg.ai h3 { font-size: 15px; font-weight: 600; margin: 14px 0 6px; }
+  .msg.ai p { margin: 8px 0; } .msg.ai ul, .msg.ai ol { margin: 8px 0 8px 20px; }
+  .msg.ai table { border-collapse: collapse; margin: 10px 0; font-size: 13px; display: block; overflow-x: auto; }
+  .msg.ai th, .msg.ai td { border: 1px solid var(--border); padding: 6px 9px; text-align: left; }
+  .msg.ai code { font-family: var(--font-mono); font-size: 12.5px; background: var(--bg-3); padding: 1px 4px; border-radius: 4px; }
+  .status { font-family: var(--font-mono); font-size: 11.5px; color: var(--accent); margin-bottom: 6px; }
+  .sources { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-2); }
+  .sources a { color: var(--text-2); } .sources a:hover { color: var(--accent); }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 14px; }
+  .chip { background: var(--bg-3); border: 1px solid var(--border); color: var(--text-1); border-radius: 999px; padding: 7px 12px; font: inherit; font-size: 12.5px; cursor: pointer; }
+  .chip:hover { border-color: var(--accent-border); color: var(--accent); }
+  .composer { display: flex; gap: 10px; position: sticky; bottom: 0; background: var(--bg); padding: 12px 0; }
+  .composer textarea { min-height: 48px; }
+  .empty { color: var(--text-2); text-align: center; padding: 30px 10px; }
+  footer { margin-top: 40px; color: var(--text-3); font-size: 11.5px; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <a class="back" href="/">← HOME</a>
+  <div class="eyebrow">Personal · Ireland</div>
+  <h1>Wealth advisor</h1>
+  <p class="sub">Your investing partner. It builds a tax-aware plan for living in Ireland, and researches portfolios, upcoming IPOs and sector moves with live web search — always with a rationale and a euro amount.</p>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="profile">1 · Profile</button>
+    <button class="tab" data-tab="plan">2 · Plan</button>
+    <button class="tab" data-tab="advisor">3 · Ask advisor</button>
+    <button class="tab" data-tab="tax">Irish tax rules</button>
+    <button class="tab" data-tab="settings">Settings</button>
+  </nav>
+
+  <!-- PROFILE -->
+  <section class="panel active" id="profile">
+    <div class="card">
+      <h2>About you</h2>
+      <p class="hint">Stored only in this browser. The plan and the advisor use it to size every suggestion.</p>
+      <div class="grid">
+        <label>Age<input type="number" id="age" min="18" max="80" value="28"></label>
+        <label>Gross salary (€ / year)<input type="number" id="salary" min="0" step="1000" value="55000"></label>
+        <label>Take-home pay (€ / month)<input type="number" id="takehome" min="0" step="50" value="3400"></label>
+        <label>Essential spending (€ / month)<input type="number" id="expenses" min="0" step="50" value="1900"></label>
+        <label>Cash savings today (€)<input type="number" id="cash" min="0" step="100" value="8000"></label>
+        <label>Already invested, outside pension (€)<input type="number" id="invested" min="0" step="100" value="0"></label>
+        <label>Pension pot today (€)<input type="number" id="pensionPot" min="0" step="100" value="0"></label>
+        <label>Your pension contribution (% of salary)<input type="number" id="pensionPct" min="0" max="40" step="0.5" value="5"></label>
+        <label>Employer matches up to (% of salary)<input type="number" id="matchPct" min="0" max="20" step="0.5" value="5"></label>
+        <label>High-interest debt, &gt;7% APR (€)<input type="number" id="debt" min="0" step="100" value="0"></label>
+        <label>Can invest each month (€)<input type="number" id="monthly" min="0" step="50" value="800"></label>
+        <label>Lump sum to invest now (€)<input type="number" id="lump" min="0" step="100" value="0"></label>
+        <label>Horizon (years)<input type="number" id="horizon" min="1" max="50" value="15"></label>
+        <label>Status
+          <select id="status"><option value="single">Single</option><option value="married1">Married, one income</option><option value="married2">Married, two incomes</option></select>
+        </label>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Risk appetite</h2>
+      <p class="hint">How would you react if your portfolio fell 30% in a year?</p>
+      <div class="risk-scale" id="riskScale">
+        <button data-r="1">1 · Sell everything</button>
+        <button data-r="2">2 · Very uneasy</button>
+        <button data-r="3">3 · Hold on</button>
+        <button data-r="4">4 · Buy a little more</button>
+        <button data-r="5">5 · Buy a lot more</button>
+      </div>
+      <div class="grid" style="margin-top:16px">
+        <label style="grid-column:1/-1">Goals and anything else the advisor should know
+          <textarea id="goals" placeholder="e.g. House deposit in 4 years, early retirement at 50, interested in AI and renewables, use Trading 212 and Revolut…"></textarea>
+        </label>
+      </div>
+      <div class="row" style="margin-top:16px">
+        <button class="btn" id="saveProfile">Save &amp; build my plan</button>
+        <span class="small muted" id="savedNote"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN -->
+  <section class="panel" id="plan">
+    <div class="kpis" id="kpis"></div>
+    <div class="card">
+      <h2>Where this month's money goes</h2>
+      <p class="hint">Ordered by guaranteed return first: a cash buffer, killing expensive debt, and pension tax relief beat any stock pick.</p>
+      <ol class="ladder" id="ladder"></ol>
+    </div>
+    <div class="card">
+      <h2>Investment account mix</h2>
+      <p class="hint" id="allocHint"></p>
+      <div class="alloc">
+        <svg id="donut" viewBox="0 0 120 120" width="180" height="180" role="img" aria-label="Allocation chart"></svg>
+        <div class="alloc-list" id="allocList"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Projection</h2>
+      <p class="hint" id="projHint"></p>
+      <div class="chart-wrap"><svg id="proj" viewBox="0 0 640 260" width="100%" role="img" aria-label="Projected wealth"></svg></div>
+      <div class="legend">
+        <span style="--c:var(--text-3)">Contributed</span>
+        <span style="--c:var(--amber)">Poor markets</span>
+        <span style="--c:var(--accent)">Expected</span>
+        <span style="--c:var(--blue)">Strong markets</span>
+      </div>
+    </div>
+    <div class="row"><button class="btn" id="askPlan">Have the advisor review this plan →</button></div>
+  </section>
+
+  <!-- ADVISOR -->
+  <section class="panel" id="advisor">
+    <div class="notice" id="keyNotice" hidden>Add your Anthropic API key in <a href="#" data-goto="settings">Settings</a> to talk to the advisor. It stays in this browser and is sent only to Anthropic.</div>
+    <div class="chips" id="chips">
+      <button class="chip">What should I do with this month's money?</button>
+      <button class="chip">Upcoming IPOs worth watching, and how much I'd put in</button>
+      <button class="chip">Which sectors look set to move in the next 6–12 months, and why?</button>
+      <button class="chip">Build me a core + satellite portfolio with specific ETFs I can buy from Ireland</button>
+      <button class="chip">ETFs vs investment trusts vs single stocks: what's most tax-efficient for me?</button>
+      <button class="chip">Stress-test my plan against a recession</button>
+    </div>
+    <div class="chat" id="chat"><div class="empty">Ask anything about growing your money. The advisor searches the web for current prices, news and IPO filings before answering.</div></div>
+    <div class="composer">
+      <textarea id="prompt" placeholder="e.g. I have €5,000 bonus. Where should it go?"></textarea>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <button class="btn" id="send">Send</button>
+        <button class="btn ghost small" id="clearChat" title="Start a new conversation">New</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAX -->
+  <section class="panel" id="tax">
+    <div class="notice">These rates drive the plan and are given to the advisor. They are what I could confirm as of late 2026 — check revenue.ie after each October Budget and edit them here if they change.</div>
+    <div class="card">
+      <table class="tax-table">
+        <thead><tr><th>Rule</th><th>Value</th><th>What it means for you</th></tr></thead>
+        <tbody>
+          <tr><td>Exit tax on Irish/EU funds &amp; ETFs</td><td><input type="number" id="t_exit" step="0.5"> %</td><td>Applies to gains <em>and</em> dividends on UCITS ETFs (e.g. VWCE, CSPX). No annual exemption and losses can't offset other gains. Cut from 41% to 38% from 1 Jan 2026.</td></tr>
+          <tr><td>Deemed disposal</td><td><input type="number" id="t_dd" step="1"> yrs</td><td>Every 8 years you're taxed on ETF gains as if you sold, even if you didn't. Drags long-term compounding.</td></tr>
+          <tr><td>Capital gains tax (shares, investment trusts)</td><td><input type="number" id="t_cgt" step="0.5"> %</td><td>Individual shares and UK/US investment trusts. Losses offset gains; no deemed disposal.</td></tr>
+          <tr><td>CGT annual exemption</td><td>€ <input type="number" id="t_cgtEx" step="10"></td><td>First €1,270 of gains each year is tax-free. Worth harvesting every year.</td></tr>
+          <tr><td>Dividends from shares</td><td colspan="2">Taxed as income at your marginal rate + USC + PRSI. File a W-8BEN with your broker so US withholding is 15%, which you credit against Irish tax.</td></tr>
+          <tr><td>Deposit interest (DIRT)</td><td><input type="number" id="t_dirt" step="0.5"> %</td><td>Tax on savings interest. An Post State Savings (Savings Certs/Bonds) are tax-free and State-guaranteed.</td></tr>
+          <tr><td>Higher-rate band (single)</td><td>€ <input type="number" id="t_band" step="500"></td><td>Income above this is taxed at 40% income tax, so pension contributions above it save 40%.</td></tr>
+          <tr><td>Pension relief earnings cap</td><td>€ <input type="number" id="t_cap" step="1000"></td><td>Tax relief limits by age: under 30 → 15%, 30–39 → 20%, 40–49 → 25%, 50–54 → 30%, 55–59 → 35%, 60+ → 40% of salary.</td></tr>
+          <tr><td>Auto-enrolment (MyFutureFund)</td><td colspan="2">Started 1 Jan 2026 for employees aged 23–60 earning over €20,000 with no workplace pension: 1.5% from you, matched 1.5% by employer and 0.5% by the State, rising in steps to 6/6/2 by 2036.</td></tr>
+        </tbody>
+      </table>
+      <div class="row" style="margin-top:14px"><button class="btn ghost" id="resetTax">Reset to defaults</button></div>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="panel" id="settings">
+    <div class="card">
+      <h2>Advisor connection</h2>
+      <p class="hint">The advisor runs on Claude through your own Anthropic API key (get one at console.anthropic.com). The key is saved only in this browser's local storage and sent straight to api.anthropic.com — never to this website. Don't use this on a shared computer.</p>
+      <div class="grid">
+        <label style="grid-column:1/-1">Anthropic API key<input type="password" id="apiKey" placeholder="sk-ant-…" autocomplete="off"></label>
+        <label>Model
+          <select id="model">
+            <option value="claude-opus-5-5">Claude Opus 5.5 — deepest research</option>
+            <option value="claude-sonnet-5-5">Claude Sonnet 5.5 — faster, cheaper</option>
+          </select>
+        </label>
+        <label>Research depth
+          <select id="effort"><option value="medium">Standard</option><option value="high" selected>Thorough</option><option value="xhigh">Very thorough</option></select>
+        </label>
+        <label>Web searches per answer<input type="number" id="maxSearch" min="1" max="20" value="8"></label>
+      </div>
+      <div class="row" style="margin-top:16px">
+        <button class="btn" id="saveSettings">Save</button>
+        <button class="btn ghost" id="forgetKey">Forget key</button>
+        <span class="small muted" id="settingsNote"></span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Not regulated financial advice. This tool gives educational analysis to help you decide; it is not a Central Bank of Ireland–authorised adviser and can be wrong. Investments can fall in value. For pensions, large sums or anything you don't fully understand, speak to a CBI-authorised financial adviser.
+  </footer>
+</div>
+
+<script type="module">
+const SDK_URL = "https://cdn.jsdelivr.net/npm/@anthropic-ai/sdk@1.2.0/+esm";
+let Anthropic = null;
+
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('wa_' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('wa_' + k, JSON.stringify(v)); } catch {} },
+  del(k) { try { localStorage.removeItem('wa_' + k); } catch {} },
+};
+const eur = (n) => '€' + Math.round(n).toLocaleString('en-IE');
+
+/* ───────── Tabs ───────── */
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === name));
+  if (name === 'plan') renderPlan();
+  if (name === 'advisor') $('keyNotice').hidden = !!store.get('key', '');
+  store.set('tab', name);
+}
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
+document.addEventListener('click', (e) => { const g = e.target.closest('[data-goto]'); if (g) { e.preventDefault(); showTab(g.dataset.goto); } });
+
+/* ───────── Tax rules ───────── */
+const TAX_DEFAULTS = { exit: 38, dd: 8, cgt: 33, cgtEx: 1270, dirt: 33, band: 44000, cap: 115000 };
+let tax = { ...TAX_DEFAULTS, ...store.get('tax', {}) };
+function loadTax() { for (const k in TAX_DEFAULTS) $('t_' + k).value = tax[k]; }
+function readTax() { for (const k in TAX_DEFAULTS) { const v = parseFloat($('t_' + k).value); tax[k] = isNaN(v) ? TAX_DEFAULTS[k] : v; } store.set('tax', tax); }
+for (const k in TAX_DEFAULTS) $('t_' + k).addEventListener('change', readTax);
+$('resetTax').onclick = () => { tax = { ...TAX_DEFAULTS }; store.set('tax', tax); loadTax(); };
+loadTax();
+
+/* ───────── Profile ───────── */
+const FIELDS = ['age','salary','takehome','expenses','cash','invested','pensionPot','pensionPct','matchPct','debt','monthly','lump','horizon','status','goals'];
+let risk = 3;
+function loadProfile() {
+  const p = store.get('profile', null);
+  if (p) { FIELDS.forEach(f => { if (p[f] != null) $(f).value = p[f]; }); risk = p.risk || 3; }
+  setRisk(risk);
+}
+function readProfile() {
+  const p = { risk };
+  FIELDS.forEach(f => { const el = $(f); p[f] = (el.type === 'number') ? (parseFloat(el.value) || 0) : el.value; });
+  return p;
+}
+function setRisk(r) { risk = r; document.querySelectorAll('#riskScale button').forEach(b => b.classList.toggle('on', +b.dataset.r === r)); }
+document.querySelectorAll('#riskScale button').forEach(b => b.addEventListener('click', () => setRisk(+b.dataset.r)));
+$('saveProfile').onclick = () => { store.set('profile', readProfile()); $('savedNote').textContent = 'Saved'; showTab('plan'); };
+loadProfile();
+
+/* ───────── Plan engine ───────── */
+const PROFILES = {
+  1: { name: 'Conservative', ret: 0.04, mix: [['core',30],['bonds',40],['statesav',30]] },
+  2: { name: 'Cautious',     ret: 0.05, mix: [['core',50],['bonds',35],['statesav',15]] },
+  3: { name: 'Balanced',     ret: 0.06, mix: [['core',65],['trust',10],['bonds',20],['satellite',5]] },
+  4: { name: 'Growth',       ret: 0.07, mix: [['core',65],['trust',15],['bonds',5],['satellite',15]] },
+  5: { name: 'Aggressive',   ret: 0.08, mix: [['core',55],['trust',20],['satellite',25]] },
+};
+const SLEEVES = {
+  core:     { nm: 'Global equity ETF (core)', c: 'var(--accent)', hex: '#00e5a0',
+              ex: 'One accumulating UCITS world tracker, e.g. Vanguard FTSE All-World (VWCE) or iShares MSCI ACWI (SSAC). Exit-tax regime.' },
+  trust:    { nm: 'Investment trusts', c: 'var(--blue)', hex: '#5aa9ff',
+              ex: 'Global trusts listed in London (e.g. F&C, Alliance Witan). Taxed under CGT 33% with the €1,270 exemption and no deemed disposal.' },
+  bonds:    { nm: 'Bonds', c: 'var(--violet)', hex: '#b18cff',
+              ex: 'Short-dated euro government bond ETF or directly held Irish/German government bonds.' },
+  statesav: { nm: 'State Savings / deposits', c: 'var(--text-2)', hex: '#8a8a8a',
+              ex: 'An Post Savings Bonds/Certs (tax-free, State-guaranteed) or best-rate deposit account.' },
+  satellite:{ nm: 'Satellite: stocks, IPOs, themes', c: 'var(--amber)', hex: '#f5a623',
+              ex: 'High-conviction picks from the advisor: individual shares, new listings, sector bets. Max 2% of portfolio per IPO, 5% per stock.' },
+};
+const reliefPct = (age) => age < 30 ? 15 : age < 40 ? 20 : age < 50 ? 25 : age < 55 ? 30 : age < 60 ? 35 : 40;
+const bandFor = (s) => s === 'married1' ? tax.band + 9000 : s === 'married2' ? tax.band : tax.band; // second-earner uplift not modelled
+
+function buildPlan(p) {
+  const steps = [];
+  let left = p.monthly;
+  const efMonths = p.risk <= 2 ? 6 : 4;
+  const efTarget = p.expenses * efMonths;
+  const efGap = Math.max(0, efTarget - p.cash);
+  const marginal = p.salary > bandFor(p.status) ? 40 : 20;
+
+  // 1. Emergency fund
+  if (efGap > 0) {
+    const a = Math.min(left, Math.max(left * 0.5, efGap / 12), efGap);
+    steps.push({ t: `Top up emergency fund to ${eur(efTarget)}`, why: `${efMonths} months of essential spending, ${eur(efGap)} to go. Keep it in an instant-access account or An Post State Savings (tax-free). This stops you selling investments in a crash.`, amt: a, note: '/month' });
+    left -= a;
+  } else steps.push({ t: 'Emergency fund', why: `You hold ${eur(p.cash)}, at least ${efMonths} months of spending. Anything above that can be invested.`, amt: 0, done: true });
+
+  // 2. Expensive debt
+  if (p.debt > 0 && left > 0) {
+    const a = Math.min(left, p.debt);
+    steps.push({ t: `Pay down high-interest debt (${eur(p.debt)})`, why: 'Clearing debt above 7% APR is a guaranteed, tax-free return higher than markets reliably pay.', amt: a, note: '/month' });
+    left -= a;
+  }
+
+  // 3. Pension: employer match, then tax relief
+  const limitPct = reliefPct(p.age);
+  const capSalary = Math.min(p.salary, tax.cap);
+  if (p.matchPct > p.pensionPct) {
+    const extraPct = p.matchPct - p.pensionPct;
+    const gross = capSalary * extraPct / 100 / 12;
+    const net = gross * (1 - marginal / 100);
+    steps.push({ t: `Raise pension to ${p.matchPct}% to get the full employer match`, why: `Free money: your employer adds ${eur(gross)}/month, and the ${eur(gross)} you put in only costs ~${eur(net)} after ${marginal}% tax relief. An instant 100%+ return.`, amt: Math.min(net, Math.max(left, 0)), note: 'net/month' });
+    left -= Math.min(net, Math.max(left, 0));
+  }
+  const curPct = Math.max(p.pensionPct, p.matchPct);
+  if (marginal === 40 && curPct < limitPct && left > 0) {
+    const roomPct = limitPct - curPct;
+    const gross = Math.min(capSalary * roomPct / 100 / 12, left / 0.6 * 0.5);
+    const net = gross * 0.6;
+    steps.push({ t: 'Extra pension (AVC or PRSA)', why: `You pay 40% tax, so each €100 into a pension costs you €60. At ${p.age} you can get relief on up to ${limitPct}% of salary (you're at ${curPct}%). Locked until 60+, so this uses about half of what's left.`, amt: net, note: 'net/month' });
+    left -= net;
+  } else if (marginal === 20) {
+    steps.push({ t: 'Extra pension contributions', why: 'At the 20% tax rate the relief is smaller and the money is locked away, so prioritising flexible investing makes sense for now. Revisit when your salary crosses the 40% band.', amt: 0, done: true });
+  }
+
+  // 4. Invest the rest
+  const prof = PROFILES[p.risk];
+  if (left > 0) {
+    steps.push({ t: `Invest in your ${prof.name.toLowerCase()} portfolio`, why: 'Split as shown below. Automate it as a monthly buy on the same day each month (euro-cost averaging).', amt: left, note: '/month' });
+  }
+  return { steps, investMonthly: Math.max(0, left), prof, efTarget, efGap, marginal, limitPct };
+}
+
+function renderPlan() {
+  const p = store.get('profile', null) || readProfile();
+  const plan = buildPlan(p);
+  const { prof } = plan;
+
+  $('kpis').innerHTML = [
+    ['Risk profile', prof.name, `${p.horizon}-year horizon`],
+    ['Investing each month', eur(plan.investMonthly), `of ${eur(p.monthly)} available`],
+    ['Your tax rate', plan.marginal + '%', 'marginal income tax'],
+    ['Pension relief limit', plan.limitPct + '%', `of salary at age ${p.age}`],
+  ].map(([k, v, d]) => `<div class="kpi"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${d}</div></div>`).join('');
+
+  $('ladder').innerHTML = plan.steps.map((s, i) => `
+    <li class="${s.done ? 'done' : ''}"><span class="n">${s.done ? '✓' : i + 1}</span>
+      <div><div class="t">${s.t}</div><div class="why">${s.why}</div></div>
+      <div class="amt">${s.amt ? eur(s.amt) : '—'}<small>${s.amt ? s.note : ''}</small></div></li>`).join('');
+
+  $('allocHint').textContent = `${prof.name} mix for the ${eur(plan.investMonthly)}/month${p.lump ? ` and ${eur(p.lump)} lump sum` : ''} going into your investment account.`;
+  let a0 = -Math.PI / 2, arcs = '';
+  for (const [k, pc] of prof.mix) {
+    const a1 = a0 + pc / 100 * Math.PI * 2;
+    const large = a1 - a0 > Math.PI ? 1 : 0;
+    const P = (a) => [60 + 50 * Math.cos(a), 60 + 50 * Math.sin(a)];
+    const [x0, y0] = P(a0), [x1, y1] = P(a1 - 0.015);
+    arcs += `<path d="M${x0} ${y0} A50 50 0 ${large} 1 ${x1} ${y1}" stroke="${SLEEVES[k].hex}" stroke-width="14" fill="none"/>`;
+    a0 = a1;
+  }
+  $('donut').innerHTML = arcs + `<text x="60" y="58" text-anchor="middle" fill="#f0f0f0" font-size="13" font-family="JetBrains Mono">${eur(plan.investMonthly)}</text><text x="60" y="72" text-anchor="middle" fill="#8a8a8a" font-size="7">per month</text>`;
+  $('allocList').innerHTML = prof.mix.map(([k, pc]) => `
+    <div class="alloc-item"><span class="sw" style="background:${SLEEVES[k].c}"></span>
+      <div><div class="nm">${SLEEVES[k].nm}</div><div class="ex">${SLEEVES[k].ex}</div></div>
+      <div class="pc">${pc}%<small>${eur(plan.investMonthly * pc / 100)}/mo${p.lump ? ' · ' + eur(p.lump * pc / 100) : ''}</small></div></div>`).join('');
+
+  renderProjection(p, plan);
+}
+
+// After-tax projection: blended tax ≈ exit tax on ETF/bond sleeves (with deemed disposal every N years), CGT on trusts/satellite.
+function project(p, plan, r) {
+  const years = p.horizon, m = plan.investMonthly;
+  const etfShare = plan.prof.mix.filter(([k]) => ['core','bonds'].includes(k)).reduce((s, [, x]) => s + x, 0) / 100;
+  const cashShare = plan.prof.mix.filter(([k]) => k === 'statesav').reduce((s, [, x]) => s + x, 0) / 100;
+  const cgtShare = 1 - etfShare - cashShare;
+  // Each sleeve tracked separately
+  let etf = { v: (p.invested + p.lump) * etfShare, basis: (p.invested + p.lump) * etfShare };
+  let cgt = { v: (p.invested + p.lump) * cgtShare, basis: (p.invested + p.lump) * cgtShare };
+  let cash = (p.invested + p.lump) * cashShare;
+  const out = [{ y: 0, contrib: p.invested + p.lump, net: p.invested + p.lump }];
+  let contrib = p.invested + p.lump;
+  for (let y = 1; y <= years; y++) {
+    for (let mo = 0; mo < 12; mo++) {
+      etf.v = etf.v * (1 + r) ** (1 / 12) + m * etfShare; etf.basis += m * etfShare;
+      cgt.v = cgt.v * (1 + r) ** (1 / 12) + m * cgtShare; cgt.basis += m * cgtShare;
+      cash = cash * (1 + 0.025) ** (1 / 12) + m * cashShare;
+      contrib += m;
+    }
+    if (y % tax.dd === 0) { const g = Math.max(0, etf.v - etf.basis); const t = g * tax.exit / 100; etf.v -= t; etf.basis = etf.v; }
+    const etfNet = etf.v - Math.max(0, etf.v - etf.basis) * tax.exit / 100;
+    const cgtNet = cgt.v - Math.max(0, cgt.v - cgt.basis - tax.cgtEx) * tax.cgt / 100;
+    out.push({ y, contrib, net: etfNet + cgtNet + cash });
+  }
+  return out;
+}
+function renderProjection(p, plan) {
+  const r = plan.prof.ret;
+  const lo = project(p, plan, r - 0.03), mid = project(p, plan, r), hi = project(p, plan, r + 0.02);
+  const W = 640, H = 260, L = 64, R = 12, T = 12, B = 28;
+  const max = Math.max(...hi.map(d => d.net)) * 1.05 || 1;
+  const x = (y) => L + (W - L - R) * y / p.horizon, yv = (v) => T + (H - T - B) * (1 - v / max);
+  const line = (arr, key, col, dash = '') => `<polyline fill="none" stroke="${col}" stroke-width="2" ${dash} points="${arr.map(d => `${x(d.y)},${yv(d[key])}`).join(' ')}"/>`;
+  let grid = '';
+  for (let i = 0; i <= 4; i++) { const v = max * i / 4; grid += `<line x1="${L}" x2="${W - R}" y1="${yv(v)}" y2="${yv(v)}" stroke="rgba(255,255,255,.06)"/><text x="${L - 8}" y="${yv(v) + 4}" text-anchor="end" fill="#5a5a5a" font-size="10" font-family="JetBrains Mono">${v >= 1e6 ? '€' + (v / 1e6).toFixed(1) + 'M' : '€' + Math.round(v / 1000) + 'k'}</text>`; }
+  const step = Math.max(1, Math.ceil(p.horizon / 6));
+  for (let y = 0; y <= p.horizon; y += step) grid += `<text x="${x(y)}" y="${H - 8}" text-anchor="middle" fill="#5a5a5a" font-size="10" font-family="JetBrains Mono">${y}y</text>`;
+  $('proj').innerHTML = grid + line(mid, 'contrib', '#5a5a5a', 'stroke-dasharray="4 4"') + line(lo, 'net', '#f5a623') + line(mid, 'net', '#00e5a0') + line(hi, 'net', '#5aa9ff');
+  const e = mid.at(-1);
+  $('projHint').textContent = `After tax (exit tax with ${tax.dd}-yearly deemed disposal on ETFs, CGT on trusts and shares). Expected ${(r * 100).toFixed(0)}% a year → about ${eur(e.net)} in ${p.horizon} years from ${eur(e.contrib)} contributed. Poor markets: ${eur(lo.at(-1).net)}. Pension not included.`;
+}
+
+/* ───────── Settings ───────── */
+function loadSettings() {
+  $('apiKey').value = store.get('key', '');
+  $('model').value = store.get('model', 'claude-opus-5-5');
+  $('effort').value = store.get('effort', 'high');
+  $('maxSearch').value = store.get('maxSearch', 8);
+}
+$('saveSettings').onclick = () => {
+  store.set('key', $('apiKey').value.trim()); store.set('model', $('model').value);
+  store.set('effort', $('effort').value); store.set('maxSearch', Math.min(20, Math.max(1, +$('maxSearch').value || 8)));
+  $('settingsNote').textContent = 'Saved'; setTimeout(() => $('settingsNote').textContent = '', 2000);
+};
+$('forgetKey').onclick = () => { store.del('key'); $('apiKey').value = ''; $('settingsNote').textContent = 'Key removed'; };
+loadSettings();
+
+/* ───────── Advisor ───────── */
+function systemPrompt() {
+  const p = store.get('profile', null) || readProfile();
+  const plan = buildPlan(p);
+  const today = new Date().toISOString().slice(0, 10);
+  return `You are a personal investment advisor and research partner for one client who lives and pays tax in Ireland. Your single objective is to grow their long-term, after-tax wealth while keeping the risk of permanent loss within what they can handle.
+
+Today is ${today}. Your training data is out of date for markets: before you name any stock, IPO, fund price, valuation, interest rate, sector trend or tax rule, use web search to check current facts, and cite them. Prefer primary and reputable sources (company filings/prospectuses, exchange notices, revenue.ie, centralbank.ie, ECB, Reuters, FT, Bloomberg, Irish Times, Business Post).
+
+How to advise:
+- Always answer with concrete actions: what to buy or do, the euro amount and % of their investable money, the vehicle/ticker and exchange, and when. Then give the rationale (why now, the catalyst), the bear case (what would make it wrong), and the exit or review trigger.
+- Think in core + satellite. The core is low-cost, diversified and boring. Speculative ideas (IPOs, single stocks, sector bets) sit in the satellite. Position limits: any single IPO at most 2% of their investable portfolio, any single stock at most 5%, total satellite within their risk profile's satellite allocation. Say clearly when something is speculative.
+- For IPOs: give listing date/status, exchange, valuation vs peers, revenue growth, profitability path, use of proceeds, lock-up expiry dates, and whether an Irish retail investor can realistically get an allocation (usually not: most will buy on listing day via brokers like Trading 212, DEGIRO, Interactive Brokers, Revolut). Often the better move is to wait for the first earnings report or lock-up expiry; say so when true.
+- For sector moves: explain the driver (rates, earnings revisions, policy, capex cycles, flows), the time frame, and the cleanest way to get the exposure from Ireland, preferring UCITS ETFs or investment trusts.
+- Order of priority before market investing: emergency fund, expensive debt, employer pension match, pension tax relief if on the 40% rate.
+- Tax for an Irish resident (use these values; flag if your search finds they have changed): Irish/EU-domiciled funds and ETFs pay exit tax of ${tax.exit}% on gains and distributions, with deemed disposal every ${tax.dd} years, no annual exemption and no loss offset. US-domiciled ETFs are generally not available to EU retail investors (PRIIPs/KID). Individual shares and investment trusts pay CGT at ${tax.cgt}% with a €${tax.cgtEx} annual exemption, and losses can offset gains. Dividends from shares are income (marginal rate + USC + PRSI); use W-8BEN for 15% US withholding. Deposit interest pays DIRT ${tax.dirt}%. An Post State Savings are tax-free. Pension relief limits by age: <30 15%, 30–39 20%, 40–49 25%, 50–54 30%, 55–59 35%, 60+ 40% of salary, earnings capped at €${tax.cap.toLocaleString('en-IE')}. Mention the after-tax impact of each recommendation, and the 31 Oct pay-and-file deadline for CGT/exit tax self-assessment where relevant.
+- Be direct and honest. If something is overhyped, say so. If the best answer is "do nothing" or "just keep buying the core ETF", say that. Never promise returns; give ranges.
+- Keep answers scannable: short headings, a summary table of actions with € amounts, then the reasoning. Aim for depth, not length.
+- You are not a Central Bank of Ireland–authorised adviser; mention once, briefly, at the end, when your answer involves pensions or large sums.
+
+Client profile (from their own inputs):
+${JSON.stringify({ ...p, riskProfile: plan.prof.name, marginalTaxRate: plan.marginal + '%', pensionReliefLimit: plan.limitPct + '% of salary' }, null, 1)}
+
+Their current plan from this app (monthly):
+${plan.steps.map(s => `- ${s.t}: ${s.amt ? eur(s.amt) + ' ' + s.note : 'n/a'}`).join('\n')}
+Investment mix (${plan.prof.name}): ${plan.prof.mix.map(([k, pc]) => `${SLEEVES[k].nm} ${pc}%`).join(', ')}.`;
+}
+
+let history = [];                         // full API content (this session only)
+let transcript = store.get('chat', []);    // [{role, text, sources}] persisted
+const chatEl = $('chat');
+const esc = (t) => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const renderMd = (t) => (window.marked && window.DOMPurify) ? DOMPurify.sanitize(marked.parse(t || '')) : `<p style="white-space:pre-wrap">${esc(t || '')}</p>`;
+
+function addBubble(role, text, sources) {
+  if (chatEl.querySelector('.empty')) chatEl.innerHTML = '';
+  const d = document.createElement('div');
+  d.className = 'msg ' + (role === 'user' ? 'user' : 'ai');
+  if (role === 'user') d.textContent = text; else d.innerHTML = renderMd(text) + sourcesHtml(sources);
+  chatEl.appendChild(d);
+  return d;
+}
+function sourcesHtml(sources) {
+  if (!sources || !sources.length) return '';
+  return `<div class="sources">Sources: ${sources.slice(0, 12).map((s, i) => `<a href="${encodeURI(s.url)}" target="_blank" rel="noopener">[${i + 1}] ${esc(s.title || new URL(s.url).hostname)}</a>`).join(' · ')}</div>`;
+}
+function restoreChat() {
+  if (!transcript.length) return;
+  chatEl.innerHTML = '';
+  transcript.forEach(m => addBubble(m.role, m.text, m.sources));
+  history = transcript.map(m => ({ role: m.role, content: m.text }));
+}
+restoreChat();
+
+async function ask(text) {
+  const key = store.get('key', '');
+  if (!key) { $('keyNotice').hidden = false; return; }
+  text = text.trim(); if (!text) return;
+  $('send').disabled = true; $('prompt').value = '';
+  addBubble('user', text);
+  transcript.push({ role: 'user', text });
+  history.push({ role: 'user', content: text });
+
+  const bubble = addBubble('assistant', '');
+  const status = document.createElement('div'); status.className = 'status'; status.textContent = 'Thinking…';
+  bubble.prepend(status);
+  const body = document.createElement('div'); bubble.appendChild(body);
+  chatEl.scrollIntoView({ block: 'end' });
+
+  const model = store.get('model', 'claude-opus-5-5');
+  let answer = '', sources = [], searches = 0;
+  const seen = new Set();
+  const turnStart = history.length;
+
+  try {
+    if (!Anthropic) { status.textContent = 'Connecting…'; Anthropic = (await import(SDK_URL)).default; }
+    const client = new Anthropic({ apiKey: key, dangerouslyAllowBrowser: true });
+    for (let guard = 0; guard < 6; guard++) {
+      const stream = client.beta.messages.stream({
+        model,
+        max_tokens: 32000,
+        betas: ['server-side-fallback-2026-07-01'],
+        fallbacks: 'default',
+        thinking: { type: 'adaptive' },
+        output_config: { effort: store.get('effort', 'high') },
+        system: systemPrompt(),
+        tools: [
+          { type: 'web_search_20260209', name: 'web_search', max_uses: store.get('maxSearch', 8), user_location: { type: 'approximate', country: 'IE', timezone: 'Europe/Dublin' } },
+          { type: 'web_fetch_20260209', name: 'web_fetch', max_uses: 5 },
+        ],
+        messages: history,
+      });
+      stream.on('streamEvent', (ev) => {
+        if (ev.type === 'content_block_start') {
+          const b = ev.content_block;
+          if (b.type === 'server_tool_use') { searches++; status.textContent = b.name === 'web_fetch' ? 'Reading a source…' : `Searching the web (${searches})…`; }
+          else if (b.type === 'thinking') status.textContent = 'Thinking…';
+          else if (b.type === 'text') status.textContent = 'Writing…';
+        } else if (ev.type === 'content_block_delta' && ev.delta.type === 'text_delta') {
+          answer += ev.delta.text;
+          body.innerHTML = renderMd(answer);
+        }
+      });
+      const msg = await stream.finalMessage();
+      for (const b of msg.content) {
+        if (b.type === 'text' && b.citations) for (const c of b.citations) {
+          if (c.url && !seen.has(c.url)) { seen.add(c.url); sources.push({ url: c.url, title: c.title }); }
+        }
+      }
+      history.push({ role: 'assistant', content: msg.content });
+      if (msg.stop_reason === 'pause_turn') continue;
+      if (msg.stop_reason === 'refusal') answer += '\n\n_The model declined to answer this request. Try rephrasing._';
+      if (msg.stop_reason === 'max_tokens') answer += '\n\n_Answer cut off at the length limit. Ask me to continue._';
+      break;
+    }
+    status.remove();
+    body.innerHTML = renderMd(answer) + sourcesHtml(sources);
+    transcript.push({ role: 'assistant', text: answer, sources });
+    // Collapse this turn's API content to text so later turns stay small; keep the full turn only until the next question.
+    history.splice(turnStart, history.length - turnStart, { role: 'assistant', content: answer || '(no answer)' });
+    store.set('chat', transcript.slice(-40));
+  } catch (err) {
+    status.remove();
+    const m = err?.status === 401 ? 'Your API key was rejected. Check it in Settings.'
+            : err?.status === 429 ? 'Rate limited by the API. Wait a minute and try again.'
+            : err?.status === 529 || err?.status >= 500 ? 'Anthropic\'s API is busy right now. Try again shortly.'
+            : /import|fetch/i.test(String(err?.message)) && !Anthropic ? 'Could not load the Claude SDK from cdn.jsdelivr.net. Check your connection or ad-blocker.'
+            : 'Error: ' + (err?.message || err);
+    body.innerHTML = `<p style="color:var(--red)">${esc(m)}</p>`;
+    history.splice(turnStart - 1);           // drop the failed user turn
+    transcript.pop();
+  } finally {
+    $('send').disabled = false;
+  }
+}
+
+$('send').onclick = () => ask($('prompt').value);
+$('prompt').addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask($('prompt').value); } });
+$('chips').addEventListener('click', (e) => { const c = e.target.closest('.chip'); if (c) ask(c.textContent); });
+$('clearChat').onclick = () => { history = []; transcript = []; store.del('chat'); chatEl.innerHTML = '<div class="empty">New conversation.</div>'; };
+$('askPlan').onclick = () => { showTab('advisor'); ask('Review the plan this app built for me. What would you change, what exact funds/ETFs would you use for each sleeve from Ireland, and how should I invest any lump sum (all at once vs phased)?'); };
+
+showTab(store.get('tab', store.get('profile', null) ? 'plan' : 'profile'));
+</script>
+</body>
+</html>
