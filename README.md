@@ -11,7 +11,7 @@ It's a small collection of personal tools: money, fitness and travel. Every page
 | Home | [`/`](https://ashishkumarswain.com/) | Landing page linking to everything below |
 | Wealth advisor | [`/advisor.html`](https://ashishkumarswain.com/advisor.html) | Ireland-aware investing plan and AI research partner |
 | Training | [`/training.html`](https://ashishkumarswain.com/training.html) | Cut to 165: weight, waist, body fat and strength against the plan |
-| FORM | [`/form-conditioning-app/`](https://ashishkumarswain.com/form-conditioning-app/) | Body-conditioning projection and photo check-ins, all in the browser |
+| FORM | [`/form/`](https://ashishkumarswain.com/form/) | Body-conditioning projection and photo check-ins, all in the browser |
 | Travel | [`/travel.html`](https://ashishkumarswain.com/travel.html) | Photographs by country, loaded from Google Drive |
 
 ## Pages in detail
@@ -162,7 +162,7 @@ Anything on this page is public, so weight, waist and body-fat figures can be se
 
 <br>
 
-`form-conditioning-app/` is a browser-only prototype for setting a measurable body-conditioning target and comparing it with a later check-in. Photos never leave the device.
+`form/` is a browser-only prototype for setting a measurable body-conditioning target and comparing it with a later check-in. Photos never leave the device.
 
 It has three steps:
 
@@ -172,7 +172,7 @@ It has three steps:
 
 The photo is never analysed to infer body fat or health. The image is a directional illustration, not a prediction. Not medical advice.
 
-Files: `index.html`, `app.js`, `styles.css`, with its own [README](form-conditioning-app/README.md) and MIT [LICENSE](form-conditioning-app/LICENSE).
+Files: `index.html`, `app.js`, `styles.css`, with its own [README](form/README.md) and MIT [LICENSE](form/LICENSE).
 
 </details>
 
