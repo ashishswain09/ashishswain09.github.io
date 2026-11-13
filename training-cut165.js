@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════
-// Cut to 165 — Block 1 progress (first tab of training.html)
+// Cut to 165 — Block 1 progress (the whole of training.html)
 //
 // DATA: three tables with these exact column headers:
 //   checkin  — cut_wk, week_of, block_wk, phase, target_lb, avg_lb, delta_lb,
@@ -128,6 +128,11 @@
     $('cut-load').style.display = 'none';
     $('cut-body').style.display = '';
     $('cut-source').textContent = live ? 'Live from Google Sheet' : `Snapshot · data up to ${SNAPSHOT_DATE}`;
+    const pill = $('cut-pill');
+    if (pill) {
+      pill.textContent = live ? 'Live data' : `Data to ${SNAPSHOT_DATE.replace(/ \d{4}$/, '')}`;
+      const dot = pill.previousElementSibling; if (dot && !live) { dot.style.background = 'var(--orange)'; dot.style.animation = 'none'; }
+    }
     if (!h) { $('cut-headline').textContent = 'No complete check-in week yet.'; return; }
 
     $('cut-headline').innerHTML = `Week ${h.cut_wk} averaged <b>${f1(h.avg)} lb</b>: ${f1(h.lost)} lb down from ${f1(START_LB)}, ` +
