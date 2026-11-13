@@ -13,7 +13,6 @@ It's a small collection of personal tools: money, fitness and travel. Every page
 | **Wealth advisor** | [`/advisor.html`](https://ashishkumarswain.com/advisor.html) | Ireland-aware investing plan and AI research partner ([details below](#wealth-advisor)) |
 | Travel | [`/travel.html`](https://ashishkumarswain.com/travel.html) | Photographs by country |
 | Training | [`/training.html`](https://ashishkumarswain.com/training.html) | 360° fitness dashboard: weight, nutrition and strength tracking |
-| Spartan | [`/spartan/`](https://ashishkumarswain.com/spartan/) | Block 23 training log with Google Drive sync (prebuilt app in `spartan/assets/`) |
 | FORM | [`/form-conditioning-app/`](https://ashishkumarswain.com/form-conditioning-app/) | Body conditioning projection and progress check-ins (hosted separately, linked from the homepage) |
 
 ---
@@ -110,14 +109,12 @@ The advisor provides **educational analysis, not regulated financial advice**. I
 
 ## Running locally
 
-No build is needed for the plain pages. Serve the folder and open it in a browser:
+No build is needed. Serve the folder and open it in a browser:
 
 ```bash
 python3 -m http.server 8000
 # then open http://localhost:8000
 ```
-
-`spartan/` contains a prebuilt bundle. Edit its source project and copy the new build output here, rather than editing the files in `spartan/assets/` by hand.
 
 ## Deployment
 
