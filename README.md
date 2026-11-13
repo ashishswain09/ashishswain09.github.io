@@ -11,7 +11,7 @@ It's a small collection of personal tools: money, fitness and travel. Every page
 | Home | [`/`](https://ashishkumarswain.com/) | Landing page linking to everything below |
 | **Wealth advisor** | [`/advisor.html`](https://ashishkumarswain.com/advisor.html) | Ireland-aware investing plan and AI research partner ([details below](#wealth-advisor)) |
 | Travel | [`/travel.html`](https://ashishkumarswain.com/travel.html) | Photographs by country |
-| Training | [`/training.html`](https://ashishkumarswain.com/training.html) | Opens on **Cut to 165**: weight vs plan, waist, weekly loss vs the 1 lb trigger, body-fat estimates, main-lift e1RM and weekly check-ins (code in `training-cut165.js`, data in `data/cut165/` or a live Google Sheet). The Pete coaching history tabs follow. |
+| Training | [`/training.html`](https://ashishkumarswain.com/training.html) | **Cut to 165** (Block 1): weight vs plan, waist, weekly loss vs the 1 lb trigger, body-fat estimates, main-lift e1RM and weekly check-ins. Code in `training-cut165.js`; data from a live Google Sheet or the snapshot in `data/cut165/` |
 | FORM | [`/form-conditioning-app/`](https://ashishkumarswain.com/form-conditioning-app/) | Body conditioning projection and progress check-ins, all in the browser (source in `form-conditioning-app/`) |
 
 ---
