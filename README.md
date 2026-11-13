@@ -144,16 +144,14 @@ The advisor provides **educational analysis, not regulated financial advice**. I
 
 #### Where the data comes from
 
-The code is in `training-cut165.js`, and it reads three tables:
+The page reads your **Block 1 workbook live** from Google Sheets each time it opens. This is the same workbook you log in, so new weigh-ins, check-ins and sessions show up automatically.
 
-| Table | Columns |
-|---|---|
-| `checkin` | cut_wk, week_of, block_wk, phase, target_lb, avg_lb, delta_lb, rate3_lb_wk, waist_cm, avg_steps, protein_days, sessions, sleep_h, hunger, scale_reading, decision, days_logged |
-| `weighins` | date, weight_lb, cut_wk |
-| `lifts` | block_wk, week_of, cut_wk, day, exercise, main, sets, rep_range, load_kg, set1, set2, set3, rir, e1rm, next_kg, coach, block23_kg |
-
-- **Live:** set `CUT165_SHEET_ID` in `training-cut165.js` to a Google Sheet with tabs named exactly `checkin`, `weighins` and `lifts`, shared "Anyone with the link → Viewer". The header pill then reads **Live data**.
-- **Snapshot (current):** if no sheet is set, or it can't be reached, the page reads the CSVs in `data/cut165/`, which currently run to 8 Nov. The header pill shows the date. To update, replace those CSVs.
+- **Sheet:** set in `CUT165_SHEET_ID` in `training-cut165.js`. It's shared "Anyone with the link → Viewer".
+- **Tabs read:**
+  - **Check-in:** one row per cut week, with the target, Mon–Sun weigh-ins, 7-day average, weekly change, 3-week rate, waist, steps, sleep, hunger and decision.
+  - **Log:** one row per exercise per block week, with load, reps, RIR, e1RM, next load, the Block 23 load and the coach note. Warm-up rows and unlogged sets are skipped.
+- **Columns are read by position.** If you insert or move a column in either tab, update the indexes in `fromWorkbook()`. If the layout stops making sense, the page falls back rather than showing wrong numbers.
+- **Fallback:** if the sheet can't be reached, the page uses the saved copy in `data/cut165/` (currently up to 13 Nov), and the header pill shows its date instead of **Live data**.
 
 Anything on this page is public, so weight, waist and body-fat figures can be seen by anyone who visits.
 
