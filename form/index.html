@@ -65,15 +65,19 @@
             <div class="form-card-title"><span>Your parameters</span><span class="required-note">* required</span></div>
             <div class="fields two-col">
               <label><span>Date *</span><input id="baseline-date" type="date" /></label>
+              <label><span>Sex *</span><select id="sex"><option value="male">Male</option><option value="female">Female</option></select></label>
+              <label><span>Age *</span><input id="age" type="number" min="16" max="90" value="30" inputmode="numeric" /></label>
               <label><span>Height (cm) *</span><input id="height" type="number" min="120" max="230" value="175" /></label>
               <label><span>Weight (kg) *</span><input id="weight" type="number" min="35" max="250" step="0.1" value="78" /></label>
               <label><span>Waist (cm) *</span><input id="waist" type="number" min="45" max="180" step="0.1" value="88" /></label>
-              <label><span>Body fat % <i>optional</i></span><input id="bodyfat" type="number" min="3" max="60" step="0.1" placeholder="e.g. 22" /></label>
+              <label><span>Neck (cm) <i>recommended</i></span><input id="neck" type="number" min="25" max="60" step="0.1" placeholder="e.g. 38" /></label>
+              <label class="hip-field" hidden><span>Hip (cm) *</span><input id="hip" type="number" min="60" max="180" step="0.1" placeholder="widest point" /></label>
+              <label><span>Body fat % <i>optional</i></span><input id="bodyfat" type="number" min="3" max="60" step="0.1" placeholder="if measured (DEXA, scale)" /></label>
               <label><span>Avg sleep (hours)</span><input id="sleep" type="number" min="3" max="12" step="0.1" value="7" /></label>
               <label><span>Daily steps</span><input id="steps" type="number" min="0" max="50000" step="500" value="7000" /></label>
               <label><span>Training / week</span><input id="training" type="number" min="0" max="14" value="3" /></label>
             </div>
-            <div class="note"><span>i</span><p>A photo alone cannot reliably measure body fat or health. Use the same measurement method at every check-in.</p></div>
+            <div class="note"><span>i</span><p>Measure waist at the navel and neck just below the larynx, relaxed, the same way each time. With your neck measurement FORM estimates body fat with the US Navy method; a photo alone can't measure body fat or health.</p></div>
             <button class="primary next" data-next="2">Build my projection <span>→</span></button>
           </div>
         </div>
@@ -82,7 +86,7 @@
       <section class="panel" id="step-2">
         <div class="section-heading">
           <div><p class="kicker">YOUR HYPOTHESIS</p><h2>Shape a realistic outcome.</h2></div>
-          <p>Adjust what you believe you can achieve. The guardrails flag aggressive rates, but the choices remain yours.</p>
+          <p>Set a target weight and timeline. A validated body-composition model works out the calories it takes, what you will likely reach at your consistency, and how your waist and body fat follow.</p>
         </div>
 
         <div class="projection-layout">
@@ -95,9 +99,9 @@
 
             <div class="fields two-col target-fields">
               <label><span>Target weight (kg)</span><input id="target-weight" type="number" step="0.1" /></label>
-              <label><span>Target waist (cm)</span><input id="target-waist" type="number" step="0.1" /></label>
-              <label><span>Target body fat %</span><input id="target-bodyfat" type="number" min="3" max="60" step="0.1" placeholder="Optional" /></label>
               <label><span>Strength change %</span><input id="strength-change" type="number" min="-30" max="100" value="10" /></label>
+              <label><span>Predicted waist (cm)</span><input id="target-waist" type="number" step="0.1" readonly tabindex="-1" class="derived" /></label>
+              <label><span>Predicted body fat %</span><input id="target-bodyfat" type="number" step="0.1" readonly tabindex="-1" class="derived" /></label>
             </div>
 
             <div class="divider"></div>
@@ -114,6 +118,20 @@
               <span class="rate-icon">✓</span>
               <div><strong id="rate-title">Sustainable pace</strong><p id="rate-copy">Your planned weekly rate sits within a commonly manageable range.</p></div>
             </div>
+
+            <div class="model-card" id="model-card">
+              <p class="subhead">What the model says</p>
+              <div class="model-grid">
+                <div><small>Maintenance</small><b id="m-maint">—</b><i>kcal/day now</i></div>
+                <div><small>To hit target</small><b id="m-intake">—</b><i id="m-deficit">—</i></div>
+                <div><small>Likely by target date</small><b id="m-likely">—</b><i id="m-range">—</i></div>
+                <div><small>Of the weight lost</small><b id="m-fat">—</b><i id="m-lean">—</i></div>
+              </div>
+              <svg id="model-chart" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Projected weight over time"></svg>
+              <div class="model-legend"><span class="lg-plan">Plan (100%)</span><span class="lg-likely">Likely (your consistency)</span><span class="lg-band">Range</span></div>
+              <p class="model-src">Mifflin-St Jeor resting energy · Hall energy-balance model with Forbes fat/lean partition (as in the NIH Body Weight Planner) · US Navy circumference equations. Training and sleep adjustments are from controlled trials and are less certain. Body fat: <span id="m-bfsrc">—</span>.</p>
+            </div>
+
           </div>
 
           <div class="visual-card">
@@ -188,7 +206,7 @@
 
         <div class="variance">
           <div class="form-card-title"><span>Variance on the check-in date</span><span class="required-note" id="variance-progress">—</span></div>
-          <div class="variance-scroll"><table id="variance-table"><thead><tr><th></th><th>Start</th><th>Expected</th><th>Actual</th><th>vs plan</th><th>Since start</th></tr></thead><tbody></tbody></table></div>
+          <div class="variance-scroll"><table id="variance-table"><thead><tr><th></th><th>Start</th><th>Expected</th><th>Actual</th><th>vs projection</th><th>Since start</th></tr></thead><tbody></tbody></table></div>
         </div>
 
         <section class="verdict-card" id="verdict-card">
@@ -201,6 +219,7 @@
     </main>
 
     <footer><span>FORM / Saved only on this device</span><span>Not medical advice · v0.2</span></footer>
+    <script src="model.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
