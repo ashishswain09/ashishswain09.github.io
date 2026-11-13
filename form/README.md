@@ -2,7 +2,7 @@
 
 FORM is a private, browser-only prototype for creating a measurable body-conditioning projection and comparing it with a later check-in.
 
-**Live site:** [ashishkumarswain.com/form-conditioning-app](https://ashishkumarswain.com/form-conditioning-app/)
+**Live site:** [ashishkumarswain.com/form](https://ashishkumarswain.com/form/)
 
 ## Run it
 
@@ -12,7 +12,7 @@ From the root of this repository:
 python3 -m http.server 8080
 ```
 
-Then open `http://localhost:8080/form-conditioning-app/`.
+Then open `http://localhost:8080/form/`.
 
 ## What the MVP does
 
@@ -29,4 +29,4 @@ The photo is not analyzed to infer body fat, health status, or a diagnosis. The 
 
 ## Updating the site
 
-FORM lives in the `form-conditioning-app/` folder of the main site repository (`ashishswain09.github.io`). GitHub Pages publishes it with the rest of the site when changes are merged to `main`.
+FORM lives in the `form/` folder of the main site repository (`ashishswain09.github.io`). GitHub Pages publishes it with the rest of the site when changes are merged to `main`.
